@@ -4,7 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan(basePackages = {"com.runonground.community.model.dto", "com.runonground.match.model.dto"})
+@MapperScan(basePackages = "com.runonground.model.dao")
 public class DBConfig {
 
 }
