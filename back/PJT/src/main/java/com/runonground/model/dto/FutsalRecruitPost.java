@@ -1,21 +1,25 @@
 package com.runonground.model.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class FutsalRecruitPost {
 	private int recruitmentId;
-	private int authorId;
-	private int teamId;
+	private String authorName;
+	private String teamName;
 	private String content;
 	private int maxMembers;
-	private String regDate;
+	private LocalDateTime regDate;
 	private boolean isFull;
-	
-	public FutsalRecruitPost() {}
-	
-	public FutsalRecruitPost(int recruitmentId, int authorId, int teamId, String content, int maxMembers,
-			String regDate, boolean isFull) {
+
+	public FutsalRecruitPost() {
+	}
+
+	public FutsalRecruitPost(int recruitmentId, String authorName, String teamName, String content, int maxMembers,
+			LocalDateTime regDate, boolean isFull) {
 		this.recruitmentId = recruitmentId;
-		this.authorId = authorId;
-		this.teamId = teamId;
+		this.authorName = authorName;
+		this.teamName = teamName;
 		this.content = content;
 		this.maxMembers = maxMembers;
 		this.regDate = regDate;
@@ -30,20 +34,20 @@ public class FutsalRecruitPost {
 		this.recruitmentId = recruitmentId;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
-	public int getTeamId() {
-		return teamId;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	public String getContent() {
@@ -62,11 +66,11 @@ public class FutsalRecruitPost {
 		this.maxMembers = maxMembers;
 	}
 
-	public String getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
 
@@ -77,4 +81,5 @@ public class FutsalRecruitPost {
 	public void setFull(boolean isFull) {
 		this.isFull = isFull;
 	}
+
 }

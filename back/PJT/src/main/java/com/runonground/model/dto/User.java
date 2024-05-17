@@ -1,36 +1,38 @@
 package com.runonground.model.dto;
 
 public class User {
-	private int userId;
-	private String userName;
+	private String nickName;
+	private String userId;
 	private String password;
-	private String nickname;
-	private int teamId;
-	
+	private String realName;
+	private String teamName;
+	private String userImgPath;
+
 	public User() {}
-	
-	public User(int userId, String userName, String password, String nickname, int teamId) {
+
+	public User(String nickName, String userId, String password, String realName, String teamName, String userImgPath) {
+		this.nickName = nickName;
 		this.userId = userId;
-		this.userName = userName;
 		this.password = password;
-		this.nickname = nickname;
-		this.teamId = teamId;
+		this.realName = realName;
+		this.teamName = teamName;
+		this.userImgPath = userImgPath;
 	}
 
-	public int getUserId() {
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -41,19 +43,28 @@ public class User {
 		this.password = password;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getRealName() {
+		return realName;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
-	public int getPerferredTeamId() {
-		return teamId;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setPerferredTeamId(int teamId) {
-		this.teamId = teamId;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
+
+	public String getUserImgPath() {
+		return userImgPath;
+	}
+
+	public void setUserImgPath(String userImgPath) {
+		this.userImgPath = userImgPath;
+	}
+
 }

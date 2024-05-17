@@ -3,14 +3,14 @@ package com.runonground.model.dto;
 public class FutsalTeam {
 	private int futsalTeamId;
 	private int recruitmentId;
-	private int leaderId;
+	private String leaderName;
 	
 	public FutsalTeam() {}
-	
-	public FutsalTeam(int futsalTeamId, int recruitmentId, int leaderId) {
+
+	public FutsalTeam(int futsalTeamId, int recruitmentId, String leaderName) {
 		this.futsalTeamId = futsalTeamId;
 		this.recruitmentId = recruitmentId;
-		this.leaderId = leaderId;
+		this.leaderName = leaderName;
 	}
 
 	public int getFutsalTeamId() {
@@ -29,11 +29,13 @@ public class FutsalTeam {
 		this.recruitmentId = recruitmentId;
 	}
 
-	public int getLeaderId() {
-		return leaderId;
+	public String getLeaderName() {
+		return leaderName;
 	}
 
-	public void setLeaderId(int leaderId) {
-		this.leaderId = leaderId;
+	public void setLeaderName(String leaderName) {
+		this.leaderName = leaderName;
 	}
+	
+
 }

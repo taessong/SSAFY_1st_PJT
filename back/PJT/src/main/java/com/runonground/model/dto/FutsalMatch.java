@@ -1,21 +1,24 @@
 package com.runonground.model.dto;
 
+import java.time.LocalDateTime;
+
 public class FutsalMatch {
 	private int matchId;
-	private int authorId;
+	private String authorName;
 	private int teamAId;
 	private int teamBId;
-	private int matchDate;
-	private int matchTime;
+	private LocalDateTime matchDate;
+	private LocalDateTime matchTime;
 	private int stadiumId;
-	private String regDate;
+	private LocalDateTime regDate;
 
-	public FutsalMatch() {}
-	
-	public FutsalMatch(int matchId, int authorId, int teamAId, int teamBId, int matchDate, int matchTime, int stadiumId,
-			String regDate) {
+	public FutsalMatch() {
+	}
+
+	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, LocalDateTime matchDate,
+			LocalDateTime matchTime, int stadiumId, LocalDateTime regDate) {
 		this.matchId = matchId;
-		this.authorId = authorId;
+		this.authorName = authorName;
 		this.teamAId = teamAId;
 		this.teamBId = teamBId;
 		this.matchDate = matchDate;
@@ -32,12 +35,12 @@ public class FutsalMatch {
 		this.matchId = matchId;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
 	public int getTeamAId() {
@@ -56,19 +59,19 @@ public class FutsalMatch {
 		this.teamBId = teamBId;
 	}
 
-	public int getMatchDate() {
+	public LocalDateTime getMatchDate() {
 		return matchDate;
 	}
 
-	public void setMatchDate(int matchDate) {
+	public void setMatchDate(LocalDateTime matchDate) {
 		this.matchDate = matchDate;
 	}
 
-	public int getMatchTime() {
+	public LocalDateTime getMatchTime() {
 		return matchTime;
 	}
 
-	public void setMatchTime(int matchTime) {
+	public void setMatchTime(LocalDateTime matchTime) {
 		this.matchTime = matchTime;
 	}
 
@@ -80,11 +83,12 @@ public class FutsalMatch {
 		this.stadiumId = stadiumId;
 	}
 
-	public String getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
+
 }

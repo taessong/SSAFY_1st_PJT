@@ -2,13 +2,13 @@ package com.runonground.model.dto;
 
 public class Community {
 	private int communityId;
-	private int teamId;
+	private String teamName;
 	
 	public Community() {}
-	
-	public Community(int communityId, int teamId) {
+
+	public Community(int communityId, String teamName) {
 		this.communityId = communityId;
-		this.teamId = teamId;
+		this.teamName = teamName;
 	}
 
 	public int getCommunityId() {
@@ -19,11 +19,12 @@ public class Community {
 		this.communityId = communityId;
 	}
 
-	public int getTeamId() {
-		return teamId;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
+	
 }

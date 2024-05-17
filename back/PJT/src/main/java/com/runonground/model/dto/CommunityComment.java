@@ -1,19 +1,24 @@
 package com.runonground.model.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class CommunityComment {
 	private int commentId;
 	private int postId;
-	private int authorId;
+	private String authorName;
 	private String content;
-	private String regDate;
+	private int recommend;
+	private LocalDateTime regDate;
 	
 	public CommunityComment() {}
-	
-	public CommunityComment(int commentId, int postId, int authorId, String content, String regDate) {
+
+	public CommunityComment(int commentId, int postId, String authorName, String content, int recommend, LocalDateTime regDate) {
 		this.commentId = commentId;
 		this.postId = postId;
-		this.authorId = authorId;
+		this.authorName = authorName;
 		this.content = content;
+		this.recommend = recommend;
 		this.regDate = regDate;
 	}
 
@@ -33,12 +38,12 @@ public class CommunityComment {
 		this.postId = postId;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
 	public String getContent() {
@@ -49,11 +54,23 @@ public class CommunityComment {
 		this.content = content;
 	}
 
-	public String getRegDate() {
+	public int getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
+	}
+
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
+
+
+	
+	
 }

@@ -1,21 +1,25 @@
 package com.runonground.model.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class CommunityPost {
 	private int postId;
-	private int authorId;
-	private int teamId;
+	private String authorName;
+	private String teamName;
 	private String content;
-	private String imageUrl;
-	private String regDate;
+	private String postImgPath;
+	private LocalDateTime regDate;
 	
 	public CommunityPost() {}
-	
-	public CommunityPost(int postId, int authorId, int teamId, String content, String imageUrl, String regDate) {
+
+	public CommunityPost(int postId, String authorName, String teamName, String content, String postImgPath,
+			LocalDateTime regDate) {
 		this.postId = postId;
-		this.authorId = authorId;
-		this.teamId = teamId;
+		this.authorName = authorName;
+		this.teamName = teamName;
 		this.content = content;
-		this.imageUrl = imageUrl;
+		this.postImgPath = postImgPath;
 		this.regDate = regDate;
 	}
 
@@ -27,20 +31,20 @@ public class CommunityPost {
 		this.postId = postId;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
-	public int getTeamId() {
-		return teamId;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	public String getContent() {
@@ -51,19 +55,21 @@ public class CommunityPost {
 		this.content = content;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getPostImgPath() {
+		return postImgPath;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setPostImgPath(String postImgPath) {
+		this.postImgPath = postImgPath;
 	}
 
-	public String getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
+
+
 }
