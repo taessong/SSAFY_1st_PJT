@@ -1,5 +1,5 @@
 package com.runonground.model.dao;
 
-public interface UserDao {
-	
+public class UserDao {
+
 }

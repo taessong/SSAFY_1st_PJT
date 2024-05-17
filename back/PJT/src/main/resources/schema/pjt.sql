@@ -11,7 +11,7 @@ CREATE TABLE user (
 	nickname VARCHAR(20) PRIMARY KEY,
     user_id VARCHAR(20) UNIQUE,
     password VARCHAR(20) NOT NULL,
-    realname VARCHAR(20),
+    realname VARCHAR(20) NOT NULL,
     team_name VARCHAR(30),
     FOREIGN KEY (team_name) REFERENCES team(team_name),
     user_imgpath VARCHAR(255) NOT NULL
