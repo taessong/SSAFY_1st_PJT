@@ -7,20 +7,30 @@ public class CommunityPost {
 	private int postId;
 	private String authorName;
 	private String teamName;
+	private String title;
 	private String content;
 	private String postImgPath;
 	private LocalDateTime regDate;
 	
 	public CommunityPost() {}
 
-	public CommunityPost(int postId, String authorName, String teamName, String content, String postImgPath,
+	public CommunityPost(int postId, String authorName, String teamName, String title, String content, String postImgPath,
 			LocalDateTime regDate) {
 		this.postId = postId;
 		this.authorName = authorName;
 		this.teamName = teamName;
+		this.title = title;
 		this.content = content;
 		this.postImgPath = postImgPath;
 		this.regDate = regDate;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getPostId() {

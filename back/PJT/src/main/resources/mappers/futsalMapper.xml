@@ -4,5 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.runonground.model.dao.FutsalDao">
+	<!-- 매칭 등록 -->
+	<insert id="insertPost" parameterType="FutsalMatch">
+		INSERT INTO futsal_match(author_name, team_a_id, content, match_date, match_time, stadium_id)
+		VALUES(#{authorName}, #{teamAId}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
+	</insert>
 	
+	<!-- 매칭글 상세 보기 -->
+	<select id="readMatch" parameterType="int" resultType="FutsalMatch">
+		SELECT * FROM futsal_match
+		WHERE match_id = #{id}
+	</select>
 </mapper>

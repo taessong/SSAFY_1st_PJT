@@ -1,7 +1,6 @@
 package com.runonground.model.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class FutsalRecruitPost {
 	private int recruitmentId;
@@ -12,8 +11,7 @@ public class FutsalRecruitPost {
 	private LocalDateTime regDate;
 	private boolean isFull;
 
-	public FutsalRecruitPost() {
-	}
+	public FutsalRecruitPost() {}
 
 	public FutsalRecruitPost(int recruitmentId, String authorName, String teamName, String content, int maxMembers,
 			LocalDateTime regDate, boolean isFull) {

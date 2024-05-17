@@ -35,21 +35,18 @@ public class UserRestController {
 	}
 
 	// 로그인
-	@PostMapping("/login")
+	@PostMapping("/")
 	@Operation(summary = "로그인")
 	public ResponseEntity<Void> login(@RequestBody User user, HttpSession session){
 		String loginId = user.getUserId();
 		String loginPassword = user.getPassword();
-		
-		System.out.println(loginId);
-		System.out.println(loginPassword);
 		
 		User loginUser = userService.login(loginId, loginPassword);
 		
 		if(loginUser != null) {
 			String loginNickname = loginUser.getNickName();
 			session.setAttribute("nickName", loginNickname);
-			System.out.println(session.getAttribute("nickName")); 
+			session.setAttribute("favoriteTeam", loginUser.getTeamName());
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
