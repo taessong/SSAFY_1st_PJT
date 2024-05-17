@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h2>login</h2>
+        <LoginForm/>
     </div>
 </template>
 
 <script setup>
-
+import LoginForm from '../components/login/LoginForm.vue';
 </script>
 
 <style scoped>
