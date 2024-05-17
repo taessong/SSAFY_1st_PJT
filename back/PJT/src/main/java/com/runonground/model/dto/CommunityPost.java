@@ -9,20 +9,30 @@ public class CommunityPost {
 	private String teamName;
 	private String title;
 	private String content;
+	private int viewCnt;
 	private String postImgPath;
 	private LocalDateTime regDate;
 	
 	public CommunityPost() {}
 
-	public CommunityPost(int postId, String authorName, String teamName, String title, String content, String postImgPath,
+	public CommunityPost(int postId, String authorName, String teamName, String title, String content, int viewCnt, String postImgPath,
 			LocalDateTime regDate) {
 		this.postId = postId;
 		this.authorName = authorName;
 		this.teamName = teamName;
 		this.title = title;
 		this.content = content;
+		this.viewCnt = viewCnt;
 		this.postImgPath = postImgPath;
 		this.regDate = regDate;
+	}
+	
+	public int getViewCnt() {
+		return viewCnt;
+	}
+
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
 
 	public String getTitle() {

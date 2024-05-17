@@ -1,8 +1,8 @@
 package com.runonground.model.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.runonground.model.dto.CommunityComment;
 import com.runonground.model.dto.CommunityPost;
 
 public interface CommunityService {
@@ -22,5 +22,13 @@ public interface CommunityService {
 	// 수다글 수정
 	public void updatePost(CommunityPost communityPost);
 	
+	// 댓글 달기
+	public void addComment(CommunityComment communityComment);
+	
+	// 특정 게시물의 댓글 전체 조회
+	public List<CommunityComment> selectAllComment(int id);
+	
+	// 댓글 수정
+	public void updateComment(CommunityComment communityComment);
 }
 

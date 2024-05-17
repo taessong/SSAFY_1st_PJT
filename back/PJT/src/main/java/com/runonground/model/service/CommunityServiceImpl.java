@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.runonground.model.dao.CommunityDao;
+import com.runonground.model.dto.CommunityComment;
 import com.runonground.model.dto.CommunityPost;
 
 @Service
@@ -32,6 +33,7 @@ public class CommunityServiceImpl implements CommunityService{
 	// 	수다글 하나 조회
 	@Override
 	public CommunityPost searchOnePost(int id) {
+		communityDao.updateViewCnt(id);
 		return communityDao.searchOnePost(id);
 	}
 
@@ -45,6 +47,24 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void updatePost(CommunityPost communityPost) {
 		communityDao.updatePost(communityPost);
+	}
+
+	// 댓글 달기
+	@Override
+	public void addComment(CommunityComment communityComment) {
+		communityDao.addComment(communityComment);
+	}
+
+	// 특정 게시물의 댓글 전체 조회
+	@Override
+	public List<CommunityComment> selectAllComment(int id) {
+		return communityDao.selectAllComment(id);
+	}
+
+	// 댓글 수정
+	@Override
+	public void updateComment(CommunityComment communityComment) {
+		communityDao.updateComment(communityComment);
 	}
 	
 	

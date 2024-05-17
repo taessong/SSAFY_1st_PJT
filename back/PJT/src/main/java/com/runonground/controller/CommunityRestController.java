@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.runonground.model.dto.CommunityComment;
 import com.runonground.model.dto.CommunityPost;
 import com.runonground.model.service.CommunityService;
 
@@ -86,5 +87,45 @@ public class CommunityRestController {
 		communityService.updatePost(communityPost);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
+	// 댓글 달기
+	@PostMapping("/board/{id}/comment")
+	@Operation(summary = "댓글 달기")
+	public ResponseEntity<Void> reply(@PathVariable("id") int id, @RequestBody CommunityComment communityComment, HttpSession session){
+		// 작성자
+		String writer = (String) session.getAttribute("nickName");
+		communityComment.setAuthorName(writer);
+		communityComment.setPostId(id);
+		
+		System.out.println(communityComment.getPostId());
+		
+		communityService.addComment(communityComment);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	// 특정 게시물의 댓글 전체 조회
+	@GetMapping("/board/{id}/comment")
+	@Operation(summary = "특정 게시물의 댓글 전체 조회")
+	public ResponseEntity<List<CommunityComment>> selectAllComment(@PathVariable("id") int id){
+		List<CommunityComment> list = communityService.selectAllComment(id);
+		return new ResponseEntity<List<CommunityComment>>(list, HttpStatus.OK);
+	}
+	
+	// 댓글 수정
+	@PutMapping("/board/{id}/comment/{commentId}")
+	@Operation(summary = "댓글 수정")
+	public ResponseEntity<Void> updateComment(@PathVariable("id") int id, @PathVariable("commentId") int commentId, @RequestBody CommunityComment communityComment, HttpSession session){
+		String writer = (String) session.getAttribute("nickName");
+		
+		communityComment.setPostId(id);
+		communityComment.setCommentId(commentId);
+		communityComment.setAuthorName(writer);
+		
+		communityService.updateComment(communityComment);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	
+	// 댓글 삭제
 	
 }

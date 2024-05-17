@@ -35,4 +35,33 @@
 		SET title = #{title}, content = #{content}, reg_date = now()
 	</update>
 	
+	<!-- 조회수 증가 -->
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE community_post
+		SET view_cnt = view_cnt+1 
+		WHERE post_id = #{id}
+	</update>
+	
+	<!-- 댓글 달기 -->
+	<insert id="addComment" parameterType="CommunityComment">
+		INSERT INTO community_comment (post_id, author_name, content)
+		VALUE(#{postId}, #{authorName}, #{content})
+	</insert>
+	
+	<!-- 특정 게시물의 댓글 전체 조회 -->
+	<select id="selectAllComment" parameterType="int" resultType="CommunityComment">
+		SELECT * FROM community_comment
+		WHERE post_id = #{id}
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="CommunityComment">
+		UPDATE community_comment
+		SET post_id = #{postId}, author_name = #{authorName}, content = #{content}, reg_date = now()
+		WHERE comment_id = #{commentId}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	
+	
 </mapper>
