@@ -1,8 +1,6 @@
 package com.runonground.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,7 +123,19 @@ public class CommunityRestController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	
 	// 댓글 삭제
+	@DeleteMapping("/board/{id}/comment/{commentId}")
+	@Operation(summary = "댓글 삭제")
+	public ResponseEntity<Void> deleteComment(@PathVariable("id") int id, @PathVariable("commentId") int commentId){
+		communityService.deleteComment(commentId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 	
+	// 댓글 추천
+	@PutMapping("/board/{id}/comment/{commentId}/recommend")
+	@Operation(summary = "댓글 추천")
+	public ResponseEntity<Void> recommendComment(@PathVariable("id") int id, @PathVariable("commentId") int commentId){
+		communityService.recommendComment(commentId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 }

@@ -33,4 +33,10 @@ public interface CommunityDao {
 	
 	// 댓글 수정
 	public void updateComment(CommunityComment communityComment);
+	
+	// 댓글 삭제
+	public void deleteComment(int commentId);
+	
+	// 댓글 추천
+	public void recommendComment(int commentId);
 }

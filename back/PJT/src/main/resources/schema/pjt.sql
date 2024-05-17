@@ -26,8 +26,8 @@ CREATE TABLE user (
     user_imgpath VARCHAR(255)
 );
 
-INSERT INTO user
-VALUES ('태쏭', 'kts', 1234, '김태성', '토트넘', '');
+INSERT INTO user VALUES ('태쏭', 'kts', 1234, '김태성', '토트넘', '');
+INSERT INTO user VALUES ('범슈', 'mbs', 1234, '문범수', '맨유', '');
 
 SELECT * FROM user;
 
@@ -59,9 +59,6 @@ CREATE TABLE community_post (
     FOREIGN KEY (team_name) REFERENCES team(team_name)
 );
 
-UPDATE community_post SET view_cnt = view_cnt+1
-WHERE post_id = 2;
-
 SELECT * FROM community_post;
 
 -- 커뮤니티 답글 테이블
@@ -76,12 +73,6 @@ CREATE TABLE community_comment (
     FOREIGN KEY (author_name) REFERENCES user(nickname) ON DELETE CASCADE
 );
 
-INSERT INTO community_comment(post_id, content)
-VALUES(2, 'zzzzzzzzz');
-
-SELECT * FROM community_comment
-WHERE post_id = 2;
-
 -- 풋살 팀 모집 글 테이블
 CREATE TABLE futsal_recruit_post (
     recruitment_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -95,9 +86,6 @@ CREATE TABLE futsal_recruit_post (
     FOREIGN KEY (team_name) REFERENCES team(team_name)
 );
 
-INSERT INTO futsal_recruit_post(author_name, team_name, content)
-VALUES('태쏭', '토트넘', 'test');
-
 SELECT * FROM futsal_recruit_post;
 
 -- 풋살 팀 테이블
@@ -108,9 +96,6 @@ CREATE TABLE futsal_team (
     FOREIGN KEY (recruitment_id) REFERENCES futsal_recruit_post(recruitment_id) ON DELETE CASCADE,
     FOREIGN KEY (leader_name) REFERENCES user(nickname) ON DELETE CASCADE
 );
-
-INSERT INTO futsal_team(recruitment_id, leader_name)
-VALUES(1, '태쏭');
 
 SELECT * FROM futsal_team;
 

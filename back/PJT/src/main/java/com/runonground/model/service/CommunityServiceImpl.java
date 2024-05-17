@@ -66,7 +66,17 @@ public class CommunityServiceImpl implements CommunityService{
 	public void updateComment(CommunityComment communityComment) {
 		communityDao.updateComment(communityComment);
 	}
-	
-	
-	
+
+	// 댓글 삭제
+	@Override
+	public void deleteComment(int commentId) {
+		communityDao.deleteComment(commentId);
+	}
+
+	// 댓글 추천
+	@Override
+	public void recommendComment(int commentId) {
+		communityDao.recommendComment(commentId);
+	}
+
 }

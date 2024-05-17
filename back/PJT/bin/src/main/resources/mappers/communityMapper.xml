@@ -62,15 +62,6 @@
 	</update>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="deleteComment" parameterType="int">
-		DELETE FROM community_comment
-		WHERE comment_id = #{commentId}		
-	</delete>
 	
-	<!-- 댓글 추천 -->
-	<update id="recommendComment" parameterType="int">
-		UPDATE community_comment
-  		SET recommend = recommend + 1
-    	WHERE comment_id = #{commentId} 
-	</update>
+	
 </mapper>
