@@ -1,5 +1,6 @@
 package com.runonground.model.dao;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import com.runonground.model.dto.CommunityComment;
@@ -60,5 +61,8 @@ public interface CommunityDao {
 
 	// 모집글에 조회수 증가
 	public void updateFutsalRecruitPostViewCnt(String teamName, int recruitmentId);
+=======
+public interface CommunityDao {
+>>>>>>> 5e0d267082c08ca716f95682d6d232c6b20a8dae
 
 }
