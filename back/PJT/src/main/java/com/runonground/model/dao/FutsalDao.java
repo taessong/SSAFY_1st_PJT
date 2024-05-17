@@ -1,5 +1,5 @@
 package com.runonground.model.dao;
 
-public class FutsalDao {
+public interface FutsalDao {
 
 }
