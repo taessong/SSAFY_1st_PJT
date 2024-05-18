@@ -30,6 +30,7 @@ public class UserRestController {
 	@PostMapping("/signup")
 	@Operation(summary = "회원가입")
 	public ResponseEntity<Void> signup(@RequestBody User user){
+		System.out.println("여기까지 들어왔어용");
 		userService.signup(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

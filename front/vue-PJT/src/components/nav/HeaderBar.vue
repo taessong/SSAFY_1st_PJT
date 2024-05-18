@@ -20,5 +20,7 @@
         color: white;
         margin-left: 10px;
     }
-
+    a {
+        text-decoration-line: none;
+    }
 </style>
