@@ -28,6 +28,7 @@ CREATE TABLE user (
 
 INSERT INTO user VALUES ('태쏭', 'kts', 1234, '김태성', '토트넘', '');
 INSERT INTO user VALUES ('범슈', 'mbs', 1234, '문범수', '맨유', '');
+INSERT INTO user VALUES ('범뀨', 'kbg', 1234, '김범규', '맨시티', '');
 
 SELECT * FROM user;
 
@@ -121,19 +122,10 @@ INSERT INTO  stadium (stadium_name, location)
 VALUES ('삼정풋살파크', '대전 유성구 한밭대로371번길 25-4 삼정풋살파크');
 
 INSERT INTO  stadium (stadium_name, location)
-VALUES ('대전스카이풋살파크 ', '대전 유성구 대정북로 2');
-
-INSERT INTO  stadium (stadium_name, location)
 VALUES ('위너스풋살파크 목원대점', '대전 유성구 원신흥동 576-2');
 
 INSERT INTO  stadium (stadium_name, location)
-VALUES ('경성실내풋살장&스크린골프', '대전 서구 갈마로 209 6층');
-
-INSERT INTO  stadium (stadium_name, location)
 VALUES ('대전가장풋살존 ', '대전 서구 괴정로198번길 43 21-3, 21-9');
-
-INSERT INTO  stadium (stadium_name, location)
-VALUES ('스마트풋살장 ', '대전 유성구 엑스포로 213');
 
 INSERT INTO  stadium (stadium_name, location)
 VALUES ('남선공원풋살장', '대전 서구 남선로 66');
@@ -141,8 +133,7 @@ VALUES ('남선공원풋살장', '대전 서구 남선로 66');
 INSERT INTO  stadium (stadium_name, location)
 VALUES ('가오풋살장', '대전 동구 가오동 7-9');
 
-INSERT INTO  stadium (stadium_name, location)
-VALUES ('테크노풋살장', '대전 유성구 배울1로 297');
+SELECT * FROM stadium;
 
 -- 풋살 매칭 테이블
 CREATE TABLE futsal_match (
