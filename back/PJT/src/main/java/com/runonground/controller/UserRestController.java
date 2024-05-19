@@ -1,5 +1,8 @@
 package com.runonground.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +41,7 @@ public class UserRestController {
 	// 로그인
 	@PostMapping("/")
 	@Operation(summary = "로그인")
-	public ResponseEntity<Void> login(@RequestBody User user, HttpSession session){
+	public ResponseEntity<Map<String, String>> login(@RequestBody User user, HttpSession session){
 		String loginId = user.getUserId();
 		String loginPassword = user.getPassword();
 		
@@ -48,9 +51,14 @@ public class UserRestController {
 			String loginNickname = loginUser.getNickName();
 			session.setAttribute("nickName", loginNickname);
 			session.setAttribute("favoriteTeam", loginUser.getTeamName());
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			
+			Map<String, String> response = new HashMap<>();
+			response.put("nickName", loginNickname);
+			response.put("favoriteTeam", loginUser.getTeamName());
+			
+			return ResponseEntity.ok(response);
 		}
-		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 	
 	// 로그아웃

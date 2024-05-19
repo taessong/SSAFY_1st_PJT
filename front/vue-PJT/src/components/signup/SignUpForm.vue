@@ -100,11 +100,9 @@ import axios from "axios";
 
 // 기본 프로필 이미지 경로
 import defaultImageImg from "@/asset/loginImage/profileImg.png"; // 여기에 기본 이미지 경로를 넣으세요.
-import { RouterLink } from "vue-router";
 import router from "@/router";
 
 const defaultImagePath = defaultImageImg;
-const fileName = ref("");
 const filePath = ref("");
 const fileInput = ref(null);
 const image = ref(null);
@@ -216,7 +214,7 @@ const handleSubmit = async () => {
 
   try {
     const response = await axios.post('http://localhost:8080/user/signup', user);
-    console.log(response);
+    // console.log(response);
     alert('회원가입 성공!');
     router.push('/');
   } catch (error) {
