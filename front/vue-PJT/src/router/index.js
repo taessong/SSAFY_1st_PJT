@@ -4,6 +4,10 @@ import MainView from '@/views/MainView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import MatchView from '@/views/MatchView.vue'
 
+import MatchBoard from '@/components/match/MatchBoard.vue'
+import MatchDetail from '@/components/match/MatchDetail.vue'
+import MatchRegist from '@/components/match/MatchRegist.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,8 +29,25 @@ const router = createRouter({
     {
       path: '/match',
       name: 'match',
-      component: MatchView
-    }
+      component: MatchView,
+      children: [
+        {
+          path: "",
+          name: "matchboard",
+          component: MatchBoard
+        },
+        {
+          path: "detail",
+          name: "matchdetail",
+          component: MatchDetail
+        },
+        {
+          path: "regist",
+          name: "matchregist",
+          component: MatchRegist
+        },
+      ]
+    },
   ]
 })
 
