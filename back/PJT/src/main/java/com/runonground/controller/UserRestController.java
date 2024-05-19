@@ -56,9 +56,9 @@ public class UserRestController {
 			response.put("nickName", loginNickname);
 			response.put("favoriteTeam", loginUser.getTeamName());
 			
-			return ResponseEntity.ok(response);
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 	
 	// 로그아웃
