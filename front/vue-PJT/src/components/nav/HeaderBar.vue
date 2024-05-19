@@ -105,7 +105,6 @@ a {
 .a {
   text-decoration-line: none;
   color: white;
-  margin-left: 10px;
   font-weight: 800;
   font-size: 16px;
 }
@@ -113,6 +112,5 @@ a {
 img {
   width: 40px;
   height: 40px;
-  margin-right: 10px;
 }
 </style>
