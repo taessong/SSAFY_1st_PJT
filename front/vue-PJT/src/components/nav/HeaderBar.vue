@@ -7,7 +7,8 @@
       <a href="https://www.naver.com" class="a"><h3>QnA With GPT</h3></a>
     </div>
     <div class="header-login">
-      <div v-if="nickName">
+      <div v-if="nickName" class="user-info">
+        <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc">
         <h3>{{ nickName }}님, 안녕하세요!</h3>
       </div>
       <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"
@@ -20,17 +21,28 @@
 <!-- 여기에 나중에 로그인 여부 확인해서, 로그인 x일시 로고만, 아닐 시 전부 띄우게 해야함-->
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 const nickName = ref(null);
+
+const logoSrc= ref('');
 
 const updateNickName = () => {
     nickName.value = sessionStorage.getItem("nickName");
 }
 
-
 //닉네임 가져오기
 onMounted( async () => {
     updateNickName();
+    const favoriteTeam = sessionStorage.getItem("favoriteTeam");
+    if(favoriteTeam){
+      import(`../../asset/logo/${favoriteTeam}.png`)
+      .then(module => {
+        logoSrc.value = module.default;
+      })
+      .catch(error => {
+        console.error("Error loading logo:", error);
+      });
+    }
 });
 
 window.addEventListener('storage', () => {
@@ -63,6 +75,11 @@ const handlerLogout = (event) => {
   margin-right: auto;
 }
 
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
 .header-login {
   display: flex;
   margin-top: 8px;
@@ -91,5 +108,11 @@ a {
   margin-left: 10px;
   font-weight: 800;
   font-size: 16px;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
 }
 </style>
