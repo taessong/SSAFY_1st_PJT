@@ -19,12 +19,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in items" :key="index">
-                                <td>{{ item.teamName }}</td>
-                                <td>{{ item.title }}</td>
-                                <td>{{ item.authorName }}</td>
-                                <td>{{ new Date(item.regDate).toLocaleString() }}</td>
-                                <td>{{ item.viewCnt }}</td>
+                            <tr v-for="a in 3" :key="a">
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
                             </tr>
                         </tbody>
                     </table>
@@ -37,11 +37,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const items = ref([]);
 
 const fetchData = async () => {
     try {
+        console.log(sessionStorage.getItem("favoriteTeam"))
         const response = await axios.get('http://localhost:8080/community/board');
         items.value = response.data;
         console.log(response.data)
