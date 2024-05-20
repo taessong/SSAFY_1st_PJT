@@ -53,7 +53,7 @@
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성 일</th>
-                <th>조회수</th>
+                <th>총 인원</th>
               </tr>
             </thead>
             <tbody>
@@ -62,10 +62,10 @@
                 :key="index"
               >
                 <td>[모집]</td>
-                <td>{{ item.content }}</td>
+                <td @click="goToDetail(item.recruitmentId)">{{ item.content }}</td>
                 <td>{{ item.authorName }}</td>
                 <td>{{ item.regDate }}</td>
-                <td>{{ item.viewCnt }}</td>
+                <td>{{ item.maxMembers }}인</td>
               </tr>
             </tbody>
           </table>
@@ -113,6 +113,10 @@ const showRecruitBoard = () => {
 const selectPostAndNavigate = (item) => {
   store.selectPost(item);
   router.push({ name: "clubDetail", params: { id: item.postId } });
+};
+
+const goToDetail = (id) => {
+  router.push({ name: "recruitDetail", params: { id } });
 };
 
 onMounted(() => {
