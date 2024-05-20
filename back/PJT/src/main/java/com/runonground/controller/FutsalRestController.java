@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runonground.model.dto.FutsalMatch;
 import com.runonground.model.dto.FutsalRecruitPost;
+import com.runonground.model.dto.FutsalTeamMember;
 import com.runonground.model.service.FutsalService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,9 +34,20 @@ public class FutsalRestController {
 	// 매칭 등록
 	@PostMapping("/match")
 	@Operation(summary = "매칭 등록")
-	public ResponseEntity<Void> regist(@RequestBody FutsalMatch futsalMatch){
+	public ResponseEntity<Void> regist(@RequestBody FutsalMatch futsalMatch, HttpSession session){
+		futsalMatch.setAuthorName((String)session.getAttribute("nickName"));
+		futsalMatch.setTeamAName((String)session.getAttribute("favoriteTeam"));
+		
 		futsalService.regist(futsalMatch);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	// 매칭글 전체 보기
+	@GetMapping("/match")
+	@Operation(summary = "매칭글 전체 보기")
+	public ResponseEntity<List<FutsalMatch>> selectAll(){
+		List<FutsalMatch> list = futsalService.selectAll();
+		return new ResponseEntity<List<FutsalMatch>>(list, HttpStatus.OK);
 	}
 	
 	// 매칭글 상세 보기
@@ -62,7 +74,32 @@ public class FutsalRestController {
 		
 		futsalService.findMember(futsalRecruitPost);
 		
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	// 팀 생성
+	// 프론트 단에서 팀원 모집 게시글을 작성하고
+	// 등록하기 버튼을 누르면 이 메서드가 실행되게 하면 글 등록과 동시에 팀 생성 가능
+	@PostMapping("/board/team")
+	@Operation(summary = "팀 생성")
+	 public ResponseEntity<Void> generateTeam(HttpSession session){
+		String leader = (String) session.getAttribute("nickName");
+		futsalService.generateTeam(leader);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	// 팀을 생성한 사람은 팀원으로 등록하지 못하게 하기
+
+	
+	// 팀원 등록
+	@PostMapping("/board/team/{teamId}")
+	@Operation(summary = "팀원 등록")
+	public ResponseEntity<Void> createTeam(@PathVariable("teamId") int teamId, @RequestBody FutsalTeamMember futsalTeamMember, HttpSession session) {
+	    futsalTeamMember.setMemberName((String)session.getAttribute("nickName"));
+		futsalTeamMember.setFutsalTeamId(teamId);
+	    
+	    futsalService.registMember(futsalTeamMember);
+	    return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	// 모집 글 전체 불러오기
@@ -70,6 +107,7 @@ public class FutsalRestController {
 	@Operation(summary = "전체 모집 글 불러오기")
 	public ResponseEntity<List<FutsalRecruitPost>> selectAllRecruit(HttpSession session){
 		String teamName = (String) session.getAttribute("favoriteTeam");
+		System.out.println(teamName);
 		
 		List<FutsalRecruitPost> list = futsalService.selectAllRecruit(teamName);
 		return new ResponseEntity<List<FutsalRecruitPost>>(list, HttpStatus.OK);

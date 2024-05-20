@@ -1,20 +1,32 @@
 package com.runonground.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.runonground.model.dto.FutsalMatch;
 import com.runonground.model.dto.FutsalRecruitPost;
+import com.runonground.model.dto.FutsalTeam;
+import com.runonground.model.dto.FutsalTeamMember;
 
 public interface FutsalService {
 
 	// 매칭 등록
 	public void regist(FutsalMatch futsalMatch);
 	
+	// 매칭글 전체 보기
+	public List<FutsalMatch> selectAll();
+	
 	// 매칭글 상세 보기
 	public FutsalMatch readMatch(int id);
 	
 	// 풋살 인원 모집글 등록하기
 	public void findMember(FutsalRecruitPost futsalRecruitPost);
+	
+	// 팀 생성
+	public void generateTeam(String leader);
+	
+	// 팀원으로 등록하기
+	public void registMember(FutsalTeamMember futsalTeamMember);
 	
 	// 모집 글 전체 불러오기 
 	public List<FutsalRecruitPost> selectAllRecruit(String teamName);

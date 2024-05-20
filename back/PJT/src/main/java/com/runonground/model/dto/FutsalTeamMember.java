@@ -1,14 +1,24 @@
 package com.runonground.model.dto;
 
 public class FutsalTeamMember {
+	private int id;
 	private int futsalTeamId;
 	private String memberName;
 	
 	public FutsalTeamMember() {}
 
-	public FutsalTeamMember(int futsalTeamId, String memberName) {
+	public FutsalTeamMember(int id, int futsalTeamId, String memberName) {
+		this.id = id;
 		this.futsalTeamId = futsalTeamId;
 		this.memberName = memberName;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getFutsalTeamId() {

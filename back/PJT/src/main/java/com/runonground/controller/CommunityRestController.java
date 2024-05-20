@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +54,6 @@ public class CommunityRestController {
 	public ResponseEntity<List<CommunityPost>> searchAllPost(HttpSession session){
 		// 세선에 존재하는 로그인 유저의 선호 팀
 		String favoriteTeam = (String) session.getAttribute("favoriteTeam");
-		System.out.println(favoriteTeam);
 				
 		List<CommunityPost> list = communityService.searchAllPost(favoriteTeam);
 		return new ResponseEntity<List<CommunityPost>>(list, HttpStatus.OK);

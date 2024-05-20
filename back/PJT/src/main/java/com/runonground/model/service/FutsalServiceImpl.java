@@ -1,12 +1,17 @@
 package com.runonground.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.runonground.model.dao.FutsalDao;
 import com.runonground.model.dto.FutsalMatch;
 import com.runonground.model.dto.FutsalRecruitPost;
+import com.runonground.model.dto.FutsalTeam;
+import com.runonground.model.dto.FutsalTeamMember;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class FutsalServiceImpl implements FutsalService{
@@ -23,6 +28,12 @@ public class FutsalServiceImpl implements FutsalService{
 		futsalDao.insertPost(futsalMatch);
 	}
 
+	// 매칭글 전체보기
+	@Override
+	public List<FutsalMatch> selectAll(){
+		return futsalDao.selectAll();
+	}
+	
 	// 매칭글 상세 보기
 	@Override
 	public FutsalMatch readMatch(int id) {
@@ -35,6 +46,16 @@ public class FutsalServiceImpl implements FutsalService{
 		futsalDao.findMember(futsalRecruitPost);
 	}
 
+	// 팀 생성
+	public void generateTeam(String leader) {
+		futsalDao.insertTeam(leader);
+	}
+	
+	// 팀원으로 등록하기
+		public void registMember(FutsalTeamMember futsalTeamMember) {
+			futsalDao.insertMember(futsalTeamMember);
+		}
+	
 	// 풋살 모집 글 전체 조회
 	@Override
 	public List<FutsalRecruitPost> selectAllRecruit(String teamName){

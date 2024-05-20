@@ -11,6 +11,11 @@
 		VALUES(#{authorName}, #{teamAId}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
 	</insert>
 	
+	<!-- 매칭글 전체 보기 -->
+	<select id="selectAll" resultType="FutsalMatch">
+		SELECT * FROM futsal_match
+	</select>
+	
 	<!-- 매칭글 상세 보기 -->
 	<select id="readMatch" parameterType="int" resultType="FutsalMatch">
 		SELECT * FROM futsal_match
@@ -21,6 +26,18 @@
 	<insert id="findMember" parameterType="FutsalRecruitPost">
 		INSERT INTO futsal_recruit_post(author_name, team_name, content)
 		VALUES(#{authorName}, #{teamName}, #{content})		
+	</insert>
+	
+	<!-- 팀 생성 -->
+	<insert id="insertTeam" parameterType="String">
+		INSERT INTO futsal_team(leader_name)
+		VALUES(#{leader})
+	</insert>
+	
+	<!-- 팀원으로 등록 -->
+	<insert id="insertMember" parameterType="FutsalTeamMember">
+		INSERT INTO futsal_team_member(futsal_team_id, member_name)
+		VALUES(#{futsalTeamId}, #{memberName})
 	</insert>
 	
 	<!-- 풋살 모집 글 전체 조회 -->
