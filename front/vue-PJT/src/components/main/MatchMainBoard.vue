@@ -17,7 +17,7 @@ const gotoMatchBoard = () => {
 };
 </script>
 
-<style scoped>
+<style scoped> 
 .container {
   padding: 15px;
   width: 100%;

@@ -44,7 +44,7 @@ const boardList = async () => {
 };
 
 const goToDetail = (id) => {
-  router.push({ name: "matchdetail", params: { id } });
+  router.push({ name: "recruitDetail", params: { id } });
 };
 
 onMounted(() => {

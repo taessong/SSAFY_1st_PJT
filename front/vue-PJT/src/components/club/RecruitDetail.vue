@@ -25,35 +25,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 
-export default {
-  setup() {
-    const detail = ref([]);
-    const route = useRoute();
+const detail = ref([]);
+const route = useRoute();
 
-    const detailPost = async (id) => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/futsal/board/${id}`
-        );
-        detail.value = response.data;
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    onMounted(() => {
-      detailPost(route.params.id);
-    });
-
-    return { detail };
-  },
+const detailPost = async (id) => {
+    try {
+    const response = await axios.get(
+        `http://localhost:8080/futsal/board/${id}`
+    );
+    detail.value = response.data;
+    console.log(response);
+    } catch (error) {
+    console.error(error);
+    }
 };
+
+onMounted(() => {
+    detailPost(route.params.id);
+});
+
+
+
 </script>
 
 <style scoped>
