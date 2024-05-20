@@ -1,46 +1,140 @@
 <template>
-    <div>
-      <div>
-        <h1>클럽 상세 페이지</h1>
-        <p>클럽 ID: {{ id }}</p>
-        <p>제목: {{ selectedPost?.title }}</p>
-        <p>작성자: {{ selectedPost?.authorName }}</p>
-        <p>작성 일: {{ selectedPost?.regDate }}</p>
-        <p>조회수: {{ selectedPost?.viewCnt }}</p>
-        <!-- 추가적인 게시글 정보 -->
+  <div class="detailBoard">
+    <div class="detailPage">
+      <button @click="goBack" class="gobackButton">◀️ 뒤로가기</button>
+      <div class="detailTitle">
+        <p class="title">제목 : {{ chatItem.title }}</p>
+        <div class="authornRegDate">
+          <p class="author">작성자 : {{ chatItem.authorName }}</p>
+          <p class="regDate">작성 일자 : {{ chatItem.regDate }}</p>
+        </div>
       </div>
-      <h2>댓글</h2>
-      <ul>
-        <li v-for="comment in comments" :key="comment.commentId">
-          <p>{{ comment.content }}</p>
-        </li>
-      </ul>
+      <div class="content">
+        {{ chatItem.content }}
+      </div>
+      <p class="viewCnt">조회수: {{ chatItem.viewCnt }}</p>
     </div>
-  </template>
+    <div class="comments">
+      <h1>댓글 {{ comments.length }}개</h1>
+      <div v-for="comment in comments" :key="comment.commentId" class="comment">
+        <div class="authornContent">
+          <p>{{ comment.authorName }}</p>
+          <p>{{ comment.content }}</p>
+        </div>
+          <button class="recommend" @click="recommend">👍 {{ comment.recommend }}</button>
+      </div>
+    </div>
+  </div>
+</template>
   
   <script setup>
-  import { useClubStore } from "@/stores/club";
-  import { onMounted, computed } from "vue";
-  import { useRoute } from "vue-router";
-  
-  const props = defineProps({
-    id: String,
-  });
-  
-  const store = useClubStore();
-  const route = useRoute();
-  
-  // selectedPost와 comments는 반응형으로 만들기 위해 computed로 정의
-  const selectedPost = computed(() => store.selectedPost);
-  const comments = computed(() => store.comments);
-  
-  onMounted(() => {
-    const postId = route.params.id;
-    store.fetchComments(postId);
-  });
-  </script>
+import { useClubStore } from "@/stores/club";
+import { onMounted, computed } from "vue";
+import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
+
+const props = defineProps({
+  id: String,
+});
+
+const store = useClubStore();
+const storeDetail = useClubStore();
+const route = useRoute();
+const router = useRouter();
+
+const goBack = () => {
+  router.back();
+};
+
+const recommend = () => {
+  console.log("눌렀다!")
+}
+
+const comments = computed(() => store.comments);
+const chatItem = computed(() => storeDetail.chatItem);
+
+onMounted(() => {
+  const postId = route.params.id;
+  storeDetail.fetchOneChatData(postId);
+  store.fetchComments(postId);
+});
+</script>
   
   <style scoped>
-  /* 스타일을 여기 추가하세요 */
-  </style>
+.gobackButton {
+  border: none;
+  padding: 6px;
+  margin-bottom: 15px;
+}
+
+.detailPage {
+  padding: 30px;
+}
+
+.detailTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  margin-left: 5px;
+  font-weight: 800;
+}
+.authornRegDate {
+  display: flex;
+  font-weight: 800;
+}
+
+.regDate {
+  margin-left: 25px;
+  margin-right: 10px;
+}
+
+.content {
+  border: 1px solid black;
+  border-radius: 8px;
+  text-align: start;
+  height: 360px;
+  padding: 6px;
+}
+
+.viewCnt {
+  text-align: end;
+  font-weight: 800;
+  margin-right: 10px;
+}
+
+.comments {
+  padding: 30px;
+}
+
+.detailBoard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.comment {
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment p {
+  margin-left: 15px;
+}
+
+.authornContent {
+  display: flex;
+}
+
+.recommend {
+  margin-right: 10px;
+  border: none;
+  background-color: white;
+}
+</style>
   
