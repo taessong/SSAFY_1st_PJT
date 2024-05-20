@@ -3,10 +3,15 @@ import LoginView from '@/views/LoginView.vue'
 import MainView from '@/views/MainView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import MatchView from '@/views/MatchView.vue'
+import ClubView from '@/views/ClubView.vue'
 
 import MatchBoard from '@/components/match/MatchBoard.vue'
 import MatchDetail from '@/components/match/MatchDetail.vue'
 import MatchRegist from '@/components/match/MatchRegist.vue'
+
+import ClubDetail from '@/components/club/ClubDetail.vue'
+import ClubBoard from '@/components/club/ClubBoard.vue'
+import ClubRegist from '@/components/club/ClubRegist.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +53,29 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/club',
+      name: 'club',
+      component: ClubView,
+      children: [
+        {
+          path: "",
+          name: "clubBoard",
+          component: ClubBoard
+        },
+        {
+          path: "/chat/:id",
+          name: "clubDetail",
+          component: ClubDetail,
+          props: true
+        },
+        {
+          path: "regist",
+          name: "clubRegist",
+          component: ClubRegist
+        },
+      ]
+    }
   ]
 })
 
