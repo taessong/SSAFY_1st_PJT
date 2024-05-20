@@ -65,6 +65,15 @@ export const useClubStore = defineStore("club", () => {
     }
   }
 
+  const recommendComment = async(postId, commentId) => {
+    try {
+      await axios.put(`${BASE_URL}/community/board/${postId}/comment/${commentId}/recommend`);
+      await fetchComments(postId);
+    } catch (error) {
+      console.log("에러다!!")
+    }
+  }
+
   return {
     chatItems,
     fetchChatData,
@@ -74,5 +83,6 @@ export const useClubStore = defineStore("club", () => {
     comments,
     chatItem,
     fetchOneChatData,
+    recommendComment,
   };
 });

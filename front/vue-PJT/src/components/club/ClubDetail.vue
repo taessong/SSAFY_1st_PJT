@@ -1,7 +1,15 @@
 <template>
   <div class="detailBoard">
     <div class="detailPage">
-      <button @click="goBack" class="gobackButton">◀️ 뒤로가기</button>
+      <div class="top-button">
+        <button @click="goBack" class="gobackButton">◀️ 뒤로가기</button>
+        <div v-if="isWriter" class="putNdelete">
+          <button class="put">수정</button>
+          <button @click="confirmDelete(chatItem.postId)" class="delete">
+            삭제
+          </button>
+        </div>
+      </div>
       <div class="detailTitle">
         <p class="title">제목 : {{ chatItem.title }}</p>
         <div class="authornRegDate">
@@ -21,7 +29,15 @@
           <p>{{ comment.authorName }}</p>
           <p>{{ comment.content }}</p>
         </div>
-          <button class="recommend" @click="recommend">👍 {{ comment.recommend }}</button>
+        <div class="recommendNput">
+          <button class="recommend" @click="recommend(comment.commentId)">
+            👍 {{ comment.recommend }}
+          </button>
+          <div v-if="isCommentWriter" class="commentPutNdelete">
+            <button class="put">수정</button>
+            <button class="delete" @click="confirmCommentDelete(comment.commentId)">삭제</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,6 +48,8 @@ import { useClubStore } from "@/stores/club";
 import { onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import axios from "axios";
 
 const props = defineProps({
   id: String,
@@ -41,22 +59,61 @@ const store = useClubStore();
 const storeDetail = useClubStore();
 const route = useRoute();
 const router = useRouter();
+const isWriter = ref(false);
+const isCommentWriter = ref(false);
 
 const goBack = () => {
   router.back();
 };
 
-const recommend = () => {
-  console.log("눌렀다!")
+const recommend = (commentId) => {
+  const postId = route.params.id;
+  store.recommendComment(postId, commentId);
+};
+
+const confirmDelete = (postId) => {
+  if (window.confirm("정말 삭제하시겠습니까?")) {
+    deleteBoard(postId);
+  }
+};
+
+const deleteBoard = async (postId) => {
+  try {
+    await axios.delete(`http://localhost:8080/community/board/${postId}`);
+    router.back();
+  } catch (error) {
+    console.log("실패용", error);
+  }
+};
+
+const confirmCommentDelete = (commentId) => {
+  if( window.confirm("정말 댓글을 삭제하시겠습니까?")){
+    commentDelete(commentId);
+  }
+}
+
+const commentDelete = async (commentId) => {
+  const postId = route.params.id;
+  try{
+    await axios.delete(`http://localhost:8080/community/board/${postId}/comment/${commentId}`);
+  }catch(error){
+    console.log("에러다!!", error);
+  }
 }
 
 const comments = computed(() => store.comments);
 const chatItem = computed(() => storeDetail.chatItem);
 
-onMounted(() => {
+onMounted(async () => {
   const postId = route.params.id;
-  storeDetail.fetchOneChatData(postId);
-  store.fetchComments(postId);
+  await storeDetail.fetchOneChatData(postId);
+  await store.fetchComments(postId);
+  if (sessionStorage.getItem("nickName") === chatItem.value.authorName) {
+    isWriter.value = true;
+  }
+  if (sessionStorage.getItem("nickName") === comments.value.authorName){
+    isCommentWriter.value = true;
+  }
 });
 </script>
   
@@ -64,7 +121,12 @@ onMounted(() => {
 .gobackButton {
   border: none;
   padding: 6px;
-  margin-bottom: 15px;
+  margin-top: 25px;
+  border-radius: 8px;
+  background-color: darkcyan;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .detailPage {
@@ -135,6 +197,35 @@ onMounted(() => {
   margin-right: 10px;
   border: none;
   background-color: white;
+}
+
+.top-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.putNdelete {
+  margin-top: 25px;
+}
+
+.put,
+.delete {
+  margin-right: 10px;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  background-color: darkcyan;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.recommendNput {
+  display: flex;
+}
+
+.commentPutNdelete {
+  margin-top: 12px;
 }
 </style>
   
