@@ -97,7 +97,9 @@ INSERT INTO futsal_recruit_post (author_name, team_name, content) VALUES
 CREATE TABLE futsal_team (
     team_id INT PRIMARY KEY AUTO_INCREMENT,
     leader_name VARCHAR(20),
-    FOREIGN KEY (leader_name) REFERENCES user(nickname) ON DELETE CASCADE
+    team_name VARCHAR(30),
+    FOREIGN KEY (leader_name) REFERENCES user(nickname) ON DELETE CASCADE,
+    FOREIGN KEY (team_name) REFERENCES team(team_name)
 );
 
 -- 풋살 팀 멤버 테이블

@@ -47,14 +47,28 @@ public class FutsalServiceImpl implements FutsalService{
 	}
 
 	// 팀 생성
-	public void generateTeam(String leader) {
-		futsalDao.insertTeam(leader);
+	@Override
+	public void generateTeam(String leader, String teamName) {
+		futsalDao.insertTeam(leader, teamName);
+	}
+	
+	// 팀 조회
+	@Override
+	public List<FutsalTeam> selectAllTeam(String teamName){
+		return futsalDao.selectAllTeam(teamName);
 	}
 	
 	// 팀원으로 등록하기
-		public void registMember(FutsalTeamMember futsalTeamMember) {
-			futsalDao.insertMember(futsalTeamMember);
-		}
+	@Override
+	public void registMember(FutsalTeamMember futsalTeamMember) {
+		futsalDao.insertMember(futsalTeamMember);
+	}
+	
+	// 팀에 맞는 팀원 조회
+	@Override
+	public List<FutsalTeamMember> selectAllMember(int teamId){
+		return futsalDao.selectAllMember(teamId);
+	}
 	
 	// 풋살 모집 글 전체 조회
 	@Override

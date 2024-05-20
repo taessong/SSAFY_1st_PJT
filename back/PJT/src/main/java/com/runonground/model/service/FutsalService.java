@@ -23,10 +23,16 @@ public interface FutsalService {
 	public void findMember(FutsalRecruitPost futsalRecruitPost);
 	
 	// 팀 생성
-	public void generateTeam(String leader);
+	public void generateTeam(String leader, String teamName);
+	
+	// 팀 조회
+	public List<FutsalTeam> selectAllTeam(String teamName);
 	
 	// 팀원으로 등록하기
 	public void registMember(FutsalTeamMember futsalTeamMember);
+	
+	// 팀에 맞는 팀원 조회
+	public List<FutsalTeamMember> selectAllMember(int teamId);
 	
 	// 모집 글 전체 불러오기 
 	public List<FutsalRecruitPost> selectAllRecruit(String teamName);

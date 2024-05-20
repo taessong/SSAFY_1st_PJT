@@ -30,15 +30,26 @@
 	
 	<!-- 팀 생성 -->
 	<insert id="insertTeam" parameterType="String">
-		INSERT INTO futsal_team(leader_name)
-		VALUES(#{leader})
+		INSERT INTO futsal_team(leader_name, team_name)
+		VALUES(#{leader}, #{teamName})
 	</insert>
+	
+	<!-- 팀 조회 -->
+	<select id="selectAllTeam" parameterType="String" resultType="FutsalTeam">
+		SELECT * FROM futsal_team
+		WHERE team_name = #{teamName}
+	</select>
 	
 	<!-- 팀원으로 등록 -->
 	<insert id="insertMember" parameterType="FutsalTeamMember">
 		INSERT INTO futsal_team_member(futsal_team_id, member_name)
 		VALUES(#{futsalTeamId}, #{memberName})
 	</insert>
+	
+	<!-- 팀에 맞는 팀원 조회 -->
+	<select id="selectAllMember" parameterType="int" resultType="FutsalTeamMember">
+		SELECT * FROM futsal_team_member
+	</select>
 	
 	<!-- 풋살 모집 글 전체 조회 -->
 	<select id="selectAllRecruit" parameterType="String" resultType="FutsalRecruitPost">

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runonground.model.dto.FutsalMatch;
 import com.runonground.model.dto.FutsalRecruitPost;
+import com.runonground.model.dto.FutsalTeam;
 import com.runonground.model.dto.FutsalTeamMember;
 import com.runonground.model.service.FutsalService;
 
@@ -84,8 +85,20 @@ public class FutsalRestController {
 	@Operation(summary = "팀 생성")
 	 public ResponseEntity<Void> generateTeam(HttpSession session){
 		String leader = (String) session.getAttribute("nickName");
-		futsalService.generateTeam(leader);
+		String teamName = (String) session.getAttribute("favoriteTeam");
+		
+		futsalService.generateTeam(leader, teamName);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	// 팀 조회
+	@GetMapping("/board/team")
+	@Operation(summary = "팀 조회")
+	public ResponseEntity<List<FutsalTeam>> selectTeam(HttpSession session){
+		String teamName = (String) session.getAttribute("favoriteTeam");
+		
+		List<FutsalTeam> list = futsalService.selectAllTeam(teamName);
+		return new ResponseEntity<List<FutsalTeam>>(list, HttpStatus.OK);
 	}
 	
 	// 팀을 생성한 사람은 팀원으로 등록하지 못하게 하기
@@ -102,12 +115,19 @@ public class FutsalRestController {
 	    return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
+	// 팀에 맞는 팀원 조회
+	@GetMapping("/board/team/{teamId}")
+	@Operation(summary = "팀에 맞는 팀원 조회")
+	public ResponseEntity<List<FutsalTeamMember>> selectMember(@PathVariable("teamId") int teamId){
+		List<FutsalTeamMember> list = futsalService.selectAllMember(teamId);
+		return new ResponseEntity<List<FutsalTeamMember>>(list, HttpStatus.OK);
+	}
+	
 	// 모집 글 전체 불러오기
 	@GetMapping("/board")
 	@Operation(summary = "전체 모집 글 불러오기")
 	public ResponseEntity<List<FutsalRecruitPost>> selectAllRecruit(HttpSession session){
 		String teamName = (String) session.getAttribute("favoriteTeam");
-		System.out.println(teamName);
 		
 		List<FutsalRecruitPost> list = futsalService.selectAllRecruit(teamName);
 		return new ResponseEntity<List<FutsalRecruitPost>>(list, HttpStatus.OK);
