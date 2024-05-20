@@ -7,8 +7,8 @@
 	
 	<!-- 매칭 등록 -->
 	<insert id="insertPost" parameterType="FutsalMatch">
-		INSERT INTO futsal_match(author_name, team_a_id, content, match_date, match_time, stadium_id)
-		VALUES(#{authorName}, #{teamAId}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
+		INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id)
+		VALUES(#{authorName}, #{teamAId}, ,#{teamAName}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
 	</insert>
 	
 	<!-- 매칭글 전체 보기 -->

@@ -14,12 +14,13 @@ public class FutsalMatch {
 	private LocalDateTime matchTime;
 	private int stadiumId;
 	private LocalDateTime regDate;
+	private String stadiumImg;
 
 	public FutsalMatch() {
 	}
 
 	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, String teamAName, String teamBName, String content, LocalDateTime matchDate,
-			LocalDateTime matchTime, int stadiumId, LocalDateTime regDate) {
+			LocalDateTime matchTime, int stadiumId, LocalDateTime regDate, String stadiumImg) {
 		this.matchId = matchId;
 		this.authorName = authorName;
 		this.teamAId = teamAId;
@@ -31,6 +32,7 @@ public class FutsalMatch {
 		this.matchTime = matchTime;
 		this.stadiumId = stadiumId;
 		this.regDate = regDate;
+		this.stadiumImg = stadiumImg;
 	}
 
 	public int getMatchId() {
@@ -119,5 +121,13 @@ public class FutsalMatch {
 
 	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
+	}
+
+	public String getStadiumImg() {
+		return stadiumImg;
+	}
+
+	public void setStadiumImg(String stadiumImg) {
+		this.stadiumImg = stadiumImg;
 	}
 }

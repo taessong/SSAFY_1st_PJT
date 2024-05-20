@@ -102,6 +102,13 @@ CREATE TABLE futsal_team (
     FOREIGN KEY (team_name) REFERENCES team(team_name)
 );
 
+INSERT INTO futsal_team (leader_name, team_name)
+VALUES 
+('태쏭', '토트넘'),
+('범슈', '맨유'),
+('범뀨', '맨시티');
+
+
 -- 풋살 팀 멤버 테이블
 CREATE TABLE futsal_team_member (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -110,6 +117,9 @@ CREATE TABLE futsal_team_member (
     FOREIGN KEY (futsal_team_id) REFERENCES futsal_team(team_id) ON DELETE CASCADE,
     FOREIGN KEY (member_name) REFERENCES user(nickname) ON DELETE CASCADE
 );
+
+INSERT INTO futsal_team_member(futsal_team_id, member_name) 
+VALUES (1, 'user1'), (1, 'user2'), (1, 'user3'), (1, 'user4'), (1, 'user5');
 
 -- 경기장 테이블
 CREATE TABLE stadium (
@@ -139,8 +149,14 @@ CREATE TABLE futsal_match (
     match_time TIME,
     stadium_id INT,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    stadium_img VARCHAR(255),
     FOREIGN KEY (author_name) REFERENCES user(nickname) ON DELETE CASCADE,
     FOREIGN KEY (team_a_id) REFERENCES futsal_team(team_id) ON DELETE CASCADE,
-    FOREIGN KEY (team_b_id) REFERENCES futsal_team(team_id),
     FOREIGN KEY (stadium_id) REFERENCES stadium(stadium_id) ON DELETE CASCADE
 );
+
+INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id, stadium_img)
+VALUES
+    ('태쏭', 1, '토트넘', '토트넘이랑 붙을 사람', '2024-06-15', '14:00:00', 1, '가오풋살장/가오풋살장(1).png'),
+    ('범슈', 2, '맨유', '맨유와 경기할 팀 모집', '2024-07-20', '16:30:00', 2, '남선공원풋살장/남선공원풋살장(1).png'),
+    ('범뀨', 3, '맨시티', '맨시티와 대결할 팀 구합니다', '2024-08-25', '18:00:00', 3, '유성풋살구장/유성풋살구장(1).png');

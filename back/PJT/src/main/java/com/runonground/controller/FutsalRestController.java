@@ -52,7 +52,7 @@ public class FutsalRestController {
 	}
 	
 	// 매칭글 상세 보기
-	@GetMapping("/{id}")
+	@GetMapping("/match/{id}")
 	@Operation(summary = "매칭글 상세 보기")
 	public ResponseEntity<FutsalMatch> detail(@PathVariable("id") int id){
 		FutsalMatch futsalMatch = futsalService.readMatch(id);
