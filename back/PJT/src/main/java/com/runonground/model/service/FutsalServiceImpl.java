@@ -34,6 +34,24 @@ public class FutsalServiceImpl implements FutsalService{
 		return futsalDao.selectAll();
 	}
 	
+	// 매칭 등록 삭제하기 
+	@Override
+	public void deleteMatch(int id) {
+		futsalDao.deleteMatch(id);
+	}
+
+	// B팀이 매칭 신청하기
+	@Override
+	public void registTeamB(Map<String, Object> map) {
+		futsalDao.registTeamB(map);
+	}
+	
+	// B팀의 매칭 취소
+	@Override
+	public void cancelMatch(int id) {
+		futsalDao.cancelMatch(id);
+	}
+	
 	// 매칭글 상세 보기
 	@Override
 	public FutsalMatch readMatch(int id) {

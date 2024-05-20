@@ -144,6 +144,7 @@ CREATE TABLE futsal_match (
     team_b_id INT,
     team_a_name VARCHAR(30),
     team_b_name VARCHAR(30),
+    team_b_leader VARCHAR(20),
     content VARCHAR(1000),
     match_date DATE,
     match_time TIME,

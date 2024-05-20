@@ -9,6 +9,7 @@ public class FutsalMatch {
 	private int teamBId;
 	private String teamAName;
 	private String teamBName;
+	private String teamBLeader;
 	private String content;
 	private LocalDateTime matchDate;
 	private LocalDateTime matchTime;
@@ -19,7 +20,7 @@ public class FutsalMatch {
 	public FutsalMatch() {
 	}
 
-	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, String teamAName, String teamBName, String content, LocalDateTime matchDate,
+	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, String teamAName, String teamBName, String teamBLeader, String content, LocalDateTime matchDate,
 			LocalDateTime matchTime, int stadiumId, LocalDateTime regDate, String stadiumImg) {
 		this.matchId = matchId;
 		this.authorName = authorName;
@@ -27,6 +28,7 @@ public class FutsalMatch {
 		this.teamBId = teamBId;
 		this.teamAName = teamAName;
 		this.teamBName = teamBName;
+		this.teamBLeader = teamBLeader;
 		this.content = content;
 		this.matchDate = matchDate;
 		this.matchTime = matchTime;
@@ -81,6 +83,14 @@ public class FutsalMatch {
 
 	public void setTeamBName(String teamBName) {
 		this.teamBName = teamBName;
+	}
+	
+	public String getTeamBLeader() {
+		return teamBLeader;
+	}
+
+	public void setTeamBLeader(String teamBLeader) {
+		this.teamBLeader = teamBLeader;
 	}
 
 	public String getContent() {

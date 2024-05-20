@@ -8,8 +8,29 @@
 	<!-- 매칭 등록 -->
 	<insert id="insertPost" parameterType="FutsalMatch">
 		INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id)
-		VALUES(#{authorName}, #{teamAId}, ,#{teamAName}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
+		VALUES(#{authorName}, (SELECT team_id FROM futsal_team WHERE leader_name = #{authorName}), #{teamAName}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
 	</insert>
+	
+	<!-- 매칭 등록 삭제하기 -->
+	<delete id="deleteMatch" parameterType="int">
+		DELETE FROM futsal_match
+		WHERE match_id = #{id}
+	</delete>
+	
+	<!-- 매칭 신청하기(teamB) -->
+	<update id="registTeamB" parameterType="map">
+	    UPDATE futsal_match
+	    SET team_b_id = (SELECT team_id FROM futsal_team WHERE leader_name = #{leaderName}),
+	        team_b_name = #{team}, team_b_leader = #{leaderName}
+	    WHERE match_id = #{id}
+	</update>
+	
+	<!-- 신청 취소하기 -->
+	<update id="cancelMatch">
+	    UPDATE futsal_match
+	    SET team_b_id = 0, team_b_name = NULL, team_b_leader = NULL
+	    WHERE match_id = #{id}
+	</update>
 	
 	<!-- 매칭글 전체 보기 -->
 	<select id="selectAll" resultType="FutsalMatch">
