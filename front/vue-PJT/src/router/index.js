@@ -37,7 +37,7 @@ const router = createRouter({
           component: MatchBoard
         },
         {
-          path: "detail",
+          path: ":id",
           name: "matchdetail",
           component: MatchDetail
         },
