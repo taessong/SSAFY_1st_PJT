@@ -1,6 +1,8 @@
 package com.runonground.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class FutsalRestController {
 	}
 	
 	// 매칭 등록
+	// 경기장을 어떻게 선택할까.....??
 	@PostMapping("/match")
 	@Operation(summary = "매칭 등록")
 	public ResponseEntity<Void> regist(@RequestBody FutsalMatch futsalMatch, HttpSession session){
@@ -51,16 +54,49 @@ public class FutsalRestController {
 		return new ResponseEntity<List<FutsalMatch>>(list, HttpStatus.OK);
 	}
 	
+	// 매칭 등록 삭제하기 
+	@DeleteMapping("/match/{id}")
+	@Operation(summary = "매칭 등록 삭제하기")
+	public ResponseEntity<Void> delete(@PathVariable("id") int id){
+		futsalService.deleteMatch(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	// B팀이 매칭 신청하기
+	@PutMapping("/match/{id}")
+	@Operation(summary = "B팀이 매칭 신청하기")
+	public ResponseEntity<FutsalMatch> registMatch(@PathVariable("id") int id, HttpSession session){
+	    // 다른 팀의 정보 입력
+	    // 리더가 무조건 신청해야 함
+	    String team = (String)session.getAttribute("favoriteTeam");
+	    String leaderName = (String) session.getAttribute("nickName");
+	    
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("id", id);
+	    map.put("team", team);
+	    map.put("leaderName", leaderName);
+	    
+	    futsalService.registTeamB(map);
+	    
+	    FutsalMatch futsalMatch = futsalService.readMatch(id);
+	    return new ResponseEntity<FutsalMatch>(futsalMatch, HttpStatus.CREATED);
+	}
+
+	// B팀의 매칭 신청 취소
+	@DeleteMapping("/match/{id}/cancel")
+	@Operation(summary = "B팀의 매칭 신청 취소")
+	public ResponseEntity<Void> cancel(@PathVariable("id") int id){
+		futsalService.cancelMatch(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
 	// 매칭글 상세 보기
 	@GetMapping("/match/{id}")
 	@Operation(summary = "매칭글 상세 보기")
 	public ResponseEntity<FutsalMatch> detail(@PathVariable("id") int id){
 		FutsalMatch futsalMatch = futsalService.readMatch(id);
 		
-		if(futsalMatch != null)
-			return new ResponseEntity<FutsalMatch>(futsalMatch, HttpStatus.OK);
-		
-		return new ResponseEntity<FutsalMatch>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<FutsalMatch>(futsalMatch, HttpStatus.OK);
 	}
 	
 	// 풋살 인원 모집글 등록하기

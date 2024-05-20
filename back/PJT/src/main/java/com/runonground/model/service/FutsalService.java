@@ -16,6 +16,15 @@ public interface FutsalService {
 	// 매칭글 전체 보기
 	public List<FutsalMatch> selectAll();
 	
+	// 매칭 등록 삭제하기 
+	public void deleteMatch(int id);
+	
+	// B팀이 매칭 신청하기
+	public void registTeamB(Map<String, Object> map);
+	
+	// B팀의 매칭 취소
+	public void cancelMatch(int id);
+	
 	// 매칭글 상세 보기
 	public FutsalMatch readMatch(int id);
 	

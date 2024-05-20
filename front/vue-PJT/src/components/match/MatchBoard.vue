@@ -1,27 +1,34 @@
 <template>
+  <div class="board-content">
     <h2>매칭게시판입니당</h2>
-    <div class="board-content">
-          <table>
-            <thead>
-              <tr>
-                <th>분류</th>
-                <th>내용</th>
-                <th>팀</th>
-                <th>작성자</th>
-                <th>경기일자</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="post in list" :key="post.matchId">
-                <td>{{ post.teamBId ? '[마감]' : '[모집]' }}</td>
-                <td @click="goToDetail(post.matchId)">{{ post.content }}</td>
-                <td>{{ post.teamAName }}</td>
-                <td>{{ post.authorName }}</td>
-                <td>{{ post.matchTime }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <table>
+      <thead>
+        <tr>
+          <th>분류</th>
+          <th>내용</th>
+          <th>팀</th>
+          <th>작성자</th>
+          <th>경기일자</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="post in list" :key="post.matchId">
+          <td>{{ post.teamBId ? '[마감]' : '[모집]' }}</td>
+          <td>
+            <router-link :to="{ name: 'matchdetail', params: { id: post.matchId } }">
+              {{ post.content }}
+            </router-link>
+          </td>
+          <td>{{ post.teamAName }}</td>
+          <td>{{ post.authorName }}</td>
+          <td>{{ post.matchTime }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <router-link :to="{name: 'matchregist'}">
+      <button>등록하기</button>
+    </router-link>
+  </div>
 </template>
 
 <script setup>
@@ -40,10 +47,6 @@ const boardList = async () => {
   } catch (error) {
     console.error(error);
   }
-};
-
-const goToDetail = (id) => {
-  router.push({ name: "matchdetail", params: { id } });
 };
 
 onMounted(() => {
