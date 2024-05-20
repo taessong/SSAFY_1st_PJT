@@ -7,14 +7,7 @@ const BASE_URL = "http://localhost:8080";
 export const useClubStore = defineStore("club", () => {
   const chatItems = ref([]);
   const comments = ref([]);
-
-  // state
-  const selectedPost = ref(null);
-
-  // actions
-  const selectPost = (post) => {
-    selectedPost.value = post;
-  };
+  const chatItem = ref({});
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -61,14 +54,25 @@ export const useClubStore = defineStore("club", () => {
         console.log("failed to fetch comments", error)
     }
   }
+
+  const fetchOneChatData = async (postId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/community/board/${postId}`)
+      chatItem.value = response.data;
+      chatItem.value.regDate = formatDate(chatItem.value.regDate);
+    } catch (error) {
+      console.log("failed to fetch oneChatData", error)
+    }
+  }
+
   return {
     chatItems,
     fetchChatData,
     fetchChatDataSummary,
     formatDate,
-    selectedPost,
-    selectPost,
     fetchComments,
     comments,
+    chatItem,
+    fetchOneChatData,
   };
 });

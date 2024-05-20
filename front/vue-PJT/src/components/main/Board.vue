@@ -1,7 +1,8 @@
 <template>
     <div class="container">
       <div class="club-header">
-        <h2>클럽 게시판</h2>
+        <h2 v-if="showChat">수다 게시판</h2>
+        <h2 v-if="showRecruit">모집 게시판</h2>
         <button @click="gotoClubBoard" class="button">+</button>
       </div>
       <div class="club-board">
@@ -36,7 +37,7 @@
               <tbody>
                 <tr v-for="(item, index) in store.chatItems" :key="index">
                   <td>[수다]</td>
-                  <td>{{ item.title }}</td>
+                  <td class="click" @click="selectPostAndNavigate(item)">{{ item.title }}</td>
                   <td>{{ item.authorName }}</td>
                   <td>{{ item.regDate }}</td>
                   <td>{{ item.viewCnt }}</td>
@@ -63,7 +64,7 @@
                   :key="index"
                 >
                   <td>[모집]</td>
-                  <td>{{ item.content }}</td>
+                  <td class="click" @click="goToDetail(item.recruitmentId)">{{ item.content }}</td>
                   <td>{{ item.authorName }}</td>
                   <td>{{ item.regDate }}</td>
                   <td>{{ item.viewCnt }}</td>
@@ -98,6 +99,10 @@
   const gotoClubBoard = () => {
     router.push({ name: 'clubBoard' });
   };
+
+  const goToDetail = (id) => {
+  router.push({ name: "recruitDetail", params: { id } });
+};
   
   const showChatBoard = () => {
     if (showChat.value != true) {
@@ -114,6 +119,10 @@
       console.log("모집으로 전환됐지롱~");
     }
   };
+
+  const selectPostAndNavigate = (item) => {
+  router.push({ name: "clubDetail", params: { id: item.postId } });
+};
   
   onMounted(() => {
     store.fetchChatDataSummary();
@@ -128,6 +137,10 @@
   
   h2 {
     margin-bottom: 20px;
+  }
+
+  .click {
+    cursor: pointer;
   }
   
   .club-header {

@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="club-header">
-      <h2>클럽 게시판</h2>
+      <h2 v-if="showChat">수다 게시판</h2>
+      <h2 v-if="showRecruit">모집 게시판</h2>
     </div>
     <div class="club-board">
       <div class="board-header">
@@ -35,7 +36,9 @@
             <tbody>
               <tr v-for="(item, index) in store.chatItems" :key="index">
                 <td>[수다]</td>
-                <td @click="selectPostAndNavigate(item)" class="click"> {{ item.title }}</td>
+                <td @click="selectPostAndNavigate(item)" class="click">
+                  {{ item.title }}
+                </td>
                 <td>{{ item.authorName }}</td>
                 <td>{{ item.regDate }}</td>
                 <td>{{ item.viewCnt }}</td>
@@ -62,7 +65,9 @@
                 :key="index"
               >
                 <td>[모집]</td>
-                <td @click="goToDetail(item.recruitmentId)">{{ item.content }}</td>
+                <td @click="goToDetail(item.recruitmentId)" class="click">
+                  {{ item.content }}
+                </td>
                 <td>{{ item.authorName }}</td>
                 <td>{{ item.regDate }}</td>
                 <td>{{ item.maxMembers }}인</td>
@@ -111,7 +116,6 @@ const showRecruitBoard = () => {
 };
 
 const selectPostAndNavigate = (item) => {
-  store.selectPost(item);
   router.push({ name: "clubDetail", params: { id: item.postId } });
 };
 
@@ -163,7 +167,7 @@ h2 {
 }
 
 .click {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .club-board {
