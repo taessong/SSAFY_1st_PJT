@@ -101,6 +101,7 @@
 	<update id="updateRecruit" parameterType="FutsalRecruitPost">
 		UPDATE futsal_recruit_post
 		SET content = #{content}, max_members = #{maxMembers}
+		WHERE recruitment_id = #{recruitmentId}
 	</update>
 	
 </mapper>

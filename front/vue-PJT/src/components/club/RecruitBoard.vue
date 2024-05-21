@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import axios from "@/api/axios";
 import router from "@/router";
 
 axios.defaults.withCredentials = true;
@@ -35,7 +35,7 @@ const list = ref([]);
 
 const boardList = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/futsal/board");
+    const response = await axios.get("/futsal/board");
     list.value = response.data;
     console.log(response.data);
   } catch (error) {
