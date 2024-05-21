@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="post in list" :key="post.matchId">
+        <tr v-for="post in matchList" :key="post.matchId">
           <td>{{ post.teamBId ? '[마감]' : '[모집]' }}</td>
           <td>
             <router-link :to="{ name: 'matchdetail', params: { id: post.matchId } }">
@@ -27,34 +27,46 @@
         </tr>
       </tbody>
     </table>
-    <router-link :to="{name: 'matchregist'}">
+    <router-link :to="{ name: 'matchregist' }">
       <button>등록하기</button>
     </router-link>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from '@/api/axios';
-axios.defaults.withCredentials = true;
+import { useMatchStore } from '@/stores/match';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 
-const list = ref([]);
-
-const boardList = async () => {
-  try {
-    const response = await axios.get("/futsal/match");
-    list.value = response.data;
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+const store = useMatchStore();
+const { matchList } = storeToRefs(store);
 
 onMounted(() => {
-  boardList();
+  store.getBoardList();
 });
 </script>
 
-<style>
+<style scoped>
+.board-content {
+  margin: 20px;
+}
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+button {
+  margin-top: 10px;
+}
 </style>

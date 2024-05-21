@@ -1,70 +1,53 @@
 <template>
+  <div>
+    <h2>수정 페이지</h2>
+
+    <fieldset>
+      <legend>수정</legend>
+      <div>
+        <label for="content">매치 내용:</label>
+        <input type="text" id="content" v-model="detail.content">
+      </div>
+
+      <div>
+        <label for="matchDate">경기 날짜 선택:</label>
+        <input type="date" id="matchDate" v-model="detail.matchDate">
+      </div>
+
+      <div>
+        <label for="matchTime">경기 시간 입력:</label>
+        <input type="time" id="matchTime" v-model="detail.matchTime">
+      </div>
+
+      <div>
+        <label for="stadiumId">경기장 ID 입력:</label>
+        <input type="text" id="stadiumId" v-model="detail.stadiumId">
+      </div>
+    </fieldset>
+
     <div>
-        <h2>수정 페이지</h2>
-
-        <table>
-            <thead>
-                <tr>
-                <th>내용</th>
-                <th>작성자</th>
-                <th>경기일자</th>
-                <th>경기시간</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="detail">
-                <td>{{ detail.content }}</td>
-                <td>{{ detail.authorName }}</td>
-                <td>{{ detail.matchDate }}</td>
-                <td>{{ detail.matchTime }}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div v-if="detail.authorName === nickName">
-            <button @click="updateMatch()">등록하기</button>
-        </div>
+      <button @click="updateMatch">등록하기</button>
     </div>
-
-
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import axios from "axios";
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useMatchStore } from '@/stores/match';
 
-const detail = ref([]);
-const nickName = ref('');
+const store = useMatchStore();
 const route = useRoute();
+const detail = ref({});
 
-const detailPost = async (id) => {
-  try {
-      const response = await axios.get(`/futsal/match/${id}`);
-      detail.value = response.data;
-      console.log(response.data);
-  } 
-  catch (error) {
-      console.error(error);
-  }
-};
-
-const updateMatch = async () => {
-  try {
-    const response = await axios.put(`/futsal/match/${route.params.id}`);
-    detail.value = response.data;
-    console.log(response.data);
-  }
-  catch (error) {
-    console.log(error)
-  }
-}
-
-onMounted(() => {
-  nickName.value = sessionStorage.getItem("nickName");
-  detailPost(route.params.id);
+onMounted(async () => {
+  store.getBoard(route.params.id);
+  detail.value = store.match;
 });
 
+const updateMatch = () => {
+  store.updateMatch(route.params.id, detail.value);
+};
 </script>
 
 <style scoped>

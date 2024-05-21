@@ -61,6 +61,7 @@
     </div>
 
     <!-- 상대팀이 있거나 신청자가 게시글을 볼 경우 신청하기 버튼 없앰 -->
+    <!-- 각 팀의 리더만 신청이 가능해야 함.. -->
     <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
       <button @click="registMatch()">신청하기</button>
     </div>
