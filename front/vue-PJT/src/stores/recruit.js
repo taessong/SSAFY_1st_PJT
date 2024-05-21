@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/api/axios";
 
-const BASE_URL = "http://localhost:8080";
 
 export const useRecruitStore = defineStore("recruit", () => {
   const recruitItems = ref([]);
@@ -21,7 +20,7 @@ export const useRecruitStore = defineStore("recruit", () => {
     //모집게시판에있는 글을 들고오는것. (팀이름일치해야돼!!)
     const fetchRecruitData = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/futsal/board`);
+          const response = await axios.get(`/futsal/board`);
           recruitItems.value = response.data;
         } catch (error) {
           console.log("Failed to fetch RecruitData", error);
@@ -32,7 +31,7 @@ export const useRecruitStore = defineStore("recruit", () => {
   //모집게시판에있는 글을 요약하여 들고오는것. (팀이름일치해야돼!!)
   const fetchRecruitDataSummary = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/futsal/board`);
+      const response = await axios.get(`/futsal/board`);
       recruitItems.value = response.data.slice(0, 7).map((item) => {
         return {
           ...item,

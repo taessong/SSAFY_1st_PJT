@@ -18,6 +18,7 @@
               alt="Profile Image"
               @load="resizeImage"
               ref="image"
+              class="profile-image"
             />
           </div>
           <div class="inputForms">
@@ -96,7 +97,7 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+import axios from "@/api/axios";
 
 // 기본 프로필 이미지 경로
 import defaultImageImg from "@/asset/loginImage/profileImg.png"; // 여기에 기본 이미지 경로를 넣으세요.
@@ -159,7 +160,7 @@ const handleFileUpload = async (event) => {
   fileData.append('file', file);
 
   try {
-    const response = await axios.post('http://localhost:8080/file/profileUpload', fileData, {
+    const response = await axios.post('/file/profileUpload', fileData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -213,7 +214,7 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axios.post('http://localhost:8080/user/signup', user);
+    const response = await axios.post('/user/signup', user);
     // console.log(response);
     alert('회원가입 성공!');
     router.push('/');
@@ -234,7 +235,7 @@ const handleSubmit = async () => {
 
 .signup-form {
   align-items: center;
-  width: 75%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
@@ -256,6 +257,7 @@ const handleSubmit = async () => {
   flex-direction: column-reverse;
   align-items: center;
   flex: 1;
+  margin-right: 15px;
 }
 
 .inputForms {
@@ -297,10 +299,12 @@ button {
 
 img {
   margin-top: 20px;
-  width: 150px;
-  height: 150px;
+  width: auto; /* auto로 설정 */
+  height: auto; /* auto로 설정 */
+  max-width: fit-content; /* 이미지의 최대 크기를 설정 */
+  max-height: fit-content; /* 이미지의 최대 크기를 설정 */
+  object-fit: cover; /* 원본 비율을 유지 */
   border-radius: 50%;
-  object-fit: cover;
 }
 
 
@@ -312,8 +316,8 @@ img {
 }
 
 .team-logo-container img {
-  width: 150px;
-  height: 150px;
+  width: fit-content;
+  height: fit-content;
 }
 
 p {

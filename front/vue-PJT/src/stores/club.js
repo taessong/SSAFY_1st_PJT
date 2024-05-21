@@ -1,8 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import axios from "axios";
-
-const BASE_URL = "http://localhost:8080";
+import axios from "@/api/axios";
 
 export const useClubStore = defineStore("club", () => {
   const chatItems = ref([]);
@@ -22,7 +20,7 @@ export const useClubStore = defineStore("club", () => {
 
   const fetchChatDataSummary = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/community/board`);
+      const response = await axios.get(`/community/board`);
       chatItems.value = response.data.slice(0, 7).map((item) => {
         return {
           ...item,
@@ -37,7 +35,7 @@ export const useClubStore = defineStore("club", () => {
 
   const fetchChatData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/community/board`);
+      const response = await axios.get(`/community/board`);
       chatItems.value = response.data;
       console.log(response.data);
     } catch (error) {
@@ -47,7 +45,7 @@ export const useClubStore = defineStore("club", () => {
 
   const fetchComments = async (postId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/community/board/${postId}/comment`);
+        const response = await axios.get(`/community/board/${postId}/comment`);
         console.log(response.data);
         comments.value = response.data;
     } catch (error) {
@@ -57,7 +55,7 @@ export const useClubStore = defineStore("club", () => {
 
   const fetchOneChatData = async (postId) => {
     try {
-      const response = await axios.get(`${BASE_URL}/community/board/${postId}`)
+      const response = await axios.get(`/community/board/${postId}`)
       chatItem.value = response.data;
       chatItem.value.regDate = formatDate(chatItem.value.regDate);
     } catch (error) {
@@ -67,12 +65,14 @@ export const useClubStore = defineStore("club", () => {
 
   const recommendComment = async(postId, commentId) => {
     try {
-      await axios.put(`${BASE_URL}/community/board/${postId}/comment/${commentId}/recommend`);
+      await axios.put(`/community/board/${postId}/comment/${commentId}/recommend`);
       await fetchComments(postId);
     } catch (error) {
       console.log("에러다!!")
     }
   }
+
+
 
   return {
     chatItems,

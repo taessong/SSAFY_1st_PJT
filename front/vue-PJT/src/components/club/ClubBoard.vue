@@ -3,6 +3,7 @@
     <div class="club-header">
       <h2 v-if="showChat">수다 게시판</h2>
       <h2 v-if="showRecruit">모집 게시판</h2>
+      <button @click="gotoRegist" class="regist">글 등록하기</button>
     </div>
     <div class="club-board">
       <div class="board-header">
@@ -82,11 +83,9 @@
   
   <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
 import { useRouter } from "vue-router";
-axios.defaults.withCredentials = true;
 
 //store를 사용해서 불러오기
 const store = useClubStore();
@@ -114,6 +113,10 @@ const showRecruitBoard = () => {
     console.log("모집으로 전환됐지롱~");
   }
 };
+
+const gotoRegist = () => {
+  router.push({name: 'clubRegist'});
+}
 
 const selectPostAndNavigate = (item) => {
   router.push({ name: "clubDetail", params: { id: item.postId } });
@@ -267,5 +270,16 @@ h2 {
 
 .board-content-wrapper tr:last-child td:last-child {
   border-bottom-right-radius: 6px;
+}
+
+.regist {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: skyblue;
+  color: white;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
 }
 </style>
