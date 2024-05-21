@@ -42,7 +42,7 @@
 
 <script setup>
 import { nextTick, onMounted, ref, watch } from "vue";
-import axios from "axios";
+import axios from "@/api/axios";
 import { useRouter } from "vue-router";
 
 //axios를 통해 데이터를 내보낼 폼
@@ -81,12 +81,13 @@ const handleSubmit = async () => {
   }
 
   try {
-    const response = await axios.post("http://localhost:8080/user/", loginUser);
+    const response = await axios.post("/user/", loginUser);
     //성공시 세션에 닉네임과 선호팀을 저장
     if (response.status === 200) {
       sessionStorage.setItem("nickName", response.data.nickName);
       sessionStorage.setItem("favoriteTeam", response.data.favoriteTeam);
       //메인페이지로...
+      getData();
       alert("로그인 성공! 환영합니다!");
       await nextTick();
       router.push("/main").then(() => {
@@ -99,6 +100,15 @@ const handleSubmit = async () => {
     console.log(error);
   }
 };
+
+async function getData() {
+  try {
+    const res = await axios.get('/user/sessionCheck')
+    console.log("Data", res.data);
+  } catch (error) {
+    console.log("에러당", error)
+  }
+}
 </script>
 
 <style scoped>

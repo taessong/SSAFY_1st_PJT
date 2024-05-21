@@ -15,6 +15,8 @@ import ClubBoard from '@/components/club/ClubBoard.vue'
 import ClubRegist from '@/components/club/ClubRegist.vue'
 import ClubUpdate from '@/components/club/ClubUpdate.vue'
 import RecruitDetail from '@/components/club/RecruitDetail.vue'
+import RecruitRegist from '@/components/club/RecruitRegist.vue'
+
 import MatchUpdate from '@/components/match/MatchUpdate.vue'
 
 const router = createRouter({
@@ -93,6 +95,10 @@ const router = createRouter({
           path: "/recruit/:id",
           name: "recruitDetail",
           component: RecruitDetail
+        },{
+          path: "recruitRegist",
+          name: "recruitRegist",
+          component: RecruitRegist
         }
       ]
     }

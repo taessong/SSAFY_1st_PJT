@@ -61,6 +61,21 @@ public class UserRestController {
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 	
+	@GetMapping("/sessionCheck")
+	@Operation(summary = "세션 있는지 확인하기")
+	public ResponseEntity<?> checkSession(HttpSession session){
+		//닉네임이 있는지 확인하고.
+		String nickName = (String) session.getAttribute("nickName");
+		if(nickName == null) {
+			return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+		}
+		Map<String, String> response = new HashMap<>();
+		response.put("nickName", nickName);
+		response.put("favoriteTeam", (String) session.getAttribute("favoriteTeam"));
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
 	// 로그아웃
 	@GetMapping("/logout")
 	@Operation(summary = "로그아웃")
