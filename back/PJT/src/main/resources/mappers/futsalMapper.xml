@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.runonground.model.dao.FutsalDao">
 	
 	<!-- 매칭 등록 -->
@@ -20,7 +19,7 @@
 	<!-- 매칭글 수정하기 -->
 	<update id="updateMatch" parameterType="FutsalMatch">
 		UPDATE futsal_match
-		SET content = #{content}, match_date = #{matchDate}, match_time = #{time}, stadium_id = #{stadiumId}
+		SET content = #{content}, match_date = #{matchDate}, match_time = #{matchTime}, stadium_id = #{stadiumId}
 		WHERE match_id = #{matchId}
 	</update>
 	

@@ -41,8 +41,8 @@ const route = useRoute();
 const detail = ref({});
 
 onMounted(async () => {
-  store.getBoard(route.params.id);
-  detail.value = store.match;
+  await store.getBoard(route.params.id);
+  detail.value = { ...store.match };
 });
 
 const updateMatch = () => {
@@ -51,5 +51,4 @@ const updateMatch = () => {
 </script>
 
 <style scoped>
-
 </style>

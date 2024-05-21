@@ -164,3 +164,15 @@ VALUES
     ('범뀨', 3, '맨시티', '맨시티와 대결할 팀 구합니다', '2024-08-25', '18:00:00', 3, '유성풋살구장/유성풋살구장(1).png');
 
 SELECT * FROM futsal_match;
+
+CREATE TABLE recommendations (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_nickname VARCHAR(20),
+    post_id INT,
+    comment_id INT,
+    FOREIGN KEY (user_nickname) REFERENCES user(nickname),
+    FOREIGN KEY (post_id) REFERENCES community_post(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES community_comment(comment_id) ON DELETE CASCADE
+);
+
+SELECT * FROM stadium WHERE stadium_id = 2;
