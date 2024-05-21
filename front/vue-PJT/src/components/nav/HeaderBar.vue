@@ -22,9 +22,11 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRouter } from 'vue-router'
 const nickName = ref(null);
 
 const logoSrc= ref('');
+const router = useRouter();
 
 const updateNickName = () => {
     nickName.value = sessionStorage.getItem("nickName");
@@ -57,7 +59,7 @@ const handlerLogout = (event) => {
   sessionStorage.removeItem("favoriteTeam");
   nickName.value = null;
   alert("로그아웃 되었습니다.");
-  router.push({ name: "login" });
+  router.push({ name: 'login' });
 };
 </script>
 
