@@ -46,7 +46,11 @@
               <p>{{ comment.content }}</p>
             </div>
             <div class="recommendNput">
-              <button class="recommend" @click="recommend(comment.commentId)">
+              <button
+                class="recommend"
+                @click="recommend(comment.commentId)"
+                :disabled="hasRecommended(comment.commentId)"
+              >
                 👍 {{ comment.recommend }}
               </button>
               <div
@@ -102,6 +106,7 @@ const comment = ref({
 });
 
 const modifyMode = ref({});
+const recommendedComments = ref([]);
 
 const store = useClubStore();
 const storeDetail = useClubStore();
@@ -115,9 +120,40 @@ const goBack = () => {
   router.back();
 };
 
-const recommend = (commentId) => {
+const recommendCount = async (commentId) => {
   const postId = route.params.id;
-  store.recommendComment(postId, commentId);
+  try {
+    await axios.put(
+      `/community/board/${postId}/comment/${commentId}/recommend`
+    );
+    alert("댓글을 추천하였습니다");
+    router.go(0);
+  } catch (error) {
+    console.log("에러가 났어용", error);
+  }
+};
+
+const recommend = async (commentId) => {
+  const postId = route.params.id;
+  try {
+    const response = await axios.post("/recommendation", {
+      userNickName: sessionStorage.getItem("nickName"), // 사용자 ID를 세션 또는 다른 저장소에서 가져옴
+      postId: postId.toString(), // postId를 문자열로 변환
+      commentId: commentId.toString(), // commentId를 문자열로 변환
+    });
+    recommendedComments.value.push(commentId); // 사용자 추천 리스트에 추가
+    recommendCount(commentId);
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      alert("이미 추천하셨습니다.");
+    } else {
+      console.error("추천 실패", error);
+    }
+  }
+};
+
+const hasRecommended = (commentId) => {
+  return recommendedComments.value.includes(commentId);
 };
 
 const confirmDelete = (postId) => {
@@ -288,6 +324,11 @@ onMounted(async () => {
   margin-right: 10px;
   border: none;
   background-color: white;
+  cursor: pointer;
+}
+
+.recommend:hover {
+  transform: scale(1.2);
 }
 
 .top-button {
@@ -318,7 +359,6 @@ onMounted(async () => {
 
 .commentPutNdelete {
   margin-top: 3px;
-
 }
 
 .post-image {
@@ -349,8 +389,8 @@ onMounted(async () => {
   padding: 20px 20px;
   border-radius: 8px;
   width: 10%;
+  cursor: pointer;
 }
-
 
 .modifyBar {
   width: 80%;
@@ -367,7 +407,7 @@ onMounted(async () => {
   background-color: darkcyan;
   border-radius: 8px;
   font-weight: 800;
-  color:white;
+  color: white;
 }
 
 .isModify {
