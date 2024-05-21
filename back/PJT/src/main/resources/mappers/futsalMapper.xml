@@ -17,6 +17,13 @@
 		WHERE match_id = #{id}
 	</delete>
 	
+	<!-- 매칭글 수정하기 -->
+	<update id="updateMatch" parameterType="FutsalMatch">
+		UPDATE futsal_match
+		SET content = #{content}, match_date = #{matchDate}, match_time = #{time}, stadium_id = #{stadiumId}
+		WHERE match_id = #{matchId}
+	</update>
+	
 	<!-- 매칭 신청하기(teamB) -->
 	<update id="registTeamB" parameterType="map">
 	    UPDATE futsal_match
@@ -28,7 +35,7 @@
 	<!-- 신청 취소하기 -->
 	<update id="cancelMatch">
 	    UPDATE futsal_match
-	    SET team_b_id = 0, team_b_name = NULL, team_b_leader = NULL
+	    SET team_b_id = NULL, team_b_name = NULL, team_b_leader = NULL
 	    WHERE match_id = #{id}
 	</update>
 	
@@ -70,6 +77,7 @@
 	<!-- 팀에 맞는 팀원 조회 -->
 	<select id="selectAllMember" parameterType="int" resultType="FutsalTeamMember">
 		SELECT * FROM futsal_team_member
+		WHERE futsal_team_id = #{teamId}
 	</select>
 	
 	<!-- 풋살 모집 글 전체 조회 -->

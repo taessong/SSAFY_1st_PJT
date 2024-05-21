@@ -9,6 +9,7 @@
           <th>팀</th>
           <th>작성자</th>
           <th>경기일자</th>
+          <th>경기시간</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           </td>
           <td>{{ post.teamAName }}</td>
           <td>{{ post.authorName }}</td>
+          <td>{{ post.matchDate }}</td>
           <td>{{ post.matchTime }}</td>
         </tr>
       </tbody>

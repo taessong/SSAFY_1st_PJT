@@ -4,7 +4,10 @@
         <fieldset>
             <legend>매치 정보 입력</legend>
             <input type="text" v-model="content" placeholder="매치 내용 입력">
+            <input type="date" v-model="matchDate" placeholder="경기 날짜 선택">
+            <input type="time" v-model="matchTime" placeholder="경기 시간 입력">
             <input type="text" v-model="stadiumId" placeholder="경기장 ID 입력">
+            <select name="" id=""></select>
             <button @click="registMatch()">등록하기</button>
         </fieldset>
     </div>
@@ -17,14 +20,21 @@ import { useRouter } from 'vue-router';
 
 const content = ref('');
 const stadiumId = ref('');
+const matchDate = ref('');
+const matchTime = ref('');
 const router = useRouter();
 
 const registMatch = async () => {
     try {
+        console.log(matchDate.value);
+        console.log(matchTime.value);
+
         const response = await axios.post('http://localhost:8080/futsal/match', {
             authorName: sessionStorage.getItem("nickName"),
             teamAName: sessionStorage.getItem("favoriteTeam"),
             content: content.value,
+            matchDate: matchDate.value,
+            matchTime: matchTime.value,
             stadiumId: stadiumId.value
         });
         console.log(response.data);

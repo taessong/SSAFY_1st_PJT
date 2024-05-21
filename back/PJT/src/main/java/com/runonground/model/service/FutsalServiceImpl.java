@@ -39,6 +39,12 @@ public class FutsalServiceImpl implements FutsalService{
 	public void deleteMatch(int id) {
 		futsalDao.deleteMatch(id);
 	}
+	
+	// 매칭글 수정하기
+	@Override
+	public void updateMatch(FutsalMatch futsalMatch) {
+		futsalDao.updateMatch(futsalMatch);
+	}
 
 	// B팀이 매칭 신청하기
 	@Override
@@ -111,7 +117,4 @@ public class FutsalServiceImpl implements FutsalService{
 	public void updateRecruit(FutsalRecruitPost futsalRecruitPost) {
 		futsalDao.updateRecruit(futsalRecruitPost);
 	}
-
-	
-	
 }

@@ -30,7 +30,7 @@
                   <th>분류</th>
                   <th>제목</th>
                   <th>작성자</th>
-                  <th>작성 일</th>
+                  <th>작성일</th>
                   <th>조회수</th>
                 </tr>
               </thead>
@@ -54,7 +54,7 @@
                   <th>분류</th>
                   <th>제목</th>
                   <th>작성자</th>
-                  <th>작성 일</th>
+                  <th>작성일</th>
                   <th>조회수</th>
                 </tr>
               </thead>
