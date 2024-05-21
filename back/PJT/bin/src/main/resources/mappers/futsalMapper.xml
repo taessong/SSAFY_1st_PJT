@@ -2,14 +2,46 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.runonground.model.dao.FutsalDao">
 	
 	<!-- 매칭 등록 -->
 	<insert id="insertPost" parameterType="FutsalMatch">
-		INSERT INTO futsal_match(author_name, team_a_id, content, match_date, match_time, stadium_id)
-		VALUES(#{authorName}, #{teamAId}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
+		INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id)
+		VALUES(#{authorName}, (SELECT team_id FROM futsal_team WHERE leader_name = #{authorName}), #{teamAName}, #{content}, #{matchDate}, #{matchTime}, #{stadiumId})
 	</insert>
+	
+	<!-- 매칭 등록 삭제하기 -->
+	<delete id="deleteMatch" parameterType="int">
+		DELETE FROM futsal_match
+		WHERE match_id = #{id}
+	</delete>
+	
+	<!-- 매칭글 수정하기 -->
+	<update id="updateMatch" parameterType="FutsalMatch">
+		UPDATE futsal_match
+		SET content = #{content}, match_date = #{matchDate}, match_time = #{matchTime}, stadium_id = #{stadiumId}
+		WHERE match_id = #{matchId}
+	</update>
+	
+	<!-- 매칭 신청하기(teamB) -->
+	<update id="registTeamB" parameterType="map">
+	    UPDATE futsal_match
+	    SET team_b_id = (SELECT team_id FROM futsal_team WHERE leader_name = #{leaderName}),
+	        team_b_name = #{team}, team_b_leader = #{leaderName}
+	    WHERE match_id = #{id}
+	</update>
+	
+	<!-- 신청 취소하기 -->
+	<update id="cancelMatch">
+	    UPDATE futsal_match
+	    SET team_b_id = NULL, team_b_name = NULL, team_b_leader = NULL
+	    WHERE match_id = #{id}
+	</update>
+	
+	<!-- 매칭글 전체 보기 -->
+	<select id="selectAll" resultType="FutsalMatch">
+		SELECT * FROM futsal_match
+	</select>
 	
 	<!-- 매칭글 상세 보기 -->
 	<select id="readMatch" parameterType="int" resultType="FutsalMatch">
@@ -22,6 +54,30 @@
 		INSERT INTO futsal_recruit_post(author_name, team_name, content)
 		VALUES(#{authorName}, #{teamName}, #{content})		
 	</insert>
+	
+	<!-- 팀 생성 -->
+	<insert id="insertTeam" parameterType="String">
+		INSERT INTO futsal_team(leader_name, team_name)
+		VALUES(#{leader}, #{teamName})
+	</insert>
+	
+	<!-- 팀 조회 -->
+	<select id="selectAllTeam" parameterType="String" resultType="FutsalTeam">
+		SELECT * FROM futsal_team
+		WHERE team_name = #{teamName}
+	</select>
+	
+	<!-- 팀원으로 등록 -->
+	<insert id="insertMember" parameterType="FutsalTeamMember">
+		INSERT INTO futsal_team_member(futsal_team_id, member_name)
+		VALUES(#{futsalTeamId}, #{memberName})
+	</insert>
+	
+	<!-- 팀에 맞는 팀원 조회 -->
+	<select id="selectAllMember" parameterType="int" resultType="FutsalTeamMember">
+		SELECT * FROM futsal_team_member
+		WHERE futsal_team_id = #{teamId}
+	</select>
 	
 	<!-- 풋살 모집 글 전체 조회 -->
 	<select id="selectAllRecruit" parameterType="String" resultType="FutsalRecruitPost">
