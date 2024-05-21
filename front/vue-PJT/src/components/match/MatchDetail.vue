@@ -61,6 +61,7 @@
     </div>
 
     <!-- 상대팀이 있거나 신청자가 게시글을 볼 경우 신청하기 버튼 없앰 -->
+    <!-- 각 팀의 리더만 신청이 가능해야 함.. -->
     <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
       <button @click="registMatch()">신청하기</button>
     </div>
@@ -84,7 +85,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
+import axios from "@/api/axios";
 
 const detail = ref([]);
 const nickName = ref('');
@@ -96,7 +97,7 @@ const imgSrc = ref('');
 
 const detailPost = async (id) => {
   try {
-      const response = await axios.get(`http://localhost:8080/futsal/match/${id}`);
+      const response = await axios.get(`/futsal/match/${id}`);
       detail.value = response.data;
       console.log(response.data);
       showTeamA();
@@ -118,7 +119,7 @@ const getStadiumImage = (imageName) => {
 
 const registMatch = async () => {
   try {
-      const response = await axios.put(`http://localhost:8080/futsal/match/${route.params.id}/regist`);
+      const response = await axios.put(`/futsal/match/${route.params.id}/regist`);
       detail.value = response.data;
       console.log(response.data);
       if (detail.value.teamBId) {
@@ -132,7 +133,7 @@ const registMatch = async () => {
 
 const cancelMatch = async () => {
   try {
-      const response = await axios.delete(`http://localhost:8080/futsal/match/${route.params.id}/cancel`);
+      const response = await axios.delete(`/futsal/match/${route.params.id}/cancel`);
       detail.value = response.data;
       console.log(response.data)
       // 새로고침
@@ -145,7 +146,7 @@ const cancelMatch = async () => {
 
 const updateMatch = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/futsal/match/${route.params.id}`);
+    const response = await axios.put(`/futsal/match/${route.params.id}`);
     detail.value = response.data;
     console.log(response.data);
   }
@@ -156,7 +157,7 @@ const updateMatch = async () => {
 
 const deleteMatch = async () => {
   try {
-      await axios.delete(`http://localhost:8080/futsal/match/${route.params.id}`);
+      await axios.delete(`/futsal/match/${route.params.id}`);
       router.push('/match');
   }
   catch (error) {
@@ -166,7 +167,7 @@ const deleteMatch = async () => {
 
 const showTeamA = async () => {
   try {
-      const response = await axios.get(`http://localhost:8080/futsal/board/team/${detail.value.teamAId}`);
+      const response = await axios.get(`/futsal/board/team/${detail.value.teamAId}`);
       teamAMember.value = response.data;
   }
   catch (error) {
@@ -176,7 +177,7 @@ const showTeamA = async () => {
 
 const showTeamB = async () => {
   try {
-      const response = await axios.get(`http://localhost:8080/futsal/board/team/${detail.value.teamBId}`);
+      const response = await axios.get(`/futsal/board/team/${detail.value.teamBId}`);
       teamBMember.value = response.data;
   }
   catch (error) {
