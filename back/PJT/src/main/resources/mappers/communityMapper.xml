@@ -33,6 +33,7 @@
 	<update id="updatePost" parameterType="CommunityPost">
 		UPDATE community_post
 		SET title = #{title}, content = #{content}, reg_date = now()
+		WHERE post_id = #{postId}
 	</update>
 	
 	<!-- 조회수 증가 -->
