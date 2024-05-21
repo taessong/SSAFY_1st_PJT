@@ -40,7 +40,7 @@ const route = useRoute();
 
 const detailPost = async (id) => {
   try {
-      const response = await axios.get(`http://localhost:8080/futsal/match/${id}`);
+      const response = await axios.get(`/futsal/match/${id}`);
       detail.value = response.data;
       console.log(response.data);
   } 
@@ -51,7 +51,7 @@ const detailPost = async (id) => {
 
 const updateMatch = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/futsal/match/${route.params.id}`);
+    const response = await axios.put(`/futsal/match/${route.params.id}`);
     detail.value = response.data;
     console.log(response.data);
   }

@@ -3,7 +3,8 @@
     <div class="club-header">
       <h2 v-if="showChat">수다 게시판</h2>
       <h2 v-if="showRecruit">모집 게시판</h2>
-      <button @click="gotoRegist" class="regist">글 등록하기</button>
+      <button v-if="showChat" @click="gotoChatRegist" class="regist">수다 글 등록하기</button>
+      <button v-if="showRecruit" @click="gotoRecriutRegist" class="regist">모집 글 등록하기</button>
     </div>
     <div class="club-board">
       <div class="board-header">
@@ -114,8 +115,13 @@ const showRecruitBoard = () => {
   }
 };
 
-const gotoRegist = () => {
+const gotoChatRegist = () => {
   router.push({name: 'clubRegist'});
+
+}
+
+const gotoRecriutRegist = () => {
+  router.push({name: 'recruitRegist'});
 }
 
 const selectPostAndNavigate = (item) => {

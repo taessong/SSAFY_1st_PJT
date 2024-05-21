@@ -26,7 +26,10 @@
   <script setup>
   import { ref } from 'vue';
   import axios from '@/api/axios';
+  import { useRouter } from 'vue-router';
   
+  const router = useRouter();
+
   const form = ref({
     title: '',
     content: '',
@@ -59,8 +62,9 @@
   const submitForm = async () => {
     try {
       const response = await axios.post('/community/board', form.value);
-      console.log('글 등록 성공:', response.data);
+      alert("작성이 완료 되었습니다.")
       // 글 등록 후 필요한 동작 수행 (예: 페이지 이동)
+      router.go(-1);
     } catch (error) {
       console.error('글 등록 실패:', error);
     }

@@ -29,7 +29,7 @@ const registMatch = async () => {
         console.log(matchDate.value);
         console.log(matchTime.value);
 
-        const response = await axios.post('http://localhost:8080/futsal/match', {
+        const response = await axios.post('/futsal/match', {
             authorName: sessionStorage.getItem("nickName"),
             teamAName: sessionStorage.getItem("favoriteTeam"),
             content: content.value,
