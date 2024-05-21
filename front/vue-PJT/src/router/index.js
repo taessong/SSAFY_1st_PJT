@@ -14,6 +14,7 @@ import ClubDetail from '@/components/club/ClubDetail.vue'
 import ClubBoard from '@/components/club/ClubBoard.vue'
 import ClubRegist from '@/components/club/ClubRegist.vue'
 import RecruitDetail from '@/components/club/RecruitDetail.vue'
+import MatchUpdate from '@/components/match/MatchUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
           path: "regist",
           name: "matchregist",
           component: MatchRegist
+        },
+        {
+          path: ":id/update",
+          name: "matchupdate",
+          component: MatchUpdate
         },
       ]
     },
