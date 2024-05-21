@@ -1,6 +1,8 @@
 package com.runonground.model.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class FutsalMatch {
 	private int matchId;
@@ -11,8 +13,8 @@ public class FutsalMatch {
 	private String teamBName;
 	private String teamBLeader;
 	private String content;
-	private LocalDateTime matchDate;
-	private LocalDateTime matchTime;
+	private LocalDate matchDate;
+	private LocalTime matchTime;
 	private int stadiumId;
 	private LocalDateTime regDate;
 	private String stadiumImg;
@@ -20,8 +22,8 @@ public class FutsalMatch {
 	public FutsalMatch() {
 	}
 
-	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, String teamAName, String teamBName, String teamBLeader, String content, LocalDateTime matchDate,
-			LocalDateTime matchTime, int stadiumId, LocalDateTime regDate, String stadiumImg) {
+	public FutsalMatch(int matchId, String authorName, int teamAId, int teamBId, String teamAName, String teamBName, String teamBLeader, String content, LocalDate matchDate,
+			LocalTime matchTime, int stadiumId, LocalDateTime regDate, String stadiumImg) {
 		this.matchId = matchId;
 		this.authorName = authorName;
 		this.teamAId = teamAId;
@@ -101,19 +103,19 @@ public class FutsalMatch {
 		this.content = content;
 	}
 
-	public LocalDateTime getMatchDate() {
+	public LocalDate getMatchDate() {
 		return matchDate;
 	}
 
-	public void setMatchDate(LocalDateTime matchDate) {
+	public void setMatchDate(LocalDate matchDate) {
 		this.matchDate = matchDate;
 	}
 
-	public LocalDateTime getMatchTime() {
+	public LocalTime getMatchTime() {
 		return matchTime;
 	}
 
-	public void setMatchTime(LocalDateTime matchTime) {
+	public void setMatchTime(LocalTime matchTime) {
 		this.matchTime = matchTime;
 	}
 

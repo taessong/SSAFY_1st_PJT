@@ -62,8 +62,20 @@ public class FutsalRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	// B팀이 매칭 신청하기
+	// 매칭글 수정하기
 	@PutMapping("/match/{id}")
+	@Operation(summary = "매칭글 수정하기")
+	public ResponseEntity<Void> update(@PathVariable("id") int id, @RequestBody FutsalMatch futsalMatch) {
+        futsalMatch.setMatchId(id);
+
+        System.out.println(futsalMatch.getMatchTime());
+        
+        futsalService.updateMatch(futsalMatch);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+	
+	// B팀이 매칭 신청하기
+	@PutMapping("/match/{id}/regist")
 	@Operation(summary = "B팀이 매칭 신청하기")
 	public ResponseEntity<FutsalMatch> registMatch(@PathVariable("id") int id, HttpSession session){
 	    // 다른 팀의 정보 입력
@@ -136,9 +148,6 @@ public class FutsalRestController {
 		List<FutsalTeam> list = futsalService.selectAllTeam(teamName);
 		return new ResponseEntity<List<FutsalTeam>>(list, HttpStatus.OK);
 	}
-	
-	// 팀을 생성한 사람은 팀원으로 등록하지 못하게 하기
-
 	
 	// 팀원 등록
 	@PostMapping("/board/team/{teamId}")

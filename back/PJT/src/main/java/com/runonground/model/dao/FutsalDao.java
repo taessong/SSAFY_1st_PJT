@@ -19,6 +19,9 @@ public interface FutsalDao {
 	// 매칭 등록 삭제하기 
 	public void deleteMatch(int id);
 	
+	// 매칭글 수정하기
+	public void updateMatch(FutsalMatch futsalMatch);
+	
 	// B팀이 매칭 신청하기
 	public void registTeamB(Map<String, Object> map);
 	

@@ -3,7 +3,7 @@
     <RouterLink :to="{ name: 'login' }"><h1>RunOnGround</h1></RouterLink>
     <div class="header-sub">
       <RouterLink :to="{ name: 'main' }"><h3>MainPage</h3></RouterLink>
-      <RouterLink :to="{ name: 'match' }"><h3>Match</h3></RouterLink>
+      <RouterLink :to="{ name: 'matchboard' }"><h3>Match</h3></RouterLink>
       <a href="https://www.naver.com" class="a"><h3>QnA With GPT</h3></a>
     </div>
     <div class="header-login">
