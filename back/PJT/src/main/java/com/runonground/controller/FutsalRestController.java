@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.runonground.model.dto.FutsalMatch;
@@ -176,6 +177,14 @@ public class FutsalRestController {
 	public ResponseEntity<List<FutsalTeamMember>> selectMember(@PathVariable("teamId") int teamId){
 		List<FutsalTeamMember> list = futsalService.selectAllMember(teamId);
 		return new ResponseEntity<List<FutsalTeamMember>>(list, HttpStatus.OK);
+	}
+	
+	//팀원 삭제//...
+	@DeleteMapping("/board/team/{teamId}")
+	@Operation(summary = "팀원 삭제하기!")
+	public ResponseEntity<Void> removeTeamMember(@PathVariable("teamId") int teamId,@RequestParam("memberName") String memberName, HttpSession session){
+		futsalService.removeTeamMember(teamId, memberName);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	// 모집 글 전체 불러오기

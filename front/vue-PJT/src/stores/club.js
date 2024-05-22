@@ -36,7 +36,12 @@ export const useClubStore = defineStore("club", () => {
   const fetchChatData = async () => {
     try {
       const response = await axios.get(`/community/board`);
-      chatItems.value = response.data;
+      chatItems.value = response.data.map((item) => {
+        return {
+          ...item,
+          regDate: formatDate(item.regDate),
+        }
+      });
       console.log(response.data);
     } catch (error) {
       console.log("Failed to fetch data:", error);

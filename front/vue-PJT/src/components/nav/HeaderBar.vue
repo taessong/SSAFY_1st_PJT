@@ -94,17 +94,19 @@ const handlerLogout = (event) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 600px;
+  height: fit-content;
 }
 
 .header-sub {
   display: flex;
   margin-top: 9px;
   margin-right: auto;
+  align-items: center;
 }
 
 .user-info {
   display: flex;
+  align-items: center;
 }
 
 .header-login {
@@ -113,13 +115,14 @@ const handlerLogout = (event) => {
 }
 
 .logoImg {
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 h1 {
   color: white;
   margin-left: 5px;
   margin-right: 10px;
+  margin-top: 20px
 }
 
 h3 {
