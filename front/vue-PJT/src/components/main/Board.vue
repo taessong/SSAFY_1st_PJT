@@ -10,14 +10,14 @@
         <button
           class="btn"
           @click="showChatBoard"
-          :class="[showChat ? computedFavoriteTeamButtonClass : 'btn-inactive']"
+          :class="[showChat ? 'tab-active' : 'btn-inactive', computedFavoriteTeamButtonClass]"
         >
           수다
         </button>
         <button
           class="btn"
           @click="showRecruitBoard"
-          :class="[showRecruit ? computedFavoriteTeamButtonClass : 'btn-inactive']"
+          :class="[showRecruit ? 'tab-active' : 'btn-inactive', computedFavoriteTeamButtonClass]"
         >
           모집
         </button>
@@ -83,21 +83,21 @@ import { useRouter } from "vue-router";
 import { getTeamColorClass } from "@/utils/teamColors";
 axios.defaults.withCredentials = true;
 
-//store를 사용해서 불러오기
 const store = useClubStore();
 const recruitStore = useRecruitStore();
-
-//router 사용
 const router = useRouter();
 
-// 수다, 모집게시판 분류
 const showChat = ref(true);
 const showRecruit = ref(false);
 
-// 좋아하는 팀 색상 클래스 설정
 const favoriteTeam = ref(sessionStorage.getItem("favoriteTeam"));
 const computedFavoriteTeamColorClass = computed(() => getTeamColorClass(favoriteTeam.value));
 const computedFavoriteTeamButtonClass = computed(() => `${getTeamColorClass(favoriteTeam.value)}-btn`);
+
+// Debugging: Log the computed classes
+console.log("Favorite Team:", favoriteTeam.value);
+console.log("Computed Color Class:", computedFavoriteTeamColorClass.value);
+console.log("Computed Button Class:", computedFavoriteTeamButtonClass.value);
 
 const gotoClubBoard = () => {
   router.push({ name: 'clubBoard' });
@@ -130,8 +130,7 @@ onMounted(() => {
   recruitStore.fetchRecruitDataSummary();
 });
 </script>
-
-<style scoped>
+<style>
 .click {
   cursor: pointer;
 }
@@ -143,7 +142,7 @@ onMounted(() => {
 
 .btn-group > .btn {
   border-radius: 0;
-  border: 1px solid #6c757d;
+  border: 1px solid #6c757d !important;
 }
 
 .btn-group > .btn:first-child {
@@ -157,17 +156,70 @@ onMounted(() => {
 }
 
 .table-hover tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f1f1f1 !important;
 }
 
 .custom-table tbody tr {
-  border-top: none;
+  border-top: none !important;
 }
 
 .custom-table th,
 .custom-table td {
-  text-align: center; /* 중앙 정렬 */
-  vertical-align: middle; /* 세로 중앙 정렬 */
-  border-top: none; /* 행 사이의 줄 제거 */
+  text-align: center !important; /* 중앙 정렬 */
+  vertical-align: middle !important; /* 세로 중앙 정렬 */
+  border-top: none !important; /* 행 사이의 줄 제거 */
+  color: var(--team-bg) !important; /* 팀 색상에 따른 동적 텍스트 색상 */
+}
+
+/* Define color variables for different teams */
+.mancity-btn {
+  --team-bg: #6CABDD !important;
+  --team-text: #fff !important;
+}
+
+.manutd-btn {
+  --team-bg: #DA291C !important;
+  --team-text: #fff !important;
+}
+
+.liverpool-btn {
+  --team-bg: #C8102E !important;
+  --team-text: #fff !important;
+}
+
+.chelsea-btn {
+  --team-bg: #034694 !important;
+  --team-text: #fff !important;
+}
+
+.arsenal-btn {
+  --team-bg: #EF0107 !important;
+  --team-text: #fff !important;
+}
+
+.tottenham-btn {
+  --team-bg: #132257 !important;
+  --team-text: #fff !important;
+}
+
+/* General button styles */
+.btn.active {
+  background-color: var(--team-bg) !important;
+  color: var(--team-text) !important;
+}
+
+.btn-inactive {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Active tab style */
+.tab-active {
+  background-color: var(--team-bg) !important;
+  color: var(--team-text) !important;
 }
 </style>
