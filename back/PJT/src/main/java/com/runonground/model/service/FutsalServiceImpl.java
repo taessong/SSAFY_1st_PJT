@@ -82,6 +82,12 @@ public class FutsalServiceImpl implements FutsalService{
 		return futsalDao.selectAllTeam(teamName);
 	}
 	
+	// 팀 삭제
+	@Override
+	public void removeTeam(String leader) {
+		futsalDao.deleteTeam(leader);
+	}
+	
 	// 팀원으로 등록하기
 	@Override
 	public void registMember(FutsalTeamMember futsalTeamMember) {

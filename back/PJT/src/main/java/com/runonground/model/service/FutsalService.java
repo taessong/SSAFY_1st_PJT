@@ -40,6 +40,9 @@ public interface FutsalService {
 	// 팀 조회
 	public List<FutsalTeam> selectAllTeam(String teamName);
 	
+	// 팀 삭제
+	public void removeTeam(String leader);
+	
 	// 팀원으로 등록하기
 	public void registMember(FutsalTeamMember futsalTeamMember);
 	

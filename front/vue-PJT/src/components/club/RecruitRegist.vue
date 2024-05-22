@@ -26,6 +26,16 @@
     const recruitForm = {
       content: form.value.content
     };
+
+    const res = await axios.get('futsal/board/team');
+    console.log(res.data);
+    for(let i = 0; i < res.data.length; i++){
+      if(res.data[i].leaderName === sessionStorage.getItem("nickName")){
+        alert("이미 팀을 만드셨기 때문에, 팀 모집이 불가합니다.");
+        router.go(-1);
+        return;
+      }
+    }
   
     try {
       const response = await axios.post('/futsal/board', recruitForm, {
@@ -35,6 +45,8 @@
       });
       alert("작성이 완료 되었습니다.");
       // 글 등록 후 필요한 동작 수행 (예: 페이지 이동)
+      await axios.post(`/futsal/board/team`);
+      console.log("생성완료.");
       router.go(-1);
     } catch (error) {
       console.error('글 등록 실패:', error);

@@ -46,7 +46,7 @@
             </table>
           </div>
         </div>
-        <div v-else-if="showRecruit">
+        <div class="board-content-wrapper" v-else-if="showRecruit">
           <div class="board-content">
             <table>
               <thead>

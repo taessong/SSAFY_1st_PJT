@@ -149,6 +149,16 @@ public class FutsalRestController {
 		return new ResponseEntity<List<FutsalTeam>>(list, HttpStatus.OK);
 	}
 	
+	// 팀 삭제
+	@DeleteMapping("/board/team")
+	@Operation(summary = "팀 삭제")
+	public ResponseEntity<Void> removeTeam(HttpSession session){
+		String leader = (String) session.getAttribute("nickName");
+		
+		futsalService.removeTeam(leader);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	// 팀원 등록
 	@PostMapping("/board/team/{teamId}")
 	@Operation(summary = "팀원 등록")
