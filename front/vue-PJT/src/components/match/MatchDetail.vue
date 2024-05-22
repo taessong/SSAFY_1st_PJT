@@ -1,68 +1,70 @@
 <template>
-
   <div>
-    <h2>매치 디테일</h2>
-  </div>
-
-  <div class="detail-container">
-    <div class="detail" style="display: flex;">
-      <h4 style="margin-right: 100px;">분류 : {{ detail.teamBId ? '[마감]' : '[모집]' }}</h4>
-      <h4 style="margin-right: 100px;">📆{{ detail.matchDate }}</h4>
-      <h4>🕑{{ detail.matchTime }}</h4>
+    <div>
+      <h2>매치 디테일</h2>
     </div>
 
-    <div class="row logo-container">
-    <!-- Team A Logo -->
-      <div class="col-md-5 logo">
-        <div v-if="detail.teamAName === '토트넘'">
-          <img src="@/asset/logo/토트넘.png" alt="토트넘 로고">
-        </div>
-        <div v-if="detail.teamAName === '리버풀'">
-          <img src="@/asset/logo/리버풀.png" alt="리버풀 로고">
-        </div>
-        <div v-if="detail.teamAName === '맨시티'">
-          <img src="@/asset/logo/맨시티.png" alt="맨시티 로고">
-        </div>
-        <div v-if="detail.teamAName === '맨유'">
-          <img src="@/asset/logo/맨유.png" alt="맨유 로고">
-        </div>
-        <div v-if="detail.teamAName === '아스널'">
-          <img src="@/asset/logo/아스널.png" alt="아스널 로고">
-        </div>
-        <div v-if="detail.teamAName === '첼시'">
-          <img src="@/asset/logo/첼시.png" alt="첼시 로고">
-        </div>
+    <div class="detail-container">
+      <div class="detail" style="display: flex;">
+        <h4 style="margin-right: 100px;">분류 : {{ detail.teamBId ? '[마감]' : '[모집]' }}</h4>
+        <h4 style="margin-right: 100px;">📆{{ detail.matchDate }}</h4>
+        <h4>🕑{{ detail.matchTime }}</h4>
       </div>
-    
-      <!-- Versus Text -->
-      <div class="col-md-2 text-center versus">
-        <h2 v-if="detail.teamBId">VS</h2>
-      </div>
-      
-      <!-- Team B Logo -->
-      <div class="col-md-5 logo" v-if="detail.teamBId">
-        <div v-if="detail.teamBName === '토트넘'">
-          <img src="@/asset/logo/토트넘.png" alt="토트넘 로고">
+
+      <div class="row logo-container">
+        <!-- Team A Logo -->
+        <div class="col-md-5 logo">
+          <template v-if="detail.teamAName === '토트넘'">
+            <img src="@/asset/logo/토트넘.png" alt="토트넘 로고">
+          </template>
+          <template v-if="detail.teamAName === '리버풀'">
+            <img src="@/asset/logo/리버풀.png" alt="리버풀 로고">
+          </template>
+          <template v-if="detail.teamAName === '맨시티'">
+            <img src="@/asset/logo/맨시티.png" alt="맨시티 로고">
+          </template>
+          <template v-if="detail.teamAName === '맨유'">
+            <img src="@/asset/logo/맨유.png" alt="맨유 로고">
+          </template>
+          <template v-if="detail.teamAName === '아스널'">
+            <img src="@/asset/logo/아스널.png" alt="아스널 로고">
+          </template>
+          <template v-if="detail.teamAName === '첼시'">
+            <img src="@/asset/logo/첼시.png" alt="첼시 로고">
+          </template>
         </div>
-        <div v-if="detail.teamBName === '리버풀'">
-          <img src="@/asset/logo/리버풀.png" alt="리버풀 로고">
+
+        <!-- Versus Text -->
+        <div class="col-md-2 text-center versus">
+          <h2 v-if="detail.teamBId">VS</h2>
         </div>
-        <div v-if="detail.teamBName === '맨시티'">
-          <img src="@/asset/logo/맨시티.png" alt="맨시티 로고">
-        </div>
-        <div v-if="detail.teamBName === '맨유'">
-          <img src="@/asset/logo/맨유.png" alt="맨유 로고">
-        </div>
-        <div v-if="detail.teamBName === '아스널'">
-          <img src="@/asset/logo/아스널.png" alt="아스널 로고">
-        </div>
-        <div v-if="detail.teamBName === '첼시'">
-          <img src="@/asset/logo/첼시.png" alt="첼시 로고">
+
+        <!-- Team B Logo -->
+        <div class="col-md-5 logo" v-if="detail.teamBId">
+          <template v-if="detail.teamBName === '토트넘'">
+            <img src="@/asset/logo/토트넘.png" alt="토트넘 로고">
+          </template>
+          <template v-if="detail.teamBName === '리버풀'">
+            <img src="@/asset/logo/리버풀.png" alt="리버풀 로고">
+          </template>
+          <template v-if="detail.teamBName === '맨시티'">
+            <img src="@/asset/logo/맨시티.png" alt="맨시티 로고">
+          </template>
+          <template v-if="detail.teamBName === '맨유'">
+            <img src="@/asset/logo/맨유.png" alt="맨유 로고">
+          </template>
+          <template v-if="detail.teamBName === '아스널'">
+            <img src="@/asset/logo/아스널.png" alt="아스널 로고">
+          </template>
+          <template v-if="detail.teamBName === '첼시'">
+            <img src="@/asset/logo/첼시.png" alt="첼시 로고">
+          </template>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-6"> <!-- A팀이 왼쪽에 위치하도록 하는 부분 -->
+        <!-- Team A Members -->
+        <div class="col-md-6">
           <div class="team-container">
             <div class="team-a">
               <div class="team-leader">
@@ -76,102 +78,98 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6"> <!-- B팀이 오른쪽에 위치하도록 하는 부분 -->
+
+        <!-- Team B Members -->
+        <div class="col-md-6" v-if="detail.teamBId">
           <div class="team-container">
-            <div class="team-b" v-if="detail.teamBId">
+            <div class="team-b">
               <div class="team-leader">
                 <h4>{{ detail.teamBName }}팀 리더 : {{ detail.teamBLeader }}</h4>
               </div>
               <div class="team-member">
-                <div>
-                  <h4 v-for="member in teamBMember" :key="member.id">
-                    {{ member.memberName }}
-                  </h4>
-                </div>
+                <h4 v-for="member in teamBMember" :key="member.id">
+                  {{ member.memberName }}
+                </h4>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
-  </div>
+
     <div v-if="detail.stadiumId" class="stadium-container">
-      <div class="row">
-        <div class="col-md-5" v-if="imgSrc === 1">
+      <div class="row" v-if="imgSrc === 1">
+        <div class="col-md-5">
           <img src="@/asset/stadium/유성풋살구장/유성풋살구장(1).png" alt="Stadium Image">
         </div>
-        <div class="col-md-5" v-if="imgSrc === 1">
+        <div class="col-md-5">
           <img src="@/asset/stadium/유성풋살구장/유성풋살구장(2).png" alt="Stadium Image">
         </div>
-        <div class="col-md-2" v-if="imgSrc === 1">
+        <div class="col-md-2">
           <div>{{ stadiumName }}</div>
           <div>{{ stadiumAddress }}</div>
           <div>내용 : {{ detail.content }}</div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-5" v-if="imgSrc === 2">
+
+      <div class="row" v-if="imgSrc === 2">
+        <div class="col-md-5">
           <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(1).png" alt="Stadium Image">
         </div>
-        <div class="col-md-5" v-if="imgSrc === 2">
+        <div class="col-md-5">
           <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(2).png" alt="Stadium Image">
         </div>
-        <div class="col-md-2" v-if="imgSrc === 2">
+        <div class="col-md-2">
           <div><h4>{{ stadiumName }}</h4></div>
           <div><h5>{{ stadiumAddress }}</h5></div>
           <div><h5>{{ detail.authorName }} : {{ detail.content }}</h5></div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-5" v-if="imgSrc === 3">
+
+      <div class="row" v-if="imgSrc === 3">
+        <div class="col-md-5">
           <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(1).png" alt="Stadium Image">
         </div>
-        <div class="col-md-5" v-if="imgSrc === 3">
+        <div class="col-md-5">
           <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(2).png" alt="Stadium Image">
         </div>
-        <div class="col-md-2" v-if="imgSrc === 3">
+        <div class="col-md-2">
           <div>{{ stadiumName }}</div>
           <div>{{ stadiumAddress }}</div>
           <div>내용 : {{ detail.content }}</div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-5" v-if="imgSrc === 4">
+
+      <div class="row" v-if="imgSrc === 4">
+        <div class="col-md-5">
           <img src="@/asset/stadium/가오풋살장/가오풋살장(1).png" alt="Stadium Image">
         </div>
-        <div class="col-md-5" v-if="imgSrc === 4">
+        <div class="col-md-5">
           <img src="@/asset/stadium/가오풋살장/가오풋살장(2).png" alt="Stadium Image">
         </div>
-        <div class="col-md-2" v-if="imgSrc === 4">
+        <div class="col-md-2">
           <div>{{ stadiumName }}</div>
           <div>{{ stadiumAddress }}</div>
           <div>내용 : {{ detail.content }}</div>
         </div>
       </div>
     </div>
-  </div>
-
-
-
-
-  <div>
-    <!-- 상대팀이 있거나 신청자가 게시글을 볼 경우 신청하기 버튼 없앰 -->
-    <!-- 각 팀의 리더만 신청이 가능해야 함.. -->
-    <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
-      <button @click="registMatch()">신청하기</button>
-    </div>
-    <!-- 상대팀으로 등록한 사람한테만 신청취소 버튼이 보임 -->
-    <div v-if="detail.teamBLeader === nickName">
-      <button @click="cancelMatch()">신청취소</button>
-    </div>
-    <!-- 수정하기 버튼 -->
-    <div v-if="detail.authorName === nickName">
-      <router-link :to="{ name: 'matchupdate', params: { id: detail.id } }">
-        <button>수정하기</button>
-      </router-link>
-    </div>
-    <!-- 삭제하기 버튼 -->
-    <div v-if="detail.authorName === nickName">
-      <button @click="deleteMatch()">삭제하기</button>
+    
+    <div>
+      <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
+        <button @click="registMatch()">신청하기</button>
+      </div>
+      <div v-if="detail.teamBLeader === nickName">
+        <button @click="cancelMatch()">신청취소</button>
+      </div>
+      <div v-if="detail.authorName === nickName">
+        <router-link :to="{ name: 'matchupdate', params: { id: detail.id } }">
+          <button>수정하기</button>
+        </router-link>
+      </div>
+      <div v-if="detail.authorName === nickName">
+        <button @click="deleteMatch()">삭제하기</button>
+      </div>
     </div>
   </div>
 </template>
@@ -277,7 +275,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .row img {
   max-width: 100%;
   height: auto;
