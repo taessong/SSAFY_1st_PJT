@@ -85,6 +85,11 @@
 		WHERE futsal_team_id = #{teamId}
 	</select>
 	
+	<!-- 팀원 삭제하기 -->
+	<delete id="deleteTeamMember" parameterType="map">
+		DELETE FROM futsal_team_member
+		WHERE futsal_team_id = #{teamId} AND member_name = #{memberName}
+	</delete>
 	
 	
 	<!-- 풋살 모집 글 전체 조회 -->

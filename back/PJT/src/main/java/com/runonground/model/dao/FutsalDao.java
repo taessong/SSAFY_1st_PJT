@@ -49,6 +49,9 @@ public interface FutsalDao {
 	// 팀에 맞는 팀원 조회
 	public List<FutsalTeamMember> selectAllMember(int teamId);
 	
+	// 팀원 삭제하기
+	public void deleteTeamMember(Map<String, Object> teamMember);
+	
 	// 풋살 모집 글 전체 조회
 	public List<FutsalRecruitPost> selectAllRecruit(String teamName);
 	

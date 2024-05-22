@@ -1,5 +1,6 @@
 package com.runonground.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +99,14 @@ public class FutsalServiceImpl implements FutsalService{
 	@Override
 	public List<FutsalTeamMember> selectAllMember(int teamId){
 		return futsalDao.selectAllMember(teamId);
+	}
+	
+	@Override
+	public void removeTeamMember(int teamId, String memberName) {
+		Map<String, Object> teamMember = new HashMap<>();
+		teamMember.put("teamId", teamId);
+		teamMember.put("memberName", memberName);
+		futsalDao.deleteTeamMember(teamMember);
 	}
 	
 	// 풋살 모집 글 전체 조회

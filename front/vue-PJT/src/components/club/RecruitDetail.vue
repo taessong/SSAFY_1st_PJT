@@ -24,6 +24,7 @@
     </table>
     <h2>신청하기를 클릭하면 작성자가 아닌 유저가 팀원이 된다!!</h2>
     <button @click="applyTeam">신청하기</button>
+    <button @click="cancleTeam">취소하기</button>
     <div v-if="isWriter">
       <button @click="gotoUpdate">수정</button>
       <button @click="gotoDelete">삭제</button>
@@ -80,6 +81,24 @@ const applyTeam = async () => {
   }
 }
 
+const cancleTeam = async () => {
+  for(let i = 0; i < futsalMember.value.length; i++){
+    if(futsalMember.value[i].memberName === sessionStorage.getItem("nickName")){
+      try {
+        await axios.delete(`futsal/board/team/${futsalMember.value[i].futsalTeamId}`, {
+          params: {
+            memberName: futsalMember.value[i].memberName
+          }
+        });
+        alert("삭제 됐어요~"); 
+        router.go(0);
+      }catch(err){
+        console.log(err, "에러다")
+      }
+    }
+  }
+}
+
 onMounted(async() => {
   const recruitmentId = route.params.id;
   // await store.fetchRcruitOneData(recruitmentId);
@@ -88,8 +107,11 @@ onMounted(async() => {
     isWriter.value = true;
   }
 
-  if(futsalMember.value.length + 1 === 6){
+  if(futsalMember.value.length + 1 >= 6){
     recruitItem.value.full = true;
+  }
+  else{
+    recruitItem.value.full = false;
   }
 });
 </script>
