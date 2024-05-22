@@ -1,22 +1,29 @@
 <template>
   <div>
-    <h2>매치 등록 페이지</h2>
-    <fieldset>
-      <legend>매치 정보 입력</legend>
-      <div>
-        <label for="content">매치 내용 : </label>
-        <textarea id="content" v-model="match.content"></textarea>
+    <h2 class="page-title">매치 등록 페이지</h2>
+    <fieldset class="match-info">
+      <legend class="legend-title">매치 정보 입력</legend>
+      <div class="input-group">
+        <label for="content" class="input-label">매치 내용 :</label>
+        <textarea id="content" v-model="match.content" class="text-input"></textarea>
       </div>
-      <div>
-        <label for="matchDate">경기 날짜 선택 : </label>
-        <input type="date" id="matchDate" v-model="match.matchDate">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="matchDate" class="input-label">경기 날짜 선택 :</label>
+            <input type="date" id="matchDate" v-model="match.matchDate" class="date-input">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="matchTime" class="input-label">경기 시간 입력 :</label>
+            <input type="time" id="matchTime" v-model="match.matchTime" class="time-input">
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="matchTime">경기 시간 입력 : </label>
-        <input type="time" id="matchTime" v-model="match.matchTime">
-      </div>
-      <div>
-        <label for="stadium">경기장 선택 : </label>
+
+      <div class="stadium-container">
+        <h2>경기장 선택</h2>
         <div class="container">
           <div class="row">
             <div class="col-md-6">
@@ -167,9 +174,10 @@
         </div>
       </div>
 
-      <div>
-        <button @click="createMatch">등록하기</button>
+      <div class="btn-container">
+        <button @click="createMatch" class="btn btn-outline-success">등록하기</button>
       </div>
+
     </fieldset>
   </div>
 </template>
@@ -214,6 +222,15 @@ const createMatch = () => {
 </script>
 
 <style scoped>
+.btn-container {
+  text-align: center; /* 수평 가운데 정렬 */
+}
+
+.btn-outline-success {
+  width: 1000px;
+  display: inline-block;
+}
+
 .carousel {
   max-width: 100%;
   max-height: 100%;
@@ -234,8 +251,53 @@ const createMatch = () => {
 }
 
 .carousel-caption {
-  background: rgba(0, 0, 0, 0.5); /* 캡션의 배경을 반투명하게 설정 */
+  background: rgba(0, 0, 0, 0.2); /* 캡션의 배경을 반투명하게 설정 */
   padding: 10px; /* 캡션의 패딩을 추가 */
   border-radius: 5px; /* 캡션의 모서리를 둥글게 설정 */
 }
+
+.stadium-container {
+  border: 2px solid black; /* 테두리의 두께, 종류 및 색상을 지정합니다. */
+}
+
+.page-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.match-info {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.text-input,
+.date-input,
+.time-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.text-input {
+  resize: vertical;
+}
+
+.date-input,
+.time-input {
+  font-size: 16px;
+}
+
 </style>

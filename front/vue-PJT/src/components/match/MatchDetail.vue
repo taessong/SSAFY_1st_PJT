@@ -32,28 +32,6 @@
       </div>
     </div>
 
-    <div v-if="detail.teamBId">
-      <h5>상대팀</h5>
-      <table>
-          <thead>
-              <tr>
-                  <th>팀</th>
-                  <th>리더</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr v-if="detail.teamBName">
-                  <td>{{ detail.teamBName }}</td>
-                  <td>{{ detail.teamBLeader }}</td>
-              </tr>
-          </tbody>
-      </table>
-      <h3>팀원목록</h3>
-        <p v-for="member in teamBMember" :key="member.id">
-            {{ member.memberName }}
-        </p>
-    </div>
-
     <div v-if="detail.stadiumId">
       <div v-if="imgSrc === 1">
         <img src="@/asset/stadium/유성풋살구장/유성풋살구장(1).png" alt="Stadium Image">
@@ -75,6 +53,28 @@
     <div>
       <p>경기장 이름 : {{ stadiumName }}</p>
       <p>경기장 장소 : {{ stadiumAddress }}</p>
+    </div>
+
+    <div v-if="detail.teamBId">
+      <h5>상대팀</h5>
+      <table>
+          <thead>
+              <tr>
+                  <th>팀</th>
+                  <th>리더</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-if="detail.teamBName">
+                  <td>{{ detail.teamBName }}</td>
+                  <td>{{ detail.teamBLeader }}</td>
+              </tr>
+          </tbody>
+      </table>
+      <h3>팀원목록</h3>
+        <p v-for="member in teamBMember" :key="member.id">
+            {{ member.memberName }}
+        </p>
     </div>
 
     <!-- 상대팀이 있거나 신청자가 게시글을 볼 경우 신청하기 버튼 없앰 -->
@@ -117,9 +117,6 @@ const store = useMatchStore();
 // 경기장 이름, 장소
 const stadiumName = ref('');
 const stadiumAddress = ref('');
-
-
-
 
 const detailPost = async (id) => {
   try {

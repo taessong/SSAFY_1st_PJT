@@ -82,7 +82,7 @@
   </div>
 </template>
   
-  <script setup>
+<script setup>
 import { ref, onMounted } from "vue";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
