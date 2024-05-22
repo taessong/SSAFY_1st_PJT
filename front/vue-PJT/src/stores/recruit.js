@@ -21,7 +21,12 @@ export const useRecruitStore = defineStore("recruit", () => {
   const fetchRecruitData = async () => {
     try {
       const response = await axios.get(`/futsal/board`);
-      recruitItems.value = response.data;
+      recruitItems.value = response.data.map((item) => {
+        return {
+          ...item,
+          regDate: formatDate(item.regDate),
+        };
+      });;
     } catch (error) {
       console.log("Failed to fetch RecruitData", error);
     }
@@ -74,6 +79,8 @@ export const useRecruitStore = defineStore("recruit", () => {
     }
   };
 
+
+  const futsalTeamId = ref(0);
   const futsalMember = ref([]);
 
   const fetchTeamData = async (id) => {
@@ -83,9 +90,9 @@ export const useRecruitStore = defineStore("recruit", () => {
     for (let i = 0; i < response.data.length; i++) {
       //리더랑 작성자랑 이름이 똑같아야함!
       if (response.data[i].leaderName === recruitItem.value.authorName) {
-        const futsalTeamId = response.data[i].futsalTeamId;
-        console.log(futsalTeamId);
-        const teamData = await axios.get(`futsal/board/team/${futsalTeamId}`);
+        futsalTeamId.value = response.data[i].futsalTeamId;
+        console.log(futsalTeamId.value);
+        const teamData = await axios.get(`futsal/board/team/${futsalTeamId.value}`);
         futsalMember.value = teamData.data;
         // console.log(futsalMember.value);
         return;
@@ -95,18 +102,16 @@ export const useRecruitStore = defineStore("recruit", () => {
 
   const isTeamMember = async () => {
     try {
-      const response = await axios.get("futsal/board/team");
-      const futsalTeamId = response.data[0].futsalTeamId;
-      const teamData = await axios.get(`futsal/board/team/${futsalTeamId}`);
-      if (teamData.data.length === 5) {
+
+      if (futsalMember.value.length >= 5) {
         alert("꽉 차버렸쥐롱~~~~~~~~~");
         return;
       }
 
-      for (let i = 0; i < teamData.data.length; i++) {
+      for (let i = 0; i < futsalMember.value.length; i++) {
         //만약에 자기가 이미 신청한 상태라면??
         if (
-          teamData.data[i].memberName === sessionStorage.getItem("nickName")
+          futsalMember.value[i].memberName === sessionStorage.getItem("nickName")
         ) {
           alert("이미 신청하셨잖아요?");
 
@@ -115,12 +120,12 @@ export const useRecruitStore = defineStore("recruit", () => {
       }
 
       const formData = {
-        futsalTeamId: futsalTeamId,
+        futsalTeamId: futsalTeamId.value,
         memberName: sessionStorage.getItem("nickName"),
       };
 
       try {
-        await axios.post(`futsal/board/team/${futsalTeamId}`, formData, {
+        await axios.post(`futsal/board/team/${futsalTeamId.value}`, formData, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -152,5 +157,6 @@ export const useRecruitStore = defineStore("recruit", () => {
     isTeamMember,
     fetchTeamData,
     futsalMember,
+    futsalTeamId,
   };
 });

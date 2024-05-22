@@ -81,12 +81,12 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import { ref, onMounted } from "vue";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 //store를 사용해서 불러오기
 const store = useClubStore();
@@ -94,6 +94,7 @@ const recruitStore = useRecruitStore();
 
 //router 사용
 const router = useRouter();
+const route = useRoute();
 
 // 수다, 모집게시판 분류
 const showChat = ref(true);
@@ -116,12 +117,11 @@ const showRecruitBoard = () => {
 };
 
 const gotoChatRegist = () => {
-  router.push({name: 'clubRegist'});
-
+  router.push({ name: 'clubRegist' });
 }
 
 const gotoRecriutRegist = () => {
-  router.push({name: 'recruitRegist'});
+  router.push({ name: 'recruitRegist' });
 }
 
 const selectPostAndNavigate = (item) => {
@@ -135,10 +135,17 @@ const goToDetail = (id) => {
 onMounted(() => {
   store.fetchChatData();
   recruitStore.fetchRecruitData();
+  
+  // URL 매개변수에 따라 초기 상태 설정
+  if (route.query.tab === 'chat') {
+    showChatBoard();
+  } else if (route.query.tab === 'recruit') {
+    showRecruitBoard();
+  }
 });
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .container {
   padding: 20px;
 }

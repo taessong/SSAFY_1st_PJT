@@ -1,17 +1,19 @@
 <template>
-  <div class="notice-boards">
-    <div class="left-panel">
-      <article class="notice">
-        <BoardVue :teamName="teamName"/>
-      </article>
-    </div>
-    <div class="right-panel">
-      <article class="notice">
-        <YoutubeVideo />
-      </article>
-      <article class="notice">
-        <MatchMainBoard />
-      </article>
+  <div>
+    <div class="notice-boards">
+      <div class="left-panel">
+        <article class="notice">
+          <BoardVue :teamName="teamName" />
+        </article>
+        <article class="video">
+          <YoutubeVideo />
+        </article>
+      </div>
+      <div class="right-panel">
+        <article class="notice">
+          <MatchMainBoard />
+        </article>
+      </div>
     </div>
   </div>
 </template> 
@@ -36,8 +38,7 @@ const teamName = sessionStorage.getItem("favoriteTeam");
   margin-right: 10px; /* 오른쪽 여백 설정 */
   box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
 .right-panel {
@@ -52,5 +53,11 @@ const teamName = sessionStorage.getItem("favoriteTeam");
   flex: 1;
   margin: 0 10px; /* 양쪽 여백 설정 */
   box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
+}
+
+.video {
+  box-sizing: border-box;
+  flex: 1;
+  margin-left: 30px;
 }
 </style>

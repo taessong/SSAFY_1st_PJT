@@ -49,6 +49,9 @@ public interface FutsalService {
 	// 팀에 맞는 팀원 조회
 	public List<FutsalTeamMember> selectAllMember(int teamId);
 	
+	//팀원 삭제하기
+	public void removeTeamMember(int teamId, String memberName);
+	
 	// 모집 글 전체 불러오기 
 	public List<FutsalRecruitPost> selectAllRecruit(String teamName);
 	
