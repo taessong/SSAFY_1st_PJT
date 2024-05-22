@@ -2,8 +2,9 @@
   <header class="header-bar" :style="headerStyle">
     <RouterLink :to="{ name: 'login' }"><h1>RunOnGround</h1></RouterLink>
     <div class="header-sub">
-      <RouterLink :to="{ name: 'main' }"><h3>MainPage</h3></RouterLink>
-      <RouterLink :to="{ name: 'matchboard' }"><h3>Match</h3></RouterLink>
+      <RouterLink :to="{ name: 'clubBoard' }"><h3>커뮤니티</h3></RouterLink>
+      <RouterLink :to="{ name: 'recruitRegist' }"><h3>팀원모집</h3></RouterLink>
+      <RouterLink :to="{ name: 'matchboard' }"><h3>매칭</h3></RouterLink>
       <a href="https://www.naver.com" class="a"><h3>QnA With GPT</h3></a>
     </div>
     <div class="header-login">
