@@ -58,6 +58,6 @@ const updateBoard = async () => {
 };
 </script>
   
-  <style>
+<style scoped>
 </style>
   
