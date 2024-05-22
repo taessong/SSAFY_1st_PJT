@@ -124,18 +124,17 @@ VALUES (1, 'user1'), (1, 'user2'), (1, 'user3'), (1, 'user4'), (1, 'user5');
 -- 경기장 테이블
 CREATE TABLE stadium (
     stadium_id INT PRIMARY KEY AUTO_INCREMENT,
-    stadium_img VARCHAR(255),
     stadium_name VARCHAR(100) NOT NULL,
     location VARCHAR(255) NOT NULL
 );
 
-INSERT INTO stadium (stadium_img, stadium_name, location) VALUES 
-('@/asset/stadium/유성풋살구장/유성풋살구장(1).png', '유성풋살구장', '대전 유성구 유성대로713번길 83'),
-('@/asset/stadium/삼정풋살파크/삼정풋살파크(1).png', '삼정풋살파크', '대전 유성구 한밭대로371번길 25-4 삼정풋살파크'),
-('@/asset/stadium/위너스풋살파크/위너스풋살파크(1).png', '위너스풋살파크', '대전 유성구 원신흥동 576-2'),
-('@/asset/stadium/대전가장풋살존/대전가장풋살존(1).png', '대전가장풋살존', '대전 서구 괴정로198번길 43 21-3, 21-9'),
-('@/asset/stadium/남선공원풋살장/남선공원풋살장(1).png', '남선공원풋살장', '대전 서구 남선로 66'),
-('@/asset/stadium/가오풋살장/가오풋살장(1).png', '가오풋살장', '대전 동구 가오동 7-9');
+INSERT INTO stadium (stadium_name, location) VALUES 
+('유성풋살구장', '대전 유성구 유성대로713번길 83'),
+('대전가장풋살존', '대전 서구 괴정로198번길 43 21-3, 21-9'),
+('남선공원풋살장', '대전 서구 남선로 66'),
+('가오풋살장', '대전 동구 가오동 7-9');
+
+SELECT * FROM stadium;
 
 -- 풋살 매칭 테이블
 CREATE TABLE futsal_match (
@@ -151,17 +150,16 @@ CREATE TABLE futsal_match (
     match_time TIME,
     stadium_id INT,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    stadium_img VARCHAR(255),
     FOREIGN KEY (author_name) REFERENCES user(nickname) ON DELETE CASCADE,
     FOREIGN KEY (team_a_id) REFERENCES futsal_team(team_id) ON DELETE CASCADE,
     FOREIGN KEY (stadium_id) REFERENCES stadium(stadium_id) ON DELETE CASCADE
 );
 
-INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id, stadium_img)
+INSERT INTO futsal_match(author_name, team_a_id, team_a_name, content, match_date, match_time, stadium_id)
 VALUES
-    ('태쏭', 1, '토트넘', '토트넘이랑 붙을 사람', '2024-06-15', '14:00:00', 1, '가오풋살장/가오풋살장(1).png'),
-    ('범슈', 2, '맨유', '맨유와 경기할 팀 모집', '2024-07-20', '16:30:00', 2, '남선공원풋살장/남선공원풋살장(1).png'),
-    ('범뀨', 3, '맨시티', '맨시티와 대결할 팀 구합니다', '2024-08-25', '18:00:00', 3, '유성풋살구장/유성풋살구장(1).png');
+    ('태쏭', 1, '토트넘', '토트넘이랑 붙을 사람', '2024-06-15', '14:00:00', 1),
+    ('범슈', 2, '맨유', '맨유와 경기할 팀 모집', '2024-07-20', '16:30:00', 2),
+    ('범뀨', 3, '맨시티', '맨시티와 대결할 팀 구합니다', '2024-08-25', '18:00:00', 3);
 
 SELECT * FROM futsal_match;
 
@@ -174,5 +172,3 @@ CREATE TABLE recommendations (
     FOREIGN KEY (post_id) REFERENCES community_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES community_comment(comment_id) ON DELETE CASCADE
 );
-
-SELECT * FROM stadium WHERE stadium_id = 2;
