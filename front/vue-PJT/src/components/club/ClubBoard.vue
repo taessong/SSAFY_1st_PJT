@@ -22,13 +22,13 @@
       <div class="btn-group mb-4">
         <button
           @click="showChatBoard"
-          :class="['btn', 'btn-secondary', { active: showChat }]"
+          :class="['btn', { 'btn-secondary': !showChat, [favoriteTeamButtonClass]: showChat }]"
         >
           수다
         </button>
         <button
           @click="showRecruitBoard"
-          :class="['btn', 'btn-secondary', { active: showRecruit }]"
+          :class="['btn', { 'btn-secondary': !showRecruit, [favoriteTeamButtonClass]: showRecruit }]"
         >
           모집
         </button>
@@ -164,6 +164,23 @@ const applyTeamColorClasses = (items) => {
   });
 };
 
+const applyDynamicStyles = () => {
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  const colorClass = getTeamColorClass(favoriteTeam).replace('.', '');
+  style.innerHTML = `
+    .btn.active {
+      background-color: var(--${colorClass}-bg) !important;
+      color: var(--${colorClass}-text) !important;
+    }
+    .btn-secondary.active {
+      background-color: var(--${colorClass}-bg) !important;
+      color: var(--${colorClass}-text) !important;
+    }
+  `;
+  document.head.appendChild(style);
+};
+
 onMounted(() => {
   store.fetchChatData().then(() => {
     store.chatItems = applyTeamColorClasses(store.chatItems);
@@ -178,6 +195,9 @@ onMounted(() => {
   } else if (route.query.tab === 'recruit') {
     showRecruitBoard();
   }
+
+  // Apply dynamic styles
+  applyDynamicStyles();
 });
 </script>
 
@@ -191,7 +211,6 @@ h2 {
 }
 
 .active {
-  background-color: #ccc !important;
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -203,32 +222,50 @@ th {
   font-weight: bolder !important;
 }
 
-.btn.active {
-  background-color: #6CABDD !important; /* 기본 색상을 맨시티 색상으로 설정 */
-  color: #fff !important;
-}
-
+/* 팀별로 동적으로 스타일 적용 */
 .mancity-btn.active {
-  background-color: #6CABDD !important;
+  --mancity-bg: #6CABDD;
+  --mancity-text: #fff;
 }
 
 .manutd-btn.active {
-  background-color: #DA291C !important;
+  --manutd-bg: #DA291C;
+  --manutd-text: #fff;
 }
 
 .liverpool-btn.active {
-  background-color: #C8102E !important;
+  --liverpool-bg: #C8102E;
+  --liverpool-text: #fff;
 }
 
 .chelsea-btn.active {
-  background-color: #034694 !important;
+  --chelsea-bg: #034694;
+  --chelsea-text: #fff;
 }
 
 .arsenal-btn.active {
-  background-color: #EF0107 !important;
+  --arsenal-bg: #EF0107;
+  --arsenal-text: #fff;
 }
 
 .tottenham-btn.active {
-  background-color: #132257 !important;
+  --tottenham-bg: #132257;
+  --tottenham-text: #fff;
+}
+
+/* 팀 색상 반영 */
+.team-bg-active {
+  background-color: var(--mancity-bg) !important;
+  color: var(--mancity-text) !important;
+}
+
+/* 비활성화된 버튼의 기본 색상 */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn {
+  transition: background-color 0.3s, color 0.3s;
 }
 </style>
