@@ -67,6 +67,12 @@
 		WHERE team_name = #{teamName}
 	</select>
 	
+	<!-- 팀 삭제 -->
+	<delete id="deleteTeam" parameterType="String">
+		DELETE FROM futsal_team
+		WHERE leader_name = #{leader}
+	</delete>
+	
 	<!-- 팀원으로 등록 -->
 	<insert id="insertMember" parameterType="FutsalTeamMember">
 		INSERT INTO futsal_team_member(futsal_team_id, member_name)
@@ -78,6 +84,13 @@
 		SELECT * FROM futsal_team_member
 		WHERE futsal_team_id = #{teamId}
 	</select>
+	
+	<!-- 팀원 삭제하기 -->
+	<delete id="deleteTeamMember" parameterType="map">
+		DELETE FROM futsal_team_member
+		WHERE futsal_team_id = #{teamId} AND member_name = #{memberName}
+	</delete>
+	
 	
 	<!-- 풋살 모집 글 전체 조회 -->
 	<select id="selectAllRecruit" parameterType="String" resultType="FutsalRecruitPost">
@@ -101,6 +114,7 @@
 	<update id="updateRecruit" parameterType="FutsalRecruitPost">
 		UPDATE futsal_recruit_post
 		SET content = #{content}, max_members = #{maxMembers}
+		WHERE recruitment_id = #{recruitmentId}
 	</update>
 	
 </mapper>
