@@ -1,23 +1,23 @@
 <template>
   <div class="container py-4">
     <div class="club-header d-flex justify-content-between align-items-end mb-3">
-      <h2 v-if="showChat">수다 게시판</h2>
-      <h2 v-if="showRecruit">모집 게시판</h2>
-      <button @click="gotoClubBoard" class="btn btn-secondary btn-sm">+</button>
+      <h2 :class="computedFavoriteTeamColorClass" v-if="showChat">수다 게시판</h2>
+      <h2 :class="computedFavoriteTeamColorClass" v-if="showRecruit">모집 게시판</h2>
+      <button @click="gotoClubBoard" :class="['btn', computedFavoriteTeamButtonClass, 'btn-sm']">+</button>
     </div>
     <div class="club-board border rounded p-3">
-      <div class="board-header mb-3">
+      <div class="board-header mb-3 btn-group">
         <button
-          class="btn btn-outline-secondary me-2"
+          class="btn"
           @click="showChatBoard"
-          :class="{ active: showChat }"
+          :class="[showChat ? computedFavoriteTeamButtonClass : 'btn-inactive']"
         >
           수다
         </button>
         <button
-          class="btn btn-outline-secondary"
+          class="btn"
           @click="showRecruitBoard"
-          :class="{ active: showRecruit }"
+          :class="[showRecruit ? computedFavoriteTeamButtonClass : 'btn-inactive']"
         >
           모집
         </button>
@@ -75,11 +75,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
 import { useRouter } from "vue-router";
+import { getTeamColorClass } from "@/utils/teamColors";
 axios.defaults.withCredentials = true;
 
 //store를 사용해서 불러오기
@@ -93,6 +94,11 @@ const router = useRouter();
 const showChat = ref(true);
 const showRecruit = ref(false);
 
+// 좋아하는 팀 색상 클래스 설정
+const favoriteTeam = ref(sessionStorage.getItem("favoriteTeam"));
+const computedFavoriteTeamColorClass = computed(() => getTeamColorClass(favoriteTeam.value));
+const computedFavoriteTeamButtonClass = computed(() => `${getTeamColorClass(favoriteTeam.value)}-btn`);
+
 const gotoClubBoard = () => {
   router.push({ name: 'clubBoard' });
 };
@@ -102,18 +108,16 @@ const goToDetail = (id) => {
 };
 
 const showChatBoard = () => {
-  if (showChat.value != true) {
+  if (!showChat.value) {
     showChat.value = true;
     showRecruit.value = false;
-    console.log("수다로 전환됐지롱~");
   }
 };
 
 const showRecruitBoard = () => {
-  if (showRecruit.value != true) {
+  if (!showRecruit.value) {
     showRecruit.value = true;
     showChat.value = false;
-    console.log("모집으로 전환됐지롱~");
   }
 };
 
@@ -132,9 +136,24 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.btn.active {
-  background-color: #ccc !important;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+.btn-inactive {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-group > .btn {
+  border-radius: 0;
+  border: 1px solid #6c757d;
+}
+
+.btn-group > .btn:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.btn-group > .btn:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .table-hover tbody tr:hover {

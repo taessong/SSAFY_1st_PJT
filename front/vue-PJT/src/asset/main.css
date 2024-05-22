@@ -1,0 +1,92 @@
+/* src/assets/main.css */
+.mancity-color {
+    color: #6CABDD !important;
+  }
+  
+  .manutd-color {
+    color: #DA291C !important;
+  }
+  
+  .liverpool-color {
+    color: #C8102E !important;
+  }
+  
+  .chelsea-color {
+    color: #034694 !important;
+  }
+  
+  .arsenal-color {
+    color: #EF0107 !important;
+  }
+  
+  .tottenham-color {
+    color: #132257 !important;
+  }
+  
+  /* 커스텀 버튼 색상 정의 */
+  .mancity-btn {
+    background-color: #6CABDD !important;
+    border-color: #6CABDD !important;
+    color: #fff !important;
+  }
+  
+  .mancity-btn:hover {
+    background-color: #4690C5 !important;
+    border-color: #4690C5 !important;
+  }
+  
+  .manutd-btn {
+    background-color: #DA291C !important;
+    border-color: #DA291C !important;
+    color: #fff !important;
+  }
+  
+  .manutd-btn:hover {
+    background-color: #B2221A !important;
+    border-color: #B2221A !important;
+  }
+  
+  .liverpool-btn {
+    background-color: #C8102E !important;
+    border-color: #C8102E !important;
+    color: #fff !important;
+  }
+  
+  .liverpool-btn:hover {
+    background-color: #A50D23 !important;
+    border-color: #A50D23 !important;
+  }
+  
+  .chelsea-btn {
+    background-color: #034694 !important;
+    border-color: #034694 !important;
+    color: #fff !important;
+  }
+  
+  .chelsea-btn:hover {
+    background-color: #02336A !important;
+    border-color: #02336A !important;
+  }
+  
+  .arsenal-btn {
+    background-color: #EF0107 !important;
+    border-color: #EF0107 !important;
+    color: #fff !important;
+  }
+  
+  .arsenal-btn:hover {
+    background-color: #C30006 !important;
+    border-color: #C30006 !important;
+  }
+  
+  .tottenham-btn {
+    background-color: #132257 !important;
+    border-color: #132257 !important;
+    color: #fff !important;
+  }
+  
+  .tottenham-btn:hover {
+    background-color: #0E1A42 !important;
+    border-color: #0E1A42 !important;
+  }
+  

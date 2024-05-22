@@ -1,90 +1,114 @@
 <template>
-  <div class="detailBoard">
-    <div class="detailPage">
-      <div class="top-button">
-        <button @click="goBack" class="gobackButton">◀️ 뒤로가기</button>
-        <div v-if="isWriter" class="putNdelete">
-          <button @click="goUpdate()" class="put">수정</button>
-          <button @click="confirmDelete(chatItem.postId)" class="delete">
-            삭제
-          </button>
-        </div>
-      </div>
-      <div class="detailTitle">
-        <p class="title">제목 : {{ chatItem.title }}</p>
-        <div class="authornRegDate">
-          <p class="author">작성자 : {{ chatItem.authorName }}</p>
-          <p class="regDate">작성 일자 : {{ chatItem.regDate }}</p>
-        </div>
-      </div>
-      <div class="content">
-        {{ chatItem.content }}
-        <div v-if="chatItem.postImgPath">
-          <img
-            :src="chatItem.postImgPath"
-            alt="Post Image"
-            class="post-image"
-          />
-        </div>
-      </div>
-      <p class="viewCnt">조회수: {{ chatItem.viewCnt }}</p>
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-4">
+      <button
+        @click="goBack"
+        :class="['btn', 'btn-dark', computedFavoriteTeamButtonClass]"
+      >
+        ◀️ 뒤로가기
+      </button>
     </div>
-    <div class="comments">
-      <h1>댓글 {{ comments.length }}개</h1>
-      <div v-for="comment in comments" :key="comment.commentId" class="comment">
-        <div v-if="modifyMode[comment.commentId]" class="isModify">
-          <input type="text" v-model="comment.content" class="modifyBar" />
-          <div class="saveButton">
-            <button @click="updateComment(comment)">저장</button>
-            <button @click="toggleModifyMode(comment.commentId)">취소</button>
-          </div>
-        </div>
-        <div v-else>
-          <div class="commentBar">
-            <div class="authornContent">
-              <p>{{ comment.authorName }}</p>
-              <p>{{ comment.content }}</p>
-            </div>
-            <div class="recommendNput">
-              <button
-                class="recommend"
-                @click="recommend(comment.commentId)"
-                :disabled="hasRecommended(comment.commentId)"
-              >
-                👍 {{ comment.recommend }}
-              </button>
-              <div
-                v-if="comment.authorName === currentNickName"
-                class="commentPutNdelete"
-              >
-                <button
-                  class="put"
-                  @click="toggleModifyMode(comment.commentId)"
-                >
-                  수정
-                </button>
-                <button
-                  class="delete"
-                  @click="confirmCommentDelete(comment.commentId)"
-                >
-                  삭제
-                </button>
-              </div>
-            </div>
-          </div>
+    <div class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 :class="computedFavoriteTeamColorClass">{{ chatItem.title }}</h2>
+        <div class="author">
+          <p class="fw-bold mb-0">작성자 : {{ chatItem.authorName }}</p>
+          <p class="fw-bold mb-0">작성 일자 : {{ chatItem.regDate }}</p>
         </div>
       </div>
-      <form @submit.prevent="handleSubmitComment">
-        <div class="createComment">
+    </div>
+    <div class="mb-4 border rounded p-3">
+      <p class="content">{{ chatItem.content }}</p>
+      <div v-if="chatItem.postImgPath" class="text-center mt-3">
+        <img :src="chatItem.postImgPath" alt="Post Image" class="img-fluid" />
+      </div>
+    </div>
+    <div class="bottom">
+      <p class="fw-bold">조회수: {{ chatItem.viewCnt }}</p>
+      <div v-if="isWriter">
+        <button
+          @click="goUpdate()"
+          :class="[
+            'btn',
+            'btn-warning',
+            computedFavoriteTeamButtonClass,
+            'me-2',
+          ]"
+        >
+          수정
+        </button>
+        <button
+          @click="confirmDelete(chatItem.postId)"
+          :class="['btn', 'btn-danger', computedFavoriteTeamButtonClass]"
+        >
+          삭제
+        </button>
+      </div>
+    </div>
+    <div class="comments mt-4">
+      <h3>댓글 {{ comments.length }}개</h3>
+      <div
+        v-for="comment in comments"
+        :key="comment.commentId"
+        class="card mb-3 p-3"
+      >
+        <div v-if="modifyMode[comment.commentId]">
           <input
             type="text"
-            class="commentInput"
+            v-model="comment.content"
+            class="form-control mb-2"
+          />
+          <button @click="updateComment(comment)" class="btn btn-primary me-2">
+            저장
+          </button>
+          <button
+            @click="toggleModifyMode(comment.commentId)"
+            class="btn btn-secondary"
+          >
+            취소
+          </button>
+        </div>
+        <div v-else class="d-flex justify-content-between align-items-center">
+          <div>
+            <p class="fw-bold mb-1">{{ comment.authorName }}</p>
+            <p class="mb-1">{{ comment.content }}</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <button
+              class="btn me-2"
+              @click="recommend(comment.commentId)"
+              :disabled="hasRecommended(comment.commentId)"
+            >
+              👍 {{ comment.recommend }}
+            </button>
+            <div v-if="comment.authorName === currentNickName">
+              <button
+                @click="toggleModifyMode(comment.commentId)"
+                class="btn btn-warning me-2"
+              >
+                수정
+              </button>
+              <button
+                @click="confirmCommentDelete(comment.commentId)"
+                class="btn btn-danger"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form @submit.prevent="handleSubmitComment" class="mt-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
             placeholder="댓글을 입력하세요."
             id="content"
             name="content"
             v-model="comment.content"
           />
-          <button class="commentRegistButton" type="submit">등록</button>
+          <button class="btn btn-primary" type="submit">등록</button>
         </div>
       </form>
     </div>
@@ -96,10 +120,7 @@ import { useClubStore } from "@/stores/club";
 import { onMounted, computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "@/api/axios";
-
-const props = defineProps({
-  id: String,
-});
+import { getTeamColorClass } from "@/utils/teamColors";
 
 const comment = ref({
   content: "",
@@ -115,6 +136,20 @@ const router = useRouter();
 const isWriter = ref(false);
 
 const currentNickName = sessionStorage.getItem("nickName");
+
+const favoriteTeam = ref(sessionStorage.getItem("favoriteTeam"));
+
+const computedFavoriteTeamColorClass = computed(() => {
+  const className = getTeamColorClass(favoriteTeam.value);
+  console.log('computedFavoriteTeamColorClass:', className); // 콘솔 로그 추가
+  return className;
+});
+
+const computedFavoriteTeamButtonClass = computed(() => {
+  const className = `${getTeamColorClass(favoriteTeam.value)}-btn`;
+  console.log('computedFavoriteTeamButtonClass:', className); // 콘솔 로그 추가
+  return className;
+});
 
 const goBack = () => {
   router.back();
@@ -188,7 +223,6 @@ const goUpdate = () => {
 const deleteBoard = async (postId) => {
   try {
     await axios.delete(`/community/board/${postId}`);
-    router.back();
   } catch (error) {
     console.log("실패용", error);
   }
@@ -240,178 +274,45 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.gobackButton {
-  border: none;
-  padding: 6px;
-  margin-top: 25px;
+.card {
   border-radius: 8px;
-  background-color: darkcyan;
-  color: white;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.detailPage {
-  padding: 30px;
-}
-
-.detailTitle {
-  display: flex;
-  justify-content: space-between;
-}
-
-.title {
-  margin-left: 5px;
-  font-weight: 800;
-}
-.authornRegDate {
-  display: flex;
-  font-weight: 800;
-}
-
-.regDate {
-  margin-left: 25px;
-  margin-right: 10px;
-}
-
-.content {
-  border: 1px solid black;
-  border-radius: 8px;
-  text-align: start;
-  height: 360px;
-  padding: 6px;
-}
-
-.viewCnt {
-  text-align: end;
-  font-weight: 800;
-  margin-right: 10px;
-}
-
-.comments {
-  padding: 30px;
-}
-
-.detailBoard {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.comment {
-  border: 1px solid black;
-  border-radius: 8px;
-  margin-top: 10px;
-  padding: 3px;
-}
-
-.commentBar {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.comment p {
-  margin-left: 15px;
-}
-
-.authornContent {
-  display: flex;
-  align-items: center;
-}
-
-.recommend {
-  margin-right: 10px;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-}
-
-.recommend:hover {
-  transform: scale(1.2);
-}
-
-.top-button {
-  display: flex;
-  justify-content: space-between;
-}
-
-.putNdelete {
-  margin-top: 25px;
-}
-
-.put,
-.delete {
-  margin-right: 10px;
-  border: none;
-  padding: 6px;
-  border-radius: 8px;
-  background-color: darkcyan;
-  color: white;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.recommendNput {
-  display: flex;
-  align-items: center;
-}
-
-.commentPutNdelete {
-  margin-top: 3px;
-}
-
-.post-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
-}
-
-.createComment {
-  display: flex;
-  margin-top: 15px;
-  justify-content: center;
-}
-
-.commentInput {
-  border: 1px solid black;
-  padding: 30px;
-  width: 90%;
-  border-radius: 8px;
-}
-
-.commentRegistButton {
-  margin-left: 10px;
-  border: none;
-  background-color: darkcyan;
-  color: white;
-  font-weight: 800;
-  padding: 20px 20px;
-  border-radius: 8px;
-  width: 10%;
-  cursor: pointer;
-}
-
-.modifyBar {
-  width: 80%;
-  margin-left: 10px;
-  border-radius: 8px;
-  border: none;
   padding: 10px;
 }
 
-.saveButton button {
-  padding: 5px 10px;
-  margin: 5px;
-  border: none;
-  background-color: darkcyan;
-  border-radius: 8px;
-  font-weight: 800;
-  color: white;
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
-.isModify {
+.bottom {
   display: flex;
   justify-content: space-between;
+}
+
+.input-group {
+  margin-bottom: 150px;
+}
+
+.form-control {
+  padding: 15px;
+}
+
+h2 {
+  font-weight: bolder;
+  margin-left: 10px;
+}
+
+.img-fluid {
+  width: 1280px;
+  height: 860px;
+}
+
+.content {
+  font-size: 20px;
+
+}
+
+.author {
+  text-align: end;
 }
 </style>

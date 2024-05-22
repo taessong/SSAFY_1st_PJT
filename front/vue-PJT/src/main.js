@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import "bootstrap/dist/css/bootstrap.min.css"
+import './asset/main.css'
 
 const app = createApp(App)
 
@@ -31,7 +32,6 @@ router.beforeEach((to, from, next) => {
 
 app.use(createPinia())
 app.use(router)
-
 app.mount('#app')
 
 import "bootstrap/dist/js/bootstrap.min.js"

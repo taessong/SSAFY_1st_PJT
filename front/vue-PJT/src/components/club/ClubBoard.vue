@@ -1,44 +1,57 @@
 <template>
-  <div class="container">
-    <div class="club-header">
-      <h2 v-if="showChat">수다 게시판</h2>
-      <h2 v-if="showRecruit">모집 게시판</h2>
-      <button v-if="showChat" @click="gotoChatRegist" class="regist">수다 글 등록하기</button>
-      <button v-if="showRecruit" @click="gotoRecriutRegist" class="regist">모집 글 등록하기</button>
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 :class="favoriteTeamColorClass" v-if="showChat">수다 게시판</h2>
+      <h2 :class="favoriteTeamColorClass" v-if="showRecruit">모집 게시판</h2>
+      <button
+        v-if="showChat"
+        @click="gotoChatRegist"
+        :class="['btn', favoriteTeamButtonClass]"
+      >
+        수다 글 등록하기
+      </button>
+      <button
+        v-if="showRecruit"
+        @click="gotoRecriutRegist"
+        :class="['btn', favoriteTeamButtonClass]"
+      >
+        모집 글 등록하기
+      </button>
     </div>
-    <div class="club-board">
-      <div class="board-header">
+    <div>
+      <div class="btn-group mb-4">
         <button
-          class="filter-btn"
           @click="showChatBoard"
-          :class="{ active: showChat }"
+          :class="['btn', 'btn-secondary', { active: showChat }]"
         >
           수다
         </button>
         <button
-          class="filter-option"
           @click="showRecruitBoard"
-          :class="{ active: showRecruit }"
+          :class="['btn', 'btn-secondary', { active: showRecruit }]"
         >
           모집
         </button>
       </div>
-      <div class="board-content-wrapper" v-if="showChat">
-        <div class="board-content">
-          <table>
+      <div v-if="showChat">
+        <div class="table-responsive">
+          <table class="table table-hover text-center">
             <thead>
               <tr>
-                <th>분류</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>조회수</th>
+                <th :class="favoriteTeamColorClass">분류</th>
+                <th :class="favoriteTeamColorClass">제목</th>
+                <th :class="favoriteTeamColorClass">작성자</th>
+                <th :class="favoriteTeamColorClass">작성일</th>
+                <th :class="favoriteTeamColorClass">조회수</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in store.chatItems" :key="index">
                 <td>[수다]</td>
-                <td @click="selectPostAndNavigate(item)" class="click">
+                <td 
+                  @click="selectPostAndNavigate(item)" 
+                  class="click"
+                >
                   {{ item.title }}
                 </td>
                 <td>{{ item.authorName }}</td>
@@ -49,9 +62,9 @@
           </table>
         </div>
       </div>
-      <div v-else-if="showRecruit" class="board-content-wrapper">
-        <div class="board-content">
-          <table>
+      <div v-else-if="showRecruit">
+        <div class="table-responsive">
+          <table class="table table-hover text-center">
             <thead>
               <tr>
                 <th>분류</th>
@@ -62,12 +75,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="(item, index) in recruitStore.recruitItems"
-                :key="index"
-              >
+              <tr v-for="(item, index) in recruitStore.recruitItems" :key="index">
                 <td>[모집]</td>
-                <td @click="goToDetail(item.recruitmentId)" class="click">
+                <td 
+                  @click="goToDetail(item.recruitmentId)" 
+                  class="click"
+                  :class="item.colorClass"
+                >
                   {{ item.content }}
                 </td>
                 <td>{{ item.authorName }}</td>
@@ -87,6 +101,7 @@ import { ref, onMounted } from "vue";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
 import { useRouter, useRoute } from "vue-router";
+import { getTeamColorClass } from "@/utils/teamColors";
 
 //store를 사용해서 불러오기
 const store = useClubStore();
@@ -96,23 +111,32 @@ const recruitStore = useRecruitStore();
 const router = useRouter();
 const route = useRoute();
 
+// 세션 스토리지에서 favoriteTeam 가져오기
+const favoriteTeam = sessionStorage.getItem('favoriteTeam');
+
 // 수다, 모집게시판 분류
 const showChat = ref(true);
 const showRecruit = ref(false);
 
+// 좋아하는 팀 색상 클래스 설정
+const favoriteTeamColorClass = ref(getTeamColorClass(favoriteTeam));
+const favoriteTeamButtonClass = ref(getTeamColorClass(favoriteTeam, 'btn'));
+
+// 클래스 값 확인을 위한 콘솔 로그
+console.log('favoriteTeamColorClass:', favoriteTeamColorClass.value);
+console.log('favoriteTeamButtonClass:', favoriteTeamButtonClass.value);
+
 const showChatBoard = () => {
-  if (showChat.value != true) {
+  if (!showChat.value) {
     showChat.value = true;
     showRecruit.value = false;
-    console.log("수다로 전환됐지롱~");
   }
 };
 
 const showRecruitBoard = () => {
-  if (showRecruit.value != true) {
+  if (!showRecruit.value) {
     showRecruit.value = true;
     showChat.value = false;
-    console.log("모집으로 전환됐지롱~");
   }
 };
 
@@ -132,9 +156,21 @@ const goToDetail = (id) => {
   router.push({ name: "recruitDetail", params: { id } });
 };
 
+const applyTeamColorClasses = (items) => {
+  return items.map(item => {
+    item.colorClass = (item.teamName === favoriteTeam) ? getTeamColorClass(item.teamName) : '';
+    console.log(`Team: ${item.teamName}, Color Class: ${item.colorClass}`);
+    return item;
+  });
+};
+
 onMounted(() => {
-  store.fetchChatData();
-  recruitStore.fetchRecruitData();
+  store.fetchChatData().then(() => {
+    store.chatItems = applyTeamColorClasses(store.chatItems);
+  });
+  recruitStore.fetchRecruitData().then(() => {
+    recruitStore.recruitItems = applyTeamColorClasses(recruitStore.recruitItems);
+  });
   
   // URL 매개변수에 따라 초기 상태 설정
   if (route.query.tab === 'chat') {
@@ -146,153 +182,53 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
-  padding: 20px;
-}
-
-a {
-  text-decoration-line: none;
-  color: black;
-  font-weight: 800;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-
-.club-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.button {
-  width: 20px;
-  height: 20px;
-  border: none;
-  background-color: gainsboro;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 5px;
-  font-weight: 900;
-  margin-bottom: 3px;
-}
-
-.button:hover {
-  background-color: #ccc;
-}
-
 .click {
   cursor: pointer;
 }
 
-.club-board {
-  width: 100%;
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 10px;
-  box-sizing: border-box;
+h2 {
+  font-weight: bolder;
 }
 
-.board-header {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
+.active {
+  background-color: #ccc !important;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3) !important;
 }
 
-.filter-btn,
-.filter-option {
-  padding: 5px 10px;
-  border: none;
-  background-color: #eee;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 5px;
+td {
+  font-weight: bold;
 }
 
-.filter-btn.active,
-.filter-option.active {
-  background-color: #ccc;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+th {
+  font-weight: bolder !important;
 }
 
-.board-content-wrapper {
-  overflow: hidden;
-  border-radius: 6px;
+.btn.active {
+  background-color: #6CABDD !important; /* 기본 색상을 맨시티 색상으로 설정 */
+  color: #fff !important;
 }
 
-.board-content {
-  border-collapse: collapse;
-  width: 100%;
+.mancity-btn.active {
+  background-color: #6CABDD !important;
 }
 
-.board-content th,
-.board-content td {
-  padding: 10px;
-  text-align: center;
+.manutd-btn.active {
+  background-color: #DA291C !important;
 }
 
-.board-content th {
-  background-color: #f9f9f9;
+.liverpool-btn.active {
+  background-color: #C8102E !important;
 }
 
-.board-content tr {
-  background-color: #fff;
-  transition: background-color 0.3s;
+.chelsea-btn.active {
+  background-color: #034694 !important;
 }
 
-.board-content tr:hover {
-  background-color: #f1f1f1;
+.arsenal-btn.active {
+  background-color: #EF0107 !important;
 }
 
-.board-content-wrapper table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.board-content-wrapper th:first-child,
-.board-content-wrapper td:first-child {
-  border-left: none;
-}
-
-.board-content-wrapper th:last-child,
-.board-content-wrapper td:last-child {
-  border-right: none;
-}
-
-.board-content-wrapper th {
-  border-top: none;
-}
-
-.board-content-wrapper td {
-  border-bottom: none;
-}
-
-.board-content-wrapper th:first-child {
-  border-top-left-radius: 6px;
-}
-
-.board-content-wrapper th:last-child {
-  border-top-right-radius: 6px;
-}
-
-.board-content-wrapper tr:last-child td:first-child {
-  border-bottom-left-radius: 6px;
-}
-
-.board-content-wrapper tr:last-child td:last-child {
-  border-bottom-right-radius: 6px;
-}
-
-.regist {
-  margin-bottom: 10px;
-  padding: 5px 10px;
-  border-radius: 8px;
-  background-color: skyblue;
-  color: white;
-  font-weight: 800;
-  border: none;
-  cursor: pointer;
+.tottenham-btn.active {
+  background-color: #132257 !important;
 }
 </style>
