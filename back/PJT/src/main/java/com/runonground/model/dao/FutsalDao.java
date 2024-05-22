@@ -40,6 +40,9 @@ public interface FutsalDao {
 	// 팀 조회
 	public List<FutsalTeam> selectAllTeam(String teamName);
 	
+	// 팀 삭제
+	public void deleteTeam(String leader);
+	
 	// 팀원으로 등록
 	public void insertMember(FutsalTeamMember futsalTeamMember);
 	

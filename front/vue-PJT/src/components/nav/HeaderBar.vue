@@ -8,7 +8,7 @@
     </div>
     <div class="header-login">
       <div v-if="nickName" class="user-info">
-        <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc">
+        <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc" class="logoImg">
         <h3>{{ nickName }}님, 안녕하세요!</h3>
       </div>
       <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout">
@@ -84,9 +84,6 @@ const handlerLogout = (event) => {
 };
 </script>
 
-
-
-
 <style scoped>
 .header-bar {
   background-color: black;
@@ -96,7 +93,7 @@ const handlerLogout = (event) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 300px;
+  height: 600px;
 }
 
 .header-sub {
@@ -107,12 +104,15 @@ const handlerLogout = (event) => {
 
 .user-info {
   display: flex;
-  align-items: center;
 }
 
 .header-login {
   display: flex;
   margin-top: 8px;
+}
+
+.logoImg {
+  margin-top: 10px
 }
 
 h1 {
