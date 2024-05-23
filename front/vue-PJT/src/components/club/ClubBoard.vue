@@ -46,7 +46,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in store.chatItems" :key="index">
+              <tr v-for="(item, index) in paginatedChatItems" :key="index">
                 <td>[수다]</td>
                 <td 
                   @click="selectPostAndNavigate(item)" 
@@ -60,6 +60,18 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div class="pagination">
+          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-secondary">이전</button>
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="['btn btn-sm', page === currentPage ? favoriteTeamButtonClass : 'btn-light']"
+          >
+            {{ page }}
+          </button>
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-secondary">다음</button>
         </div>
       </div>
       <div v-else-if="showRecruit">
@@ -75,7 +87,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in recruitStore.recruitItems" :key="index">
+              <tr v-for="(item, index) in paginatedRecruitItems" :key="index">
                 <td>[모집]</td>
                 <td 
                   @click="goToDetail(item.recruitmentId)" 
@@ -90,13 +102,24 @@
             </tbody>
           </table>
         </div>
+        <div class="pagination">
+          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-secondary">이전</button>
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="['btn btn-sm', page === currentPage ? favoriteTeamButtonClass : 'btn-light']"
+          >
+            {{ page }}
+          </button>
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-secondary">다음</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useClubStore } from "@/stores/club";
 import { useRecruitStore } from "@/stores/recruit";
 import { useRouter, useRoute } from "vue-router";
@@ -117,6 +140,10 @@ const favoriteTeam = sessionStorage.getItem('favoriteTeam');
 const showChat = ref(true);
 const showRecruit = ref(false);
 
+// 페이지네이션 변수 설정
+const currentPage = ref(1);
+const itemsPerPage = 10;
+
 // 좋아하는 팀 색상 클래스 설정
 const favoriteTeamColorClass = ref(getTeamColorClass(favoriteTeam));
 const favoriteTeamButtonClass = ref(getTeamColorClass(favoriteTeam, 'btn'));
@@ -125,10 +152,33 @@ const favoriteTeamButtonClass = ref(getTeamColorClass(favoriteTeam, 'btn'));
 console.log('favoriteTeamColorClass:', favoriteTeamColorClass.value);
 console.log('favoriteTeamButtonClass:', favoriteTeamButtonClass.value);
 
+// 페이지네이션 계산
+const totalPages = computed(() => {
+  if (showChat.value) {
+    return Math.ceil(store.chatItems.length / itemsPerPage);
+  } else if (showRecruit.value) {
+    return Math.ceil(recruitStore.recruitItems.length / itemsPerPage);
+  }
+  return 1;
+});
+
+const paginatedChatItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return store.chatItems.slice(start, end);
+});
+
+const paginatedRecruitItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return recruitStore.recruitItems.slice(start, end);
+});
+
 const showChatBoard = () => {
   if (!showChat.value) {
     showChat.value = true;
     showRecruit.value = false;
+    currentPage.value = 1; // 페이지 초기화
   }
 };
 
@@ -136,6 +186,7 @@ const showRecruitBoard = () => {
   if (!showRecruit.value) {
     showRecruit.value = true;
     showChat.value = false;
+    currentPage.value = 1; // 페이지 초기화
   }
 };
 
@@ -155,14 +206,24 @@ const goToDetail = (id) => {
   router.push({ name: "recruitDetail", params: { id } });
 };
 
-const applyTeamColorClasses = (items) => {
-  return items.map(item => {
-    item.colorClass = (item.teamName === favoriteTeam) ? getTeamColorClass(item.teamName) : '';
-    console.log(`Team: ${item.teamName}, Color Class: ${item.colorClass}`);
-    return item;
-  });
+// 페이지네이션 함수
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
 };
 
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+const goToPage = (page) => {
+  currentPage.value = page;
+};
+
+// Apply dynamic styles function
 const applyDynamicStyles = () => {
   const style = document.createElement('style');
   style.type = 'text/css';
@@ -178,6 +239,15 @@ const applyDynamicStyles = () => {
     }
   `;
   document.head.appendChild(style);
+};
+
+// Apply team color classes to items
+const applyTeamColorClasses = (items) => {
+  return items.map(item => {
+    item.colorClass = (item.teamName === favoriteTeam) ? getTeamColorClass(item.teamName) : '';
+    console.log(`Team: ${item.teamName}, Color Class: ${item.colorClass}`);
+    return item;
+  });
 };
 
 onMounted(() => {
@@ -199,9 +269,7 @@ onMounted(() => {
   applyDynamicStyles();
 });
 </script>
-
 <style scoped>
-
 .click {
   cursor: pointer;
 }
@@ -267,5 +335,16 @@ th {
 
 .btn {
   transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination .btn {
+  margin: 0 0.25rem;
 }
 </style>

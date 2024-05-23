@@ -55,6 +55,17 @@ export const useMatchStore = defineStore('match', () => {
       });
   };
 
+  const getBoardListSummary = () => {
+    axios.get(REST_MATCH_API)
+      .then((response) => {
+        matchList.value = response.data.slice(0, 7).map((item) => {
+          return {
+            ...item
+          }
+        });
+      });
+  }
+
   const getBoard = (id) => {
     return axios.get(`${REST_MATCH_API}/${id}`)
       .then((response) => {
@@ -80,6 +91,7 @@ export const useMatchStore = defineStore('match', () => {
     match,
     getBoard,
     updateMatch,
-    stadiums
+    stadiums,
+    getBoardListSummary,
   };
 });
