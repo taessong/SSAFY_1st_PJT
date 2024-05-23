@@ -1,41 +1,42 @@
 <template>
-  <header class="header-bar">
+  <header class="header-bar" :class="[headerColorClass, { 'tottenham-special': isTottenham }]">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'login' }"><h4>⚽홈</h4></RouterLink>
+          <RouterLink :to="{ name: 'login' }"><h4 :class="{'text-black': isTottenham}">⚽홈</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'clubBoard' }"><h4>📢커뮤니티</h4></RouterLink>
+          <RouterLink :to="{ name: 'clubBoard' }"><h4 :class="{'text-black': isTottenham}">📢커뮤니티</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'matchboard' }"><h4>👊🏼매칭</h4></RouterLink>
+          <RouterLink :to="{ name: 'matchboard' }"><h4 :class="{'text-black': isTottenham}">👊🏼매칭</h4></RouterLink>
         </div>
         <div class="col-md-4 user" v-if="nickName">
           <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc" class="logoImg">
-          <h4>{{ nickName }}님, 안녕하세요!</h4>
+          <h4 :class="{ 'text-white': !isTottenham, 'text-black': isTottenham }">{{ nickName }}님, 안녕하세요!</h4>
         </div>
         <div class="col-md-2">
-          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h4>📴로그아웃</h4></RouterLink>
+          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h4 :class="{'text-black': isTottenham}">📴로그아웃</h4></RouterLink>
         </div>
       </div>
     </div>
   </header>
 </template>
+
 <script setup>
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
+import { getTeamColorClass } from "@/utils/teamColors";
 
 const nickName = ref(null);
 const logoSrc = ref('');
-const headerStyle = ref({ backgroundColor: 'black' }); // 기본 배경색 설정
-const teamImageSrc = ref('');
+const headerColorClass = ref('');
+const isTottenham = ref(false);
 const router = useRouter();
-const teamImage = ref(null);
 
 const updateNickName = () => {
   nickName.value = sessionStorage.getItem("nickName");
-}
+};
 
 onMounted(async () => {
   updateNickName();
@@ -48,24 +49,12 @@ onMounted(async () => {
     } catch (error) {
       console.error("Error loading logo:", error);
     }
-    // 팀 이미지 설정
-    teamImageSrc.value = teamBackgrounds[favoriteTeam];
-    nextTick(() => {
-      adjustImageSize();
-    });
+
+    // 헤더 배경색 설정
+    headerColorClass.value = getTeamColorClass(favoriteTeam, 'color');
+    isTottenham.value = favoriteTeam === '토트넘';
   }
 });
-
-const adjustImageSize = () => {
-  if (teamImage.value) {
-    const img = teamImage.value;
-    img.style.width = 'auto';
-    img.style.height = 'auto';
-    img.style.maxWidth = '100%';
-    img.style.maxHeight = '300px';
-    img.style.objectFit = 'contain';
-  }
-}
 
 window.addEventListener('storage', () => {
   updateNickName();
@@ -80,9 +69,11 @@ const handlerLogout = (event) => {
   router.go(0);
 };
 </script>
+
 <style scoped>
 .header-bar {
   padding: 70px 50px;
+  color: white;
 }
 
 .header-login {
@@ -99,12 +90,46 @@ const handlerLogout = (event) => {
 
 a {
   text-decoration: none;
-  color: black;
+  color: white;
   font-size: 16px;
 }
 
 .user {
   display: flex;
   align-items: center;
+  text-align: end;
+}
+
+/* 팀별 배경색 */
+.mancity-color {
+  background-color: #6CABDD !important;
+}
+
+.manutd-color {
+  background-color: #DA291C !important;
+}
+
+.liverpool-color {
+  background-color: #C8102E !important;
+}
+
+.chelsea-color {
+  background-color: #034694 !important;
+}
+
+.arsenal-color {
+  background-color: #EF0107 !important;
+}
+
+.tottenham-color {
+  background-color: #132257 !important;
+}
+
+.tottenham-special {
+  background-color: white !important;
+}
+
+.text-black {
+  color: black !important;
 }
 </style>
