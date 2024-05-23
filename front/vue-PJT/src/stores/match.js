@@ -51,6 +51,7 @@ export const useMatchStore = defineStore('match', () => {
     axios.get(REST_MATCH_API)
       .then((response) => {
         matchList.value = response.data;
+        console.log(matchList.value[0].matchId);
       });
   };
 

@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div>
-      <h2>매치 디테일</h2>
-    </div>
-
     <div class="detail-container">
-      <div class="detail" style="display: flex;">
+      <div class="detail d-flex justify-content-evenly">
         <h4 style="margin-right: 100px;">분류 : {{ detail.teamBId ? '[마감]' : '[모집]' }}</h4>
         <h4 style="margin-right: 100px;">📆{{ detail.matchDate }}</h4>
         <h4>🕑{{ detail.matchTime }}</h4>
@@ -95,80 +91,76 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div v-if="detail.stadiumId" class="stadium-container">
-      <div class="row" v-if="imgSrc === 1">
-        <div class="col-md-5">
-          <img src="@/asset/stadium/유성풋살구장/유성풋살구장(1).png" alt="Stadium Image">
+      
+      <div v-if="detail.stadiumId" class="stadium-container">
+        <div class="row" v-if="imgSrc === 1">
+          <div class="col-md-5">
+            <img src="@/asset/stadium/유성풋살구장/유성풋살구장(1).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-5">
+            <img src="@/asset/stadium/유성풋살구장/유성풋살구장(2).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-2">
+            <div>{{ stadiumName }}</div>
+            <div>{{ stadiumAddress }}</div>
+            <div>내용 : {{ detail.content }}</div>
+          </div>
         </div>
-        <div class="col-md-5">
-          <img src="@/asset/stadium/유성풋살구장/유성풋살구장(2).png" alt="Stadium Image">
+        <div class="row" v-if="imgSrc === 2">
+          <div class="col-md-5">
+            <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(1).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-5">
+            <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(2).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-2">
+            <div><h4>{{ stadiumName }}</h4></div>
+            <div><h5>{{ stadiumAddress }}</h5></div>
+            <div><h5>{{ detail.authorName }} : {{ detail.content }}</h5></div>
+          </div>
         </div>
-        <div class="col-md-2">
-          <div>{{ stadiumName }}</div>
-          <div>{{ stadiumAddress }}</div>
-          <div>내용 : {{ detail.content }}</div>
+        <div class="row" v-if="imgSrc === 3">
+          <div class="col-md-5">
+            <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(1).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-5">
+            <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(2).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-2">
+            <div>{{ stadiumName }}</div>
+            <div>{{ stadiumAddress }}</div>
+            <div>내용 : {{ detail.content }}</div>
+          </div>
         </div>
-      </div>
-
-      <div class="row" v-if="imgSrc === 2">
-        <div class="col-md-5">
-          <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(1).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-5">
-          <img src="@/asset/stadium/대전가장풋살존/대전가장풋살존(2).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-2">
-          <div><h4>{{ stadiumName }}</h4></div>
-          <div><h5>{{ stadiumAddress }}</h5></div>
-          <div><h5>{{ detail.authorName }} : {{ detail.content }}</h5></div>
-        </div>
-      </div>
-
-      <div class="row" v-if="imgSrc === 3">
-        <div class="col-md-5">
-          <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(1).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-5">
-          <img src="@/asset/stadium/남선공원풋살장/남선공원풋살장(2).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-2">
-          <div>{{ stadiumName }}</div>
-          <div>{{ stadiumAddress }}</div>
-          <div>내용 : {{ detail.content }}</div>
-        </div>
-      </div>
-
-      <div class="row" v-if="imgSrc === 4">
-        <div class="col-md-5">
-          <img src="@/asset/stadium/가오풋살장/가오풋살장(1).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-5">
-          <img src="@/asset/stadium/가오풋살장/가오풋살장(2).png" alt="Stadium Image">
-        </div>
-        <div class="col-md-2">
-          <div>{{ stadiumName }}</div>
-          <div>{{ stadiumAddress }}</div>
-          <div>내용 : {{ detail.content }}</div>
+        <div class="row" v-if="imgSrc === 4">
+          <div class="col-md-5">
+            <img src="@/asset/stadium/가오풋살장/가오풋살장(1).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-5">
+            <img src="@/asset/stadium/가오풋살장/가오풋살장(2).png" alt="Stadium Image">
+          </div>
+          <div class="col-md-2">
+            <div>{{ stadiumName }}</div>
+            <div>{{ stadiumAddress }}</div>
+            <div>내용 : {{ detail.content }}</div>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div>
-      <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
-        <button @click="registMatch()">신청하기</button>
-      </div>
-      <div v-if="detail.teamBLeader === nickName">
-        <button @click="cancelMatch()">신청취소</button>
-      </div>
-      <div v-if="detail.authorName === nickName">
-        <router-link :to="{ name: 'matchupdate', params: { id: detail.id } }">
-          <button>수정하기</button>
-        </router-link>
-      </div>
-      <div v-if="detail.authorName === nickName">
-        <button @click="deleteMatch()">삭제하기</button>
+      <div class="buttons">
+        <div v-if="detail.teamBId == 0 && detail.authorName !== nickName">
+          <button @click="registMatch()">신청하기</button>
+        </div>
+        <div v-if="detail.teamBLeader === nickName">
+          <button @click="cancelMatch()">신청취소</button>
+        </div>
+        <div v-if="detail.authorName === nickName">
+          <router-link :to="{ name: 'matchupdate', params: { id: detail.id } }">
+            <button>수정하기</button>
+          </router-link>
+        </div>
+        <div v-if="detail.authorName === nickName">
+          <button @click="deleteMatch()">삭제하기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -282,7 +274,9 @@ onMounted(() => {
 }
 
 .detail-container {
-  margin: 50px;
+  margin-top: 100px;
+  margin-left: 250px;
+  margin-right: 250px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
@@ -326,5 +320,11 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
 }
 </style>
