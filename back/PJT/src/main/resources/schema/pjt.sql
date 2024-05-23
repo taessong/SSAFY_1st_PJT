@@ -159,7 +159,12 @@ CREATE TABLE futsal_recruit_post (
 
 INSERT INTO futsal_recruit_post (author_name, team_name, content, reg_date) VALUES
 ('태성', '토트넘', '더워지기 전에 함 안 하나?.? 대전 4반?.?', '2024-05-22 16:53:00'),
-('민퉁퉁', '토트넘', '내일 오전 10시 집합', '2024-05-21 14:11:00');
+('민퉁퉁', '토트넘', '내일 오전 10시 집합', '2024-05-21 14:11:00'),
+('범수', '맨유', '더워지기 전에 함 안 하나?.? 대전 4반?.?', '2024-05-22 16:53:00'),
+('창호', '첼시', '더워지기 전에 함 안 하나?.? 대전 4반?.?', '2024-05-22 16:53:00'),
+('승탁', '리버풀', '더워지기 전에 함 안 하나?.? 대전 4반?.?', '2024-05-22 16:53:00');
+
+SELECT * FROM futsal_recruit_post;
 
 -- 풋살 팀 테이블
 CREATE TABLE futsal_team (
@@ -170,10 +175,9 @@ CREATE TABLE futsal_team (
     FOREIGN KEY (team_name) REFERENCES team(team_name)
 );
 
-INSERT INTO futsal_team (leader_name, team_name)
-VALUES 
-('민퉁퉁', '토트넘'),
+INSERT INTO futsal_team (leader_name, team_name) VALUES 
 ('태성', '토트넘'),
+('민퉁퉁', '토트넘'),
 ('범수', '맨유'),
 ('창호', '첼시'),
 ('승탁', '리버풀');
@@ -189,8 +193,14 @@ CREATE TABLE futsal_team_member (
     FOREIGN KEY (member_name) REFERENCES user(nickname) ON DELETE CASCADE
 );
 
-INSERT INTO futsal_team_member(futsal_team_id, member_name) 
-VALUES (1, '노진구'), (1, '도라에몽'), (1, '신이슬'), (1, '왕비실'), (1, '민퉁퉁');
+INSERT INTO futsal_team_member(futsal_team_id, member_name) VALUES 
+(1, '노진구'), (1, '도라에몽'), (1, '신이슬'), (1, '왕비실'), (1, '민퉁퉁'),
+(3, '맹구'), (3, '짱구'), (3, '철수'), (3, '유리'), (3, '훈이'),
+(4, '소연'), (4, '용주'), (4, '선하'), (4, '선옥'), (4, '성현'),
+(5, '승준'), (5, '혜지'), (5, '수현'), (5, '정현'), (5, '지혜');
+
+-- 풋살 팀 멤버 테이블 조회
+SELECT * FROM futsal_team_member;
 
 -- 경기장 테이블
 CREATE TABLE stadium (
