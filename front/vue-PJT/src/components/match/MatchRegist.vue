@@ -6,9 +6,6 @@
       <div class="row">
         <div class="col-md-8">
           <div>
-            <h3>매칭 내용</h3>
-          </div>
-          <div>
             <label for="content">매치 내용 :</label>
             <textarea id="content" v-model="match.content"></textarea>
           </div>
