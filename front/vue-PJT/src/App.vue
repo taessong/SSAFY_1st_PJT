@@ -13,9 +13,5 @@ import Gpt from './components/gpt/Gpt.vue';
 </template>
 
 <style>
-html, body {
-        width: auto;
-        margin : 0;
-    }
 
 </style>

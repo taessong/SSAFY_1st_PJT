@@ -45,67 +45,85 @@ const teamBackgrounds = {
 };
 
 const teamImages = computed(() => teamBackgrounds[teamName] || []); 
-
 </script>
 
 <style scoped>
-img {
-  width: 550px;
-  height: auto;
-}
-
+/* 전체 화면 스타일 설정 */
 html, body {
   margin: 0;
   height: 100%;
 }
 
+/* body 스타일 설정 */
 body {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* 메인 컨테이너 스타일 설정 */
 .main-container {
   width: 80%;
   height: 80%;
-  background-color: #f9f9f9; /* 배경색 설정 */
-  padding: 30px; /* 내부 여백 설정 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-  box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
-  margin: auto; /* 중앙에 배치 */
+  background-color: #f9f9f9;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin: auto;
 }
 
+/* 공지사항 보드 스타일 설정 */
 .notice-boards {
   display: flex;
   width: 100%;
   height: 100%;
 }
 
+/* 좌측 패널 스타일 설정 */
 .left-panel {
   flex: 1;
-  margin-right: 10px; /* 오른쪽 여백 설정 */
-  box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
+  margin-right: 10px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
+/* 우측 패널 스타일 설정 */
 .right-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 요소 간격 설정 */
-  box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
+  gap: 10px;
+  box-sizing: border-box;
 }
 
+/* 공지사항 스타일 설정 */
 .notice {
   flex: 1;
-  margin: 0 10px; /* 양쪽 여백 설정 */
-  box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
+  margin: 0 10px;
+  box-sizing: border-box;
 }
 
+/* 비디오 스타일 설정 */
 .video {
   flex: 1;
-  margin: 0 10px; /* 양쪽 여백 설정 */
-  box-sizing: border-box; /* padding과 border를 너비에 포함시킴 */
+  margin: 0 10px;
+  box-sizing: border-box;
+}
+
+/* 캐러셀 아이템 스타일 설정 */
+.carousel-inner {
+  width: 90%;
+  height: 400px; /* 고정된 높이 설정 */
+  display: flex;
+  align-content: center;
+  margin-left: 30px;
+}
+
+/* 이미지 스타일 설정 */
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 컨테이너를 완전히 덮도록 설정 */
 }
 </style>
