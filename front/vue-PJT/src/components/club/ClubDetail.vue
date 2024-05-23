@@ -3,14 +3,14 @@
     <div class="d-flex justify-content-between mb-4">
       <button
         @click="goBack"
-        :class="['btn', 'btn-dark', computedFavoriteTeamButtonClass]"
+        :class="['btn', computedFavoriteTeamButtonClass]"
       >
         ◀️ 뒤로가기
       </button>
     </div>
     <div class="mb-4">
       <div class="d-flex justify-content-between align-items-center">
-        <h2 :class="computedFavoriteTeamColorClass">{{ chatItem.title }}</h2>
+        <h2>{{ chatItem.title }}</h2>
         <div class="author">
           <p class="fw-bold mb-0">작성자 : {{ chatItem.authorName }}</p>
           <p class="fw-bold mb-0">작성 일자 : {{ chatItem.regDate }}</p>
@@ -28,12 +28,7 @@
       <div v-if="isWriter">
         <button
           @click="goUpdate()"
-          :class="[
-            'btn',
-            'btn-warning',
-            computedFavoriteTeamButtonClass,
-            'me-2',
-          ]"
+          :class="['btn', 'btn-warning', computedFavoriteTeamButtonClass, 'me-2']"
         >
           수정
         </button>
@@ -84,13 +79,13 @@
             <div v-if="comment.authorName === currentNickName">
               <button
                 @click="toggleModifyMode(comment.commentId)"
-                class="btn btn-warning me-2"
+                :class="['btn', 'btn-warning', computedFavoriteTeamButtonClass, 'me-2']"
               >
                 수정
               </button>
               <button
                 @click="confirmCommentDelete(comment.commentId)"
-                class="btn btn-danger"
+                :class="['btn', 'btn-warning', computedFavoriteTeamButtonClass, 'me-2']"
               >
                 삭제
               </button>
@@ -108,13 +103,12 @@
             name="content"
             v-model="comment.content"
           />
-          <button class="btn btn-primary" type="submit">등록</button>
+          <button :class="['btn', 'btn-primary', computedFavoriteTeamButtonClass, 'me-2']" type="submit">등록</button>
         </div>
       </form>
     </div>
   </div>
 </template>
-
 <script setup>
 import { useClubStore } from "@/stores/club";
 import { onMounted, computed, ref } from "vue";
@@ -140,15 +134,11 @@ const currentNickName = sessionStorage.getItem("nickName");
 const favoriteTeam = ref(sessionStorage.getItem("favoriteTeam"));
 
 const computedFavoriteTeamColorClass = computed(() => {
-  const className = getTeamColorClass(favoriteTeam.value);
-  console.log('computedFavoriteTeamColorClass:', className); // 콘솔 로그 추가
-  return className;
+  return getTeamColorClass(favoriteTeam.value);
 });
 
 const computedFavoriteTeamButtonClass = computed(() => {
-  const className = `${getTeamColorClass(favoriteTeam.value)}-btn`;
-  console.log('computedFavoriteTeamButtonClass:', className); // 콘솔 로그 추가
-  return className;
+  return getTeamColorClass(favoriteTeam.value, 'btn');
 });
 
 const goBack = () => {
@@ -272,7 +262,6 @@ onMounted(async () => {
   }
 });
 </script>
-
 <style scoped>
 .card {
   border-radius: 8px;
@@ -309,10 +298,89 @@ h2 {
 
 .content {
   font-size: 20px;
-
 }
 
 .author {
   text-align: end;
+}
+
+/* 팀 컬러 스타일 추가 */
+.mancity-color, .mancity-btn {
+  background-color: #6CABDD;
+  color: white;
+}
+
+.manutd-color, .manutd-btn {
+  background-color: #DA291C;
+  color: white;
+}
+
+.liverpool-color, .liverpool-btn {
+  background-color: #C8102E;
+  color: white;
+}
+
+.chelsea-color, .chelsea-btn {
+  background-color: #034694;
+  color: white;
+}
+
+.arsenal-color, .arsenal-btn {
+  background-color: #EF0107;
+  color: white;
+}
+
+.tottenham-color, .tottenham-btn {
+  background-color: #132257;
+  color: white;
+}
+
+/* 클래스 우선순위를 높이기 위해 구체적인 선택자 사용 */
+.btn-warning.mancity-btn {
+  background-color: #6CABDD;
+}
+
+.btn-danger.mancity-btn {
+  background-color: #6CABDD;
+}
+
+.btn-warning.manutd-btn {
+  background-color: #DA291C;
+}
+
+.btn-danger.manutd-btn {
+  background-color: #DA291C;
+}
+
+.btn-warning.liverpool-btn {
+  background-color: #C8102E;
+}
+
+.btn-danger.liverpool-btn {
+  background-color: #C8102E;
+}
+
+.btn-warning.chelsea-btn {
+  background-color: #034694;
+}
+
+.btn-danger.chelsea-btn {
+  background-color: #034694;
+}
+
+.btn-warning.arsenal-btn {
+  background-color: #EF0107;
+}
+
+.btn-danger.arsenal-btn {
+  background-color: #EF0107;
+}
+
+.btn-warning.tottenham-btn {
+  background-color: #132257;
+}
+
+.btn-danger.tottenham-btn {
+  background-color: #132257;
 }
 </style>

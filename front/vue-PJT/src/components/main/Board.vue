@@ -73,7 +73,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
@@ -92,7 +91,7 @@ const showRecruit = ref(false);
 
 const favoriteTeam = ref(sessionStorage.getItem("favoriteTeam"));
 const computedFavoriteTeamColorClass = computed(() => getTeamColorClass(favoriteTeam.value));
-const computedFavoriteTeamButtonClass = computed(() => `${getTeamColorClass(favoriteTeam.value)}-btn`);
+const computedFavoriteTeamButtonClass = computed(() => getTeamColorClass(favoriteTeam.value, 'btn'));
 
 // Debugging: Log the computed classes
 console.log("Favorite Team:", favoriteTeam.value);
@@ -130,14 +129,18 @@ onMounted(() => {
   recruitStore.fetchRecruitDataSummary();
 });
 </script>
-<style>
+<style scoped>
+* {
+  font-weight: bold;
+}
+
 .click {
   cursor: pointer;
 }
 
 .btn-inactive {
-  background-color: #6c757d !important;
-  color: white !important;
+  background-color: #e2e1e1 !important; /* 밝은 회색 배경색 */
+  color: #000 !important; /* 어두운 회색 텍스트 색상 */
 }
 
 .btn-group > .btn {
@@ -172,32 +175,32 @@ onMounted(() => {
 }
 
 /* Define color variables for different teams */
-.mancity-btn {
+.mancity-btn, .mancity-color {
   --team-bg: #6CABDD !important;
   --team-text: #fff !important;
 }
 
-.manutd-btn {
+.manutd-btn, .manutd-color {
   --team-bg: #DA291C !important;
   --team-text: #fff !important;
 }
 
-.liverpool-btn {
+.liverpool-btn, .liverpool-color {
   --team-bg: #C8102E !important;
   --team-text: #fff !important;
 }
 
-.chelsea-btn {
+.chelsea-btn, .chelsea-color {
   --team-bg: #034694 !important;
   --team-text: #fff !important;
 }
 
-.arsenal-btn {
+.arsenal-btn, .arsenal-color {
   --team-bg: #EF0107 !important;
   --team-text: #fff !important;
 }
 
-.tottenham-btn {
+.tottenham-btn, .tottenham-color {
   --team-bg: #132257 !important;
   --team-text: #fff !important;
 }
@@ -206,11 +209,6 @@ onMounted(() => {
 .btn.active {
   background-color: var(--team-bg) !important;
   color: var(--team-text) !important;
-}
-
-.btn-inactive {
-  background-color: #6c757d !important;
-  color: white !important;
 }
 
 .btn {
