@@ -37,7 +37,7 @@
             <tbody>
               <tr v-for="(item, index) in store.chatItems" :key="index">
                 <td>[수다]</td>
-                <td class="click" @click="selectPostAndNavigate(item)">{{ item.title }}</td>
+                <td class="click text-nowrap" @click="selectPostAndNavigate(item)">{{ item.title }}</td>
                 <td>{{ item.authorName }}</td>
                 <td>{{ item.regDate }}</td>
                 <td>{{ item.viewCnt }}</td>
@@ -55,13 +55,12 @@
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
-                <th scope="col">조회수</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in recruitStore.recruitItems" :key="index">
                 <td>[모집]</td>
-                <td class="click" @click="goToDetail(item.recruitmentId)">{{ item.content }}</td>
+                <td class="click text-nowrap" @click="goToDetail(item.recruitmentId)">{{ item.content }}</td>
                 <td>{{ item.authorName }}</td>
                 <td>{{ item.regDate }}</td>
                 <td>{{ item.viewCnt }}</td>
@@ -73,6 +72,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
@@ -129,6 +129,7 @@ onMounted(() => {
   recruitStore.fetchRecruitDataSummary();
 });
 </script>
+
 <style scoped>
 * {
   font-weight: bold;
@@ -136,6 +137,10 @@ onMounted(() => {
 
 .click {
   cursor: pointer;
+}
+
+.text-nowrap {
+  white-space: nowrap !important; /* 텍스트를 한 줄로 표시 */
 }
 
 .btn-inactive {
@@ -172,6 +177,7 @@ onMounted(() => {
   vertical-align: middle !important; /* 세로 중앙 정렬 */
   border-top: none !important; /* 행 사이의 줄 제거 */
   color: var(--team-bg) !important; /* 팀 색상에 따른 동적 텍스트 색상 */
+  white-space: nowrap; /* 줄 바꿈 없이 한 줄로 표시 */
 }
 
 /* Define color variables for different teams */

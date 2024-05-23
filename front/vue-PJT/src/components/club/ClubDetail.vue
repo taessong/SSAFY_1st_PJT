@@ -181,9 +181,10 @@ const hasRecommended = (commentId) => {
   return recommendedComments.value.includes(commentId);
 };
 
-const confirmDelete = (postId) => {
+const confirmDelete = async (postId) => {
   if (window.confirm("정말 삭제하시겠습니까?")) {
-    deleteBoard(postId);
+    await deleteBoard(postId);
+    router.push({name: 'clubBoard'});
   }
 };
 
@@ -221,6 +222,7 @@ const deleteBoard = async (postId) => {
 const confirmCommentDelete = (commentId) => {
   if (window.confirm("정말 댓글을 삭제하시겠습니까?")) {
     commentDelete(commentId);
+    router.go(0);
   }
 };
 

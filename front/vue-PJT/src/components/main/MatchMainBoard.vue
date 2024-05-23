@@ -18,7 +18,7 @@
         <tbody>
           <tr v-for="match in store.matchList" :key="match.id">
             <td>{{ match.teamBId ? '[마감]' : '[모집]' }}</td>
-            <td>{{ match.content }}</td>
+            <td class="click" @click="goToDetail(match.matchId)">{{ match.content }}</td>
             <td>{{ match.authorName }}</td>
             <td>{{ match.matchDate }}</td>
             <td>{{ match.matchTime }}</td>
@@ -52,6 +52,10 @@ const gotoMatchBoard = () => {
   router.push({ name: "matchboard" });
 };
 
+const goToDetail = (id) => {
+  router.push({ name: "matchdetail", params: { id } });
+};
+
 const getBoardListSummary = () => {
   store.getBoardListSummary();
   for(let i=0; i<store.matchList.length; i++){
@@ -67,6 +71,10 @@ onMounted(() => {
 .container {
   padding: 15px;
   width: 100%;
+}
+
+.click {
+  cursor: pointer;
 }
 
 .match-header {
@@ -89,6 +97,10 @@ onMounted(() => {
 
 h2 {
   font-weight: bolder;
+}
+
+tr td {
+  font-weight: bold;
 }
 
 .table-hover tbody tr:hover {

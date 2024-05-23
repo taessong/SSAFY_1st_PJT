@@ -19,9 +19,9 @@
             <th :class="favoriteTeamColorClass">최대인원</th>
           </tr>
         </thead>
-        <tbody> 
+        <tbody>
           <tr>
-            <td>{{ recruitItem.full }}</td>
+            <td>{{ recruitItem.full ? '마감' : '모집' }}</td>
             <td>{{ recruitItem.content }}</td>
             <td>{{ recruitItem.authorName }}</td>
             <td>{{ recruitItem.regDate }}</td>
@@ -34,11 +34,25 @@
       <button @click="applyTeam" :class="['btn', favoriteTeamButtonClass, 'me-2']">신청하기</button>
       <button @click="cancleTeam" :class="['btn', favoriteTeamButtonClass]">취소하기</button>
     </div>
-    <div v-for="member in futsalMember" :key="member.id" class="mb-2">
-      {{ member.memberName }}
+    <div class="table-responsive">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th :class="favoriteTeamColorClass">팀원 이름</th>
+            <th :class="favoriteTeamColorClass">팀원 ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="member in futsalMember" :key="member.id">
+            <td>{{ member.memberName }}</td>
+            <td>{{ member.id }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -70,66 +84,65 @@ const goBack = () => {
 
 const gotoUpdate = () => {
   const recruitId = route.params.id;
-  router.push({name: 'recruitUpdate', params: {id : recruitId}})
-}
+  router.push({ name: 'recruitUpdate', params: { id: recruitId } });
+};
 
 const gotoDelete = async () => {
   const recruitId = route.params.id;
   await store.deleteRecruitBoard(recruitId);
-  //팀 삭제까지 동시에 수행하기
+  // 팀 삭제까지 동시에 수행하기
   await axios.delete('/futsal/board/team');
   console.log("삭제완료");
-  router.push({name: 'clubBoard'});
-}
+  router.push({ name: 'clubBoard' });
+};
 
 const applyTeam = async () => {
-  if(sessionStorage.getItem("nickName") === recruitItem.value.authorName){
+  if (sessionStorage.getItem("nickName") === recruitItem.value.authorName) {
     alert("작성자는 팀 리더이기 때문에 신청을 할 수 없습니다.");
-  }
-  else{
+  } else {
     try {
       await store.isTeamMember();
       router.go(0);
     } catch (error) {
-      console.log("에러!!!", error)
+      console.log("에러!!!", error);
     }
   }
-}
+};
 
 const cancleTeam = async () => {
-  for(let i = 0; i < futsalMember.value.length; i++){
-    if(futsalMember.value[i].memberName === sessionStorage.getItem("nickName")){
+  for (let i = 0; i < futsalMember.value.length; i++) {
+    if (futsalMember.value[i].memberName === sessionStorage.getItem("nickName")) {
       try {
         await axios.delete(`futsal/board/team/${futsalMember.value[i].futsalTeamId}`, {
           params: {
             memberName: futsalMember.value[i].memberName
           }
         });
-        alert("삭제 됐어요~"); 
+        alert("삭제 됐어요~");
         router.go(0);
-      }catch(err){
-        console.log(err, "에러다")
+      } catch (err) {
+        console.log(err, "에러다");
       }
     }
   }
-}
+};
 
-onMounted(async() => {
+onMounted(async () => {
   const recruitmentId = route.params.id;
   // await store.fetchRcruitOneData(recruitmentId);
   await store.fetchTeamData(recruitmentId);
-  if(sessionStorage.getItem("nickName") === recruitItem.value.authorName){
+  if (sessionStorage.getItem("nickName") === recruitItem.value.authorName) {
     isWriter.value = true;
   }
 
-  if(futsalMember.value.length + 1 >= 6){
+  if (futsalMember.value.length + 1 >= 6) {
     recruitItem.value.full = true;
-  }
-  else{
+  } else {
     recruitItem.value.full = false;
   }
 });
 </script>
+
 <style scoped>
 .container {
   padding: 15px;

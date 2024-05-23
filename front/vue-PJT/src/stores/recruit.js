@@ -17,31 +17,27 @@ export const useRecruitStore = defineStore("recruit", () => {
     return `${year}/${month}/${day} ${hours}:${minutes}`;
   };
 
-  //모집게시판에있는 글을 들고오는것. (팀이름일치해야돼!!)
+  // 모집게시판에 있는 글을 들고오는 것 (팀 이름 일치해야 함)
   const fetchRecruitData = async () => {
     try {
       const response = await axios.get(`/futsal/board`);
-      recruitItems.value = response.data.map((item) => {
-        return {
-          ...item,
-          regDate: formatDate(item.regDate),
-        };
-      });;
+      recruitItems.value = response.data.map((item) => ({
+        ...item,
+        regDate: formatDate(item.regDate),
+      }));
     } catch (error) {
       console.log("Failed to fetch RecruitData", error);
     }
   };
 
-  //모집게시판에있는 글을 요약하여 들고오는것. (팀이름일치해야돼!!)
+  // 모집게시판에 있는 글을 요약하여 들고오는 것 (팀 이름 일치해야 함)
   const fetchRecruitDataSummary = async () => {
     try {
       const response = await axios.get(`/futsal/board`);
-      recruitItems.value = response.data.slice(0, 7).map((item) => {
-        return {
-          ...item,
-          regDate: formatDate(item.regDate),
-        };
-      });
+      recruitItems.value = response.data.slice(0, 7).map((item) => ({
+        ...item,
+        regDate: formatDate(item.regDate),
+      }));
     } catch (error) {
       console.log("Failed to fetch RecruitData", error);
     }
@@ -52,8 +48,10 @@ export const useRecruitStore = defineStore("recruit", () => {
   const fetchRcruitOneData = async (id) => {
     try {
       const response = await axios.get(`/futsal/board/${id}`);
-      recruitItem.value = response.data;
-      //console.log(response);
+      recruitItem.value = {
+        ...response.data,
+        regDate: formatDate(response.data.regDate),
+      };
     } catch (error) {
       console.error(error);
     }
@@ -79,42 +77,42 @@ export const useRecruitStore = defineStore("recruit", () => {
     }
   };
 
-
   const futsalTeamId = ref(0);
   const futsalMember = ref([]);
 
   const fetchTeamData = async (id) => {
-    const response = await axios.get("/futsal/board/team");
-    // console.log(response.data);
     await fetchRcruitOneData(id);
-    for (let i = 0; i < response.data.length; i++) {
-      //리더랑 작성자랑 이름이 똑같아야함!
-      if (response.data[i].leaderName === recruitItem.value.authorName) {
-        futsalTeamId.value = response.data[i].futsalTeamId;
-        console.log(futsalTeamId.value);
-        const teamData = await axios.get(`futsal/board/team/${futsalTeamId.value}`);
-        futsalMember.value = teamData.data;
-        // console.log(futsalMember.value);
-        return;
+    try {
+      const response = await axios.get("/futsal/board/team");
+      for (let i = 0; i < response.data.length; i++) {
+        // 리더와 작성자가 이름이 같아야 함
+        if (response.data[i].leaderName === recruitItem.value.authorName) {
+          futsalTeamId.value = response.data[i].futsalTeamId;
+          console.log(futsalTeamId.value);
+          const teamData = await axios.get(`futsal/board/team/${futsalTeamId.value}`);
+          futsalMember.value = teamData.data.map((member) => ({
+            ...member,
+            regDate: formatDate(member.regDate),
+          }));
+          return;
+        }
       }
+    } catch (error) {
+      console.error("Failed to fetch team data", error);
     }
   };
 
   const isTeamMember = async () => {
     try {
-
       if (futsalMember.value.length >= 5) {
         alert("꽉 차버렸쥐롱~~~~~~~~~");
         return;
       }
 
       for (let i = 0; i < futsalMember.value.length; i++) {
-        //만약에 자기가 이미 신청한 상태라면??
-        if (
-          futsalMember.value[i].memberName === sessionStorage.getItem("nickName")
-        ) {
+        // 만약 자기가 이미 신청한 상태라면
+        if (futsalMember.value[i].memberName === sessionStorage.getItem("nickName")) {
           alert("이미 신청하셨잖아요?");
-
           return;
         }
       }
@@ -134,16 +132,10 @@ export const useRecruitStore = defineStore("recruit", () => {
       } catch (error) {
         console.log("어 씌 등록안됐따.");
       }
-
-      //applyTeamMember(futsalTeamId);
     } catch (error) {
       console.log("에러에용에러~~", error);
     }
   };
-
-  //const applyTeamMember = async (futsalTeamId) => {
-
-  //}
 
   return {
     recruitItems,

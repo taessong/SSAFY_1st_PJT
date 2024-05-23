@@ -233,9 +233,10 @@ onMounted(() => {
 </script>
 <style scoped>
 .detail-container {
+  width: 80%;
   margin-top: 50px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
