@@ -5,13 +5,13 @@
         <article class="notice">
           <BoardVue :teamName="teamName" />
         </article>
+        <article class="video">
+          <YoutubeVideo />
+        </article>
       </div>
       <div class="right-panel">
         <article class="notice">
           <MatchMainBoard />
-        </article>
-        <article class="video">
-          <YoutubeVideo />
         </article>
       </div>
     </div>
