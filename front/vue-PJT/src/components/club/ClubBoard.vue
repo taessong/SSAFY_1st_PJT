@@ -22,13 +22,13 @@
       <div class="btn-group mb-4">
         <button
           @click="showChatBoard"
-          :class="['btn', { 'btn-secondary': !showChat, [favoriteTeamButtonClass]: showChat }]"
+          :class="['btn', showChat ? favoriteTeamButtonClass : 'btn-light']"
         >
           수다
         </button>
         <button
           @click="showRecruitBoard"
-          :class="['btn', { 'btn-secondary': !showRecruit, [favoriteTeamButtonClass]: showRecruit }]"
+          :class="['btn', showRecruit ? favoriteTeamButtonClass : 'btn-light']"
         >
           모집
         </button>
@@ -67,11 +67,11 @@
           <table class="table table-hover text-center">
             <thead>
               <tr>
-                <th>분류</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>총 인원</th>
+                <th :class="favoriteTeamColorClass">분류</th>
+                <th :class="favoriteTeamColorClass">제목</th>
+                <th :class="favoriteTeamColorClass">작성자</th>
+                <th :class="favoriteTeamColorClass">작성일</th>
+                <th :class="favoriteTeamColorClass">총 인원</th>
               </tr>
             </thead>
             <tbody>
@@ -80,7 +80,6 @@
                 <td 
                   @click="goToDetail(item.recruitmentId)" 
                   class="click"
-                  :class="item.colorClass"
                 >
                   {{ item.content }}
                 </td>
@@ -202,6 +201,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .click {
   cursor: pointer;
 }
@@ -260,9 +260,9 @@ th {
 }
 
 /* 비활성화된 버튼의 기본 색상 */
-.btn-secondary {
-  background-color: #6c757d;
-  color: #fff;
+.btn-light {
+  background-color: #d6d6d6 !important; /* 밝은 회색 */
+  color: #333 !important; /* 어두운 회색 */
 }
 
 .btn {

@@ -19,9 +19,6 @@
   </header>
 </template>
 
-
-<!-- 여기에 나중에 로그인 여부 확인해서, 로그인 x일시 로고만, 아닐 시 전부 띄우게 해야함-->
-
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
@@ -81,7 +78,7 @@ const handlerLogout = (event) => {
   sessionStorage.removeItem("favoriteTeam");
   nickName.value = null;
   alert("로그아웃 되었습니다.");
-  router.push({ name: 'login' });
+  router.go(0);
 };
 </script>
 
@@ -94,35 +91,36 @@ const handlerLogout = (event) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: fit-content;
+  width: 1903px;
+  height: 300px;
 }
 
 .header-sub {
   display: flex;
-  margin-top: 9px;
+  margin-top: 15px;
   margin-right: auto;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .user-info {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 15px;
 }
 
 .header-login {
   display: flex;
-  margin-top: 8px;
 }
 
 .logoImg {
-  margin-top: 10px;
+  margin-top: 3px;
 }
 
 h1 {
   color: white;
   margin-left: 5px;
   margin-right: 10px;
-  margin-top: 20px
+  margin-top: 8px;
 }
 
 h3 {
@@ -134,6 +132,7 @@ h3 {
 
 a {
   text-decoration-line: none;
+  margin-top: 15px;
 }
 
 .a {
