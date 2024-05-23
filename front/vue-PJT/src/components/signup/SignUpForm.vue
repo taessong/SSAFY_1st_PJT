@@ -1,71 +1,85 @@
 <template>
-  <div>
-    <div class="head">회원가입</div>
+  <div class="container mt-5">
+    <div class="head text-center mb-4">회원가입</div>
     <form @submit.prevent="handleSubmit">
-      <fieldset class="signup-form">
-        <div class="top-signup">
-          <div class="file-upload-container">
+      <fieldset class="signup-form p-4">
+        <div class="row top-signup mb-4 mt-5">
+          <div class="col-md-4 text-center file-upload-container">
             <input
               type="file"
               name="userImgPath"
               @change="handleFileUpload"
               ref="fileInput"
-              style="display: none"
+              class="d-none"
             />
-            <button @click="triggerFileInput" type="button">Upload</button>
+            <button @click="triggerFileInput" type="button" class="btn btn-primary mb-3">Upload</button>
             <img
               :src="filePath || defaultImagePath"
               alt="Profile Image"
               @load="resizeImage"
               ref="image"
-              class="profile-image"
+              class="img-fluid rounded-circle profile-image mb-3"
             />
+            <div v-if="teamLogoPath" class="team-logo-container mb-3">
+              <img :src="teamLogoPath" alt="Team Logo" @load="resizeImage" class="img-fluid" />
+              <p>선택된 팀 : {{ selectedTeam }}</p>
+            </div>
+            <div v-else class="team-logo-container">아직 선택 안함</div>
           </div>
-          <div class="inputForms">
-            <div class="inputForm">
-              <label for="userId">아이디</label>
+          <div class="col-md-8 inputForms">
+            <div class="form-group mb-3">
+              <label for="userId" class="form-label">아이디</label>
               <input
                 type="text"
                 id="userId"
                 v-model="form.userId"
                 name="userId"
+                class="form-control"
                 placeholder="아이디를 입력하세요(~20자 이내)"
-                size="25"
               />
             </div>
-            <div class="inputForm">
-              <label for="password">비밀 번호</label>
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">비밀 번호</label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 v-model="form.password"
                 name="password"
+                class="form-control"
                 placeholder="비밀 번호를 입력하세요"
               />
             </div>
-            <div class="inputForm">
-              <label for="nickName">닉네임</label>
+            <div class="form-group mb-3">
+              <label for="nickName" class="form-label">닉네임</label>
               <input
                 type="text"
                 id="nickName"
                 v-model="form.nickName"
                 name="nickName"
+                class="form-control"
                 placeholder="닉네임을 입력하세요."
               />
             </div>
-            <div class="inputForm">
-              <label for="realName">본 명</label>
+            <div class="form-group mb-3">
+              <label for="realName" class="form-label">본 명</label>
               <input
                 type="text"
                 id="realName"
                 v-model="form.realName"
                 name="realName"
+                class="form-control"
                 placeholder="본명을 입력하세요."
               />
             </div>
-            <div class="inputForm">
-              <label for="teamName">선호 팀</label>
-              <select name="teamName" id="teamName" v-model="form.teamName" @change="handleTeamChange">
+            <div class="form-group mb-3">
+              <label for="teamName" class="form-label">선호 팀</label>
+              <select
+                name="teamName"
+                id="teamName"
+                v-model="form.teamName"
+                class="form-select"
+                @change="handleTeamChange"
+              >
                 <option value="">선호하는 팀을 선택하세요.</option>
                 <option value="맨시티">맨체스터시티</option>
                 <option value="맨유">맨체스터유나이티드</option>
@@ -78,16 +92,9 @@
           </div>
         </div>
         <div class="bottom-signup">
-          <div v-if="teamLogoPath" class="team-logo-container">
-            <img :src="teamLogoPath" alt="Team Logo" @load="resizeImage" />
-            <p>선택된 팀 : {{ selectedTeam }}</p>
-          </div>
-          <div v-else class="team-logo-container">아직 선택 안함</div>
-          <div class="signupOrReset">
-            <button @click="resetForm" type="button" class="button">
-              초기화
-            </button>
-            <button type="submit" class="button">가입</button>
+          <div class="d-flex justify-content-center">
+            <button @click="resetForm" type="button" class="btn btn-secondary me-2">초기화</button>
+            <button type="submit" class="btn btn-primary">가입</button>
           </div>
         </div>
       </fieldset>
@@ -98,10 +105,10 @@
 <script setup>
 import { ref } from "vue";
 import axios from "@/api/axios";
+import router from "@/router";
 
 // 기본 프로필 이미지 경로
 import defaultImageImg from "@/asset/loginImage/profileImg.png"; // 여기에 기본 이미지 경로를 넣으세요.
-import router from "@/router";
 
 const defaultImagePath = defaultImageImg;
 const filePath = ref("");
@@ -109,7 +116,7 @@ const fileInput = ref(null);
 const image = ref(null);
 const selectedTeam = ref("");
 
-//axios를 통해 내보낼 데이터 폼
+// axios를 통해 내보낼 데이터 폼
 const form = ref({
   userId: "",
   password: "",
@@ -153,7 +160,7 @@ const getTeamLogoPath = (team) => {
   return a;
 };
 
-//파일을 선택하면 해당 파일을 브라우저에서 사용할 수 있도록 하는 함수
+// 파일을 선택하면 해당 파일을 브라우저에서 사용할 수 있도록 하는 함수
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   const fileData = new FormData();
@@ -167,7 +174,6 @@ const handleFileUpload = async (event) => {
     });
     const fileUrl = response.data;
     filePath.value = fileUrl; // 업로드된 파일의 URL을 form에 저장
-    console.log(filePath.value)
     form.value.userImgPath = fileUrl; // 업로드된 파일의 URL을 form에 저장
   } catch (error) {
     console.error('파일 업로드 실패:', error);
@@ -178,7 +184,7 @@ const triggerFileInput = () => {
   fileInput.value.click();
 };
 
-//브라우저 이미지에 맞게 해당 이미지를 조절하는 함수
+// 브라우저 이미지에 맞게 해당 이미지를 조절하는 함수
 const resizeImage = () => {
   if (image.value) {
     const maxDimension = 200;
@@ -215,7 +221,6 @@ const handleSubmit = async () => {
 
   try {
     const response = await axios.post('/user/signup', user);
-    // console.log(response);
     alert('회원가입 성공!');
     router.push('/');
   } catch (error) {
@@ -227,127 +232,48 @@ const handleSubmit = async () => {
 
 <style scoped>
 .head {
-  text-align: center;
   font-size: 32px;
   font-weight: 800;
-  padding: 20px;
 }
 
 .signup-form {
-  align-items: center;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 6px;
-  height: fit-content;
-  margin-bottom: 30px;
   border: 2px solid black;
-  display: flex;
-  flex-direction: column;
-}
-
-.top-signup {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 .file-upload-container {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  flex: 1;
-  margin-right: 15px;
+  margin-bottom: 20px;
 }
 
-.inputForms {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 2;
-}
-
-.inputForm {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-label {
-  width: 100px;
-  text-align: center;
-  margin-right: 10px;
-  border: 2px solid black;
-  border-radius: 15px;
-}
-
-input[type="text"],
-select {
-  flex: 1;
-  padding: 5px;
-  border: 2px solid black;
-  border-radius: 15px;
-}
-
-button {
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 10px;
-  margin-top: 5px;
-}
-
-img {
+.profile-image {
   margin-top: 20px;
-  width: auto; /* auto로 설정 */
-  height: auto; /* auto로 설정 */
-  max-width: fit-content; /* 이미지의 최대 크기를 설정 */
-  max-height: fit-content; /* 이미지의 최대 크기를 설정 */
-  object-fit: cover; /* 원본 비율을 유지 */
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
   border-radius: 50%;
 }
 
-
-.team-logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
 .team-logo-container img {
-  width: fit-content;
-  height: fit-content;
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
 }
 
-p {
+.team-logo-container p {
   font-size: 15px;
   font-weight: 800;
-  text-align: center;
 }
 
 .bottom-signup {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
-
-.signupOrReset {
-  margin: 60px;
-  display: flex;
-}
-
-.button {
-  width: 100px;
-  margin-left: 25px;
-  margin-right: 10px;
-  border: 2px solid black;
-  border-radius: 15px;
-  padding: 4px 6px;
-  text-decoration-line: none;
-  color: black;
-  font-weight: 800;
-}
-
-
 </style>

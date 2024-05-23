@@ -1,39 +1,36 @@
 <template>
-  <div>
-    <div class="head">로그인</div>
-    <form @submit.prevent="handleSubmit">
-      <fieldset class="login-form">
-        <h1>
-          Run! <br />
-          On Ground
-        </h1>
-        <div class="form">
-          <label for="userId">아이디</label>
+  <div class="container mt-5">
+    <div class="head text-center mb-4">로그인</div>
+    <form @submit.prevent="handleSubmit" class="mx-auto" style="max-width: 500px;">
+      <fieldset class="login-form p-4 border rounded shadow">
+        <h1 class="text-center mb-4">Run! <br /> On Ground</h1>
+        <div class="form-group mb-3">
+          <label for="userId" class="form-label">아이디</label>
           <input
             type="text"
             id="userId"
             name="userId"
             v-model="form.userId"
-            class="inputText"
+            class="form-control"
             maxlength="20"
             placeholder="아이디를 입력하세요."
           />
         </div>
-        <div class="form">
-          <label for="passsword">비밀번호</label>
+        <div class="form-group mb-4">
+          <label for="password" class="form-label">비밀번호</label>
           <input
-            type="text"
+            type="password"
             id="password"
             name="password"
             v-model="form.password"
-            class="inputText"
+            class="form-control"
             placeholder="비밀번호를 입력하세요."
           />
         </div>
 
-        <div class="sign">
-          <button type="submit">로그인</button>
-          <button type="button" @click="gotoSignupPage">회원가입</button>
+        <div class="sign d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary w-45">로그인</button>
+          <button type="button" @click="gotoSignupPage" class="btn btn-secondary w-45">회원가입</button>
         </div>
       </fieldset>
     </form>
@@ -41,7 +38,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from "vue";
+import { nextTick, ref } from "vue";
 import axios from "@/api/axios";
 import { useRouter } from "vue-router";
 
@@ -52,7 +49,6 @@ const form = ref({
   password: "",
 });
 
-const nickName = ref(null);
 const router = useRouter();
 
 //눌렀을 때 회원가입 페이지로 이동 시키기
@@ -113,71 +109,16 @@ async function getData() {
 
 <style scoped>
 .head {
-  text-align: center;
   font-size: 32px;
   font-weight: 800;
-  padding: 20px;
-}
-.login-form {
-  align-items: center;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 6px;
-  height: fit-content;
-  margin-bottom: 30px;
-  border: 2px solid black;
 }
 
-h1 {
-  text-align: center;
-  font-size: 60px;
+.login-form h1 {
+  font-size: 2rem;
+  line-height: 1.2;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-}
-
-label {
-  text-align: center;
-  padding: 15px;
-  font-size: x-large;
-  color: #70ace3;
-  font-weight: 800;
-}
-
-.inputText {
-  border-radius: 6px;
-  padding: 10px;
-  width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  border: 2px solid black;
-  font-size: 16px;
-  font-weight: 800;
-}
-
-button {
-  border: 2px solid white;
-  border-radius: 6px;
-  padding: 10px;
-  text-align: center;
-  width: 325px;
-  margin: 3px;
-  background-color: black;
-  color: white;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.sign {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  margin-bottom: 30px;
+.sign button {
+  width: 48%;
 }
 </style>
