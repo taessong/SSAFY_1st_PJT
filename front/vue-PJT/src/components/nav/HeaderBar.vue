@@ -3,20 +3,20 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'login' }"><h3>⚽</h3></RouterLink>
+          <RouterLink :to="{ name: 'login' }"><h4>⚽</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'clubBoard' }"><h3>📢</h3></RouterLink>
+          <RouterLink :to="{ name: 'clubBoard' }"><h4>📢</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'matchboard' }"><h3>👊🏼</h3></RouterLink>
+          <RouterLink :to="{ name: 'matchboard' }"><h4>👊🏼</h4></RouterLink>
         </div>
         <div class="col-md-4" v-if="nickName" style="display: flex; align-items: center;">
           <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc" class="logoImg">
-          <h3>{{ nickName }}님, 안녕하세요!</h3>
+          <h4 style="color: black;">{{ nickName }}님, 안녕하세요!</h4>
         </div>
         <div class="col-md-2">
-          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h3>📴</h3></RouterLink>
+          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h4>📴</h4></RouterLink>
         </div>
       </div>
     </div>
@@ -198,5 +198,10 @@ img {
   max-width: 100%;
   max-height: 300px;
   object-fit: contain;
+}
+
+.logoImg {
+  width: 40px;
+  height: 40px;
 }
 </style>
