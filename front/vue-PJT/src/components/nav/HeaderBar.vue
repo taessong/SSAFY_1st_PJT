@@ -3,48 +3,28 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'login' }"><h4>⚽</h4></RouterLink>
+          <RouterLink :to="{ name: 'login' }"><h4>⚽홈</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'clubBoard' }"><h4>📢</h4></RouterLink>
+          <RouterLink :to="{ name: 'clubBoard' }"><h4>📢커뮤니티</h4></RouterLink>
         </div>
         <div class="col-md-2">
-          <RouterLink :to="{ name: 'matchboard' }"><h4>👊🏼</h4></RouterLink>
+          <RouterLink :to="{ name: 'matchboard' }"><h4>👊🏼매칭</h4></RouterLink>
         </div>
-        <div class="col-md-4" v-if="nickName" style="display: flex; align-items: center;">
+        <div class="col-md-4 user" v-if="nickName">
           <img :src="logoSrc" alt="favoriteTeam" v-if="logoSrc" class="logoImg">
-          <h4 style="color: black;">{{ nickName }}님, 안녕하세요!</h4>
+          <h4>{{ nickName }}님, 안녕하세요!</h4>
         </div>
         <div class="col-md-2">
-          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h4>📴</h4></RouterLink>
+          <RouterLink v-if="nickName" :to="{ name: 'login' }" @click="handlerLogout"><h4>📴로그아웃</h4></RouterLink>
         </div>
       </div>
-    </div>
-    <div class="team-img">
-      <img :src="teamImageSrc" alt="Team Image" ref="teamImage">
     </div>
   </header>
 </template>
 <script setup>
 import { onMounted, ref, nextTick } from "vue";
 import { useRouter } from 'vue-router';
-
-// 모든 팀의 배경 이미지를 사전에 import
-import Tottenham from '../../asset/teams/토트넘.jpg';
-import Mancity from '../../asset/teams/맨시티.jpg';
-import Manchester from '../../asset/teams/맨유.jpg';
-import Arsenal from '../../asset/teams/아스날.jpg';
-import Chelsea from '../../asset/teams/첼시.jpg';
-import Liverpool from '../../asset/teams/리버풀.jpg';
-
-const teamBackgrounds = {
-  '토트넘': Tottenham,
-  '맨시티': Mancity,
-  '맨유': Manchester,
-  '아스널': Arsenal,
-  '첼시': Chelsea,
-  '리버풀': Liverpool
-};
 
 const nickName = ref(null);
 const logoSrc = ref('');
@@ -61,10 +41,6 @@ onMounted(async () => {
   updateNickName();
   const favoriteTeam = sessionStorage.getItem("favoriteTeam");
   if (favoriteTeam) {
-    // 배경 이미지 설정
-    if (teamBackgrounds[favoriteTeam]) {
-      headerStyle.value.backgroundImage = `url(${teamBackgrounds[favoriteTeam]})`;
-    }
     // 동적 import를 사용하여 프로필 이미지 설정
     try {
       const module = await import(`../../asset/logo/${favoriteTeam}.png`);
@@ -106,36 +82,7 @@ const handlerLogout = (event) => {
 </script>
 <style scoped>
 .header-bar {
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.container {
-  width: 100%;
-  max-width: 1200px;
-}
-
-.row {
-  width: 100%;
-}
-
-.header-sub {
-  display: flex;
-  margin-top: 15px;
-  margin-right: auto;
-  align-items: center;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  margin-top: 15px;
+  padding: 70px 50px;
 }
 
 .header-login {
@@ -150,58 +97,14 @@ const handlerLogout = (event) => {
   height: 40px;
 }
 
-h1 {
-  color: white;
-  margin-left: 5px;
-  margin-right: 20px;
-  margin-top: 0;
-}
-
-h3 {
-  color: white;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 5px;
-}
-
 a {
   text-decoration: none;
-  color: white;
-  font-weight: 800;
+  color: black;
   font-size: 16px;
 }
 
-.a {
-  text-decoration: none;
-  color: white;
-}
-
-a:hover, .a:hover, .header-sub h3:hover {
-  color: lightgray;
-}
-
-img {
-  width: 40px;
-  height: 40px;
-}
-
-.team-img {
+.user {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 20px;
-}
-
-.team-img img {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-}
-
-.logoImg {
-  width: 40px;
-  height: 40px;
 }
 </style>
