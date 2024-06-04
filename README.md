@@ -248,8 +248,8 @@
         <th>팀원으로 등록 & 취소</th>
       </tr>
       <tr>
-        <td><img src="./resources/"></td>
-        <td><img src="./resources/"></td>
+        <td><img src="./resources/팀원모집글등록.gif"></td>
+        <td><img src="./resources/팀원등록.gif"></td>
       </tr>
     </table>
   </div>
@@ -274,8 +274,16 @@
         <th>경기장 선택</th>
       </tr>
       <tr>
-        <td><img src="./resources/"></td>
-        <td><img src="./resources/"></td>
+        <td><img src="./resources/매칭내용날짜시간.gif"></td>
+        <td><img src="./resources/매칭경기장.gif"></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>기존의 매칭 글에 경기 신청</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/매칭신청.gif"></td>
       </tr>
     </table>
   </div>
