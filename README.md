@@ -20,8 +20,17 @@
   </thead>
   <tbody>
     <tr>
-      <td></td>
-      <td></td>
+      <td><img src="./resources/김범규.jpg"></td>
+      <td style: width=200px;><img src="./resources/김태성.jpg"></td>
     </tr>
   </tbody>
 </table>
+
+<h2>1. 개발 환경</h2>
+<div>
+  <ui>
+    <li>Front : Vue.js, javascript</li>
+    <li>Back : SpringBoot, Mybatis</li>
+    <li>협업 툴 : Discord, Git</li>
+  </ui>
+</div>
