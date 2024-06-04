@@ -92,4 +92,6 @@
     <ui>
       <li>사용자의 선호팀에 따른 커뮤니티를 보여주기 위해 로그인 페이지가 나타납니다.</li>
     </ui>
+  <img src="./resources/초기화면.jpg" style: width=500px;>
+  <img src="./resources/회원가입~로그인.gif" style: width=500px;>
 </div>
