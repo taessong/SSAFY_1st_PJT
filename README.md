@@ -210,8 +210,8 @@
       <th>댓글, 추천</th>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td><img src="./resources/수다.png" style: width=450px;></td>
+      <td><img src="./resources/댓글추천.gif"></td>
     </tr>
   </table>
 </div>
