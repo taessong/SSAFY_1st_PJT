@@ -206,11 +206,19 @@
   <br/>
   <table>
     <tr>
-      <th>게시글</th>
-      <th>댓글, 추천</th>
+      <th>게시판 리스트</th>
+      <th>등록된 게시글</th>
     </tr>
     <tr>
-      <td><img src="./resources/수다.png" style: width=450px;></td>
+      <td><img src="./resources/수다.png" style: width=600px;></td>
+      <td><img src="./resources/수다글.gif"></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>댓글</th>
+    </tr>
+    <tr>
       <td><img src="./resources/댓글추천.gif"></td>
     </tr>
   </table>
