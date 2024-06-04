@@ -289,3 +289,64 @@
   </div>
 </div>
 <br/>
+
+<div>
+  <h3>[ChatGPT-API]</h3>
+  <div>
+    <ui>
+      <li>ChatGPT-API를 이용해 서비스 사용자들에게 여러 정보를 제공하였습니다.</li>
+      <li>👟버튼을 클릭하면 사용자가 사용할만한 풋살화를 추천해줍니다.</li>
+      <li>🤸‍♂️버튼을 클릭하면 풋살 경기 전에 할 스트레칭을 추천해줍니다.</li>
+      <li>🙅🏻‍♂️버튼을 클릭하면 풋살 경기 중의 에티켓에 대해 알려줍니다.</li>
+    </ui>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th>👟버튼</th>
+        <th>🤸‍♂️버튼</th>
+        <th>🙅🏻‍♂️버튼</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/"></td>
+        <td><img src="./resources/"></td>
+        <td><img src="./resources/"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div>
+  <h3>[Youtube-API]</h3>
+  <div>
+    <ui>
+      <li>사용자의 선호 팀 별 최근 경기 하이라이트를 보여줍니다.</li>
+      <li>응원 팀의 경기를 따로 찾아보는 수고 없이 사용자에게 제공합니다.</li>
+    </ui>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th>토트넘</th>
+        <th>맨시티</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/"></td>
+        <td><img src="./resources/"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<h2>5. 아쉬운 점</h2>
+<div>
+  <ui>
+    <li>사용자 별 마이페이지를 만들지 못해 아쉬운 점이 남았습니다.</li>
+    <li></li>
+  </ui>
+</div>
+
+<h2>6. 프로젝트 후기</h2>
+<h3>😊김범규</h3>
+
+<h3>😎김태성</h3>
