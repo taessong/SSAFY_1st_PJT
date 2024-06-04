@@ -97,13 +97,14 @@
 <div>
   <h3>[회원가입]</h3>
   <ui>
-    <li>회원가입 시에 사용자가 선호하는 팀을 선택해야 회원가입이 가능하다.</li>
+    <li>회원가입 시에 사용자가 선호하는 팀을 선택해야 회원가입이 가능합니니다.</li>
+    <li>많은 팀을 선택하지 못하고, 6개의 팀만 선택하게 구현했습니다.</li>
   </ui>
   <img src="./resources/회원가입.jpg" style: width=500px;>
 </div>
 
 <div>
-  <h3>[사용자 별 화면]</h3>
+  <h3>[로그인 후 메인 화면]</h3>
   <div>
     <table>
       <thead>
@@ -115,7 +116,7 @@
       <tbody>
         <tr>
           <td><img src="./resources/토트넘.gif"></td>
-          <td></td>
+          <td><img src="./resources/아스날.gif"></td>
         </tr>
       </tbody>
     </table>
@@ -130,8 +131,8 @@
       </thead>
       <tbody>
         <tr>
-          <td></td>
-          <td></td>
+          <td><img src="./resources/맨시티.gif"></td>
+          <td><img src="./resources/맨유.gif"></td>
         </tr>
       </tbody>
     </table>
@@ -146,8 +147,8 @@
       </thead>
       <tbody>
         <tr>
-          <td></td>
-          <td></td>
+          <td><img src="./resources/리버풀.gif"></td>
+          <td><img src="./resources/첼시.gif"></td>
         </tr>
       </tbody>
     </table>
