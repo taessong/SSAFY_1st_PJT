@@ -204,45 +204,80 @@
     <li>본인이 등록한 글에 추천을 누를 수 있고, 다른 사용자가 올린 글에도 추천이 가능합니다.</li>
   </ui>
   <br/>
-  <table>
-    <tr>
-      <th>게시판 리스트</th>
-      <th>등록된 게시글</th>
-    </tr>
-    <tr>
-      <td><img src="./resources/수다.png" style: width=600px;></td>
-      <td><img src="./resources/수다글.gif"></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-      <th>댓글</th>
-      <th>추천</th>
-    </tr>
-    <tr>
-      <td><img src="./resources/댓글.gif"></td>
-      <td><img src="./resources/추천.gif"></td>
-    </tr>
-  </table>
+
+  <div>
+    <table>
+      <tr>
+        <th>게시판 리스트</th>
+        <th>등록된 게시글</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/수다.png" style: width=600px;></td>
+        <td><img src="./resources/수다글.gif"></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>댓글</th>
+        <th>추천</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/댓글.png" style: width=600px;></td>
+        <td><img src="./resources/추천.gif"></td>
+      </tr>
+    </table>
+  </div>
 </div>
 <br/>
 
 <div>
-  <h3>[팀원 모집 글 등록]</h3>
+  <div>
+    <h4>2) 모집 게시판</h4>
+    <ui>
+      <li>모집 게시판에서는 같은 팀을 응원하는 사용자들이 하나의 풋살 팀을 꾸릴 수 있습니다.</li>
+      <li>모집 글을 올린 사용자가 팀의 리더로 등록되고, 모집 글을 등록하면 하나의 팀이 생성됩니다.</li>
+      <li>다른 사용자들이 모집 글을 보고 팀원으로 등록과 취소가 가능합니다.</li>
+    </ui>
+  </div>
+  <br/>
+  
+  <div>
+    <table>
+      <tr>
+        <th>팀원 모집 글 등록</th>
+        <th>팀원으로 등록 & 취소</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/"></td>
+        <td><img src="./resources/"></td>
+      </tr>
+    </table>
+  </div>
 </div>
 <br/>
 
 <div>
-  <h3>[팀원으로 신청]</h3>
-</div>
-<br/>
-
-<div>
-  <h3>[매칭 신청]</h3>
-</div>
-<br/>
-
-<div>
-  <h3>[매칭 글 등록]</h3>
+  <div>
+    <h3>[매칭 게시판]</h3>
+    <ui>
+      <li>선호 팀에 상관 없이 모든 사용자가 이용 가능한 매칭 게시판입니다.</li>
+      <li>팀원을 모아온 리더가 모집 글을 새롭게 등록하거나 등록 된 글을 보고 매칭 신청과 취소가 가능합니다.</li>
+      <li>매칭 글 등록 시에 매칭 내용, 시간, 날짜, 경기장을 선택하게 됩니다.</li>
+      <li>기존의 매칭 글에 신청하면 동적으로 리더의 팀원이 화면에 나타나게 됩니다.</li>
+    </ui>
+  </div>
+  <br/>
+  <div>
+    <table>
+      <tr>
+        <th>매칭 내용 & 시간 & 날짜 선택</th>
+        <th>경기장 선택</th>
+      </tr>
+      <tr>
+        <td><img src="./resources/"></td>
+        <td><img src="./resources/"></td>
+      </tr>
+    </table>
+  </div>
 </div>
 <br/>
