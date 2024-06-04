@@ -217,9 +217,11 @@
   <table>
     <tr>
       <th>댓글</th>
+      <th>추천</th>
     </tr>
     <tr>
-      <td><img src="./resources/댓글추천.gif"></td>
+      <td><img src="./resources/댓글.gif"></td>
+      <td><img src="./resources/추천.gif"></td>
     </tr>
   </table>
 </div>
