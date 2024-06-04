@@ -90,8 +90,67 @@
 <div>
   <h3>[초기화면]</h3>
     <ui>
-      <li>사용자의 선호팀에 따른 커뮤니티를 보여주기 위해 로그인 페이지가 나타납니다.</li>
+      <li>사용자의 선호 팀에 따른 커뮤니티를 동적으로 보여주기 위해 로그인 페이지가 먼저 나타납니다.</li>
     </ui>
   <img src="./resources/초기화면.jpg" style: width=500px;>
-  <img src="./resources/회원가입~로그인.gif" style: width=500px;>
+</div>
+<div>
+  <h3>[회원가입]</h3>
+  <ui>
+    <li>회원가입 시에 사용자가 선호하는 팀을 선택해야 회원가입이 가능하다.</li>
+  </ui>
+  <img src="./resources/회원가입.jpg" style: width=500px;>
+</div>
+
+<div>
+  <h3>[사용자 별 화면]</h3>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>토트넘</th>
+          <th>아스날</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="./resources/토트넘.gif"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>맨시티</th>
+          <th>맨유</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>리버풀</th>
+          <th>첼시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
 </div>
